@@ -1,0 +1,7 @@
+@baseUrl = https://pokeapi.co/api/v2
+
+### get pokemon list
+GET {{baseUrl}}/pokemon
+
+### get pokemon by id
+GET {{baseUrl}}/pokemon/1
