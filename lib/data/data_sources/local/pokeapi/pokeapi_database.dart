@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:archive/archive_io.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/services.dart';
@@ -29,15 +30,26 @@ class PokeApiDatabase extends _$PokeApiDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     // put pokeapi.db in app's documents directory
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'pokeapi.db'));
+    final appDirectory = await getApplicationDocumentsDirectory();
+    final file = File(p.join(appDirectory.path, 'pokeapi.sqlite3'));
 
     if (!await file.exists()) {
-      // extract the pre-populated database file from assets
-      final blob = await rootBundle.load('assets/db.sqlite3');
+      // write the pre-populated database file from assets
+
+      // copy db archive from assets
+      const archiveDbFileName = 'pokeapi.sqlite3.zip';
+      final tempFolder = await getTemporaryDirectory();
+      final tempFile = File(p.join(tempFolder.path, archiveDbFileName));
+      final blob = await rootBundle.load('assets/$archiveDbFileName');
       final buffer = blob.buffer;
-      await file.writeAsBytes(
+      await tempFile.writeAsBytes(
           buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes));
+
+      // extract db from archive
+      await extractFileToDisk(tempFile.path, appDirectory.path);
+
+      // delete temp file
+      await tempFile.delete();
     }
 
     // work around for limitations on old Android versions
