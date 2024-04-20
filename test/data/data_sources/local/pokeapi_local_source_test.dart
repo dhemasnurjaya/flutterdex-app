@@ -11,11 +11,12 @@ import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 LazyDatabase _openTestConnection(File dbFile) {
   return LazyDatabase(() async {
     // extract the pre-populated database file from assets
-    final blob = await rootBundle.load('assets/db.sqlite3');
-    final buffer = blob.buffer;
-    await dbFile.writeAsBytes(
-        buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes));
-
+    if (!await dbFile.exists()) {
+      final blob = await rootBundle.load('assets/pokeapi.sqlite3');
+      final buffer = blob.buffer;
+      await dbFile.writeAsBytes(
+          buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes));
+    }
     return NativeDatabase.createInBackground(dbFile);
   });
 }
@@ -71,8 +72,8 @@ void main() {
     expect(result.first.type, expectedFirstPokemon.type);
   });
 
-  tearDown(() {
-    pokeApiDatabase.close();
-    dbFile.deleteSync();
+  tearDown(() async {
+    await pokeApiDatabase.close();
+    await dbFile.delete();
   });
 }

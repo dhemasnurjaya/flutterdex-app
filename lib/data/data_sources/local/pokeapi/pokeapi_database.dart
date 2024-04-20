@@ -34,7 +34,7 @@ LazyDatabase _openConnection() {
 
     if (!await file.exists()) {
       // extract the pre-populated database file from assets
-      final blob = await rootBundle.load('assets/db.sqlite3');
+      final blob = await rootBundle.load('assets/pokeapi.sqlite3');
       final buffer = blob.buffer;
       await file.writeAsBytes(
           buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes));
