@@ -19,7 +19,8 @@ part 'pokeapi_database.g.dart';
   Types,
 ])
 class PokeApiDatabase extends _$PokeApiDatabase {
-  PokeApiDatabase() : super(_openConnection());
+  PokeApiDatabase({QueryExecutor? executor})
+      : super(executor ?? _openConnection());
 
   @override
   int get schemaVersion => 1;
