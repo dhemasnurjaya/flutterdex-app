@@ -25,6 +25,9 @@ class PokemonListLoadedState extends PokemonListState {
 
   @override
   List<Object> get props => [pokemons];
+
+  @override
+  String toString() => 'PokemonListLoadedState { count: ${pokemons.length} }';
 }
 
 class PokemonListErrorState extends PokemonListState implements ErrorState {

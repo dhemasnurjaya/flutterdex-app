@@ -51,6 +51,8 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiSqliteLocalSource {
         database.types.id.equalsExp(database.pokemonTypes.typeId),
       ),
     ]);
+    query.where(
+        pokemonSubquery.ref(database.pokemons.id).isSmallerOrEqualValue(10000));
 
     final result = query
         .map((row) => PokemonWithTypeModel(
