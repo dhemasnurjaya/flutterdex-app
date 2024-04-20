@@ -3,6 +3,10 @@ import 'package:flutterdex/core/error/unknown_failure.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
+import 'package:flutterdex/domain/entities/pokemon_detail.dart';
+import 'package:flutterdex/domain/entities/pokemon_generation.dart';
+import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/entities/pokemon_type.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
@@ -61,6 +65,47 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
       }
 
       return right(mergedEntities.values.toList());
+    } on Exception catch (e) {
+      return left(UnknownFailure(message: e.toString(), cause: e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PokemonDetail>> getPokemon({required int id}) async {
+    try {
+      final pokemonWithAbilities =
+          await localSource.getPokemonWithAbilities(id: id);
+      final pokemonWithStats = await localSource.getPokemonWithStats(id: id);
+
+      final abilityEntities = pokemonWithAbilities
+          .map(
+            (e) => PokemonAbility(
+              id: e.ability.id,
+              name: e.ability.name,
+              description: e.abilityFlavorText.flavorText,
+              generation: PokemonGeneration(
+                id: e.generation.id,
+                name: e.generation.name,
+              ),
+            ),
+          )
+          .toList();
+      final statEntities = pokemonWithStats
+          .map(
+            (e) => PokemonStat(
+              id: e.stat.id,
+              name: e.stat.name,
+              baseStat: e.pokemonStat.baseStat,
+              effort: e.pokemonStat.effort,
+            ),
+          )
+          .toList();
+
+      return right(PokemonDetail(
+        id: pokemonWithStats.first.pokemon.id,
+        abilities: abilityEntities,
+        stats: statEntities,
+      ));
     } on Exception catch (e) {
       return left(UnknownFailure(message: e.toString(), cause: e));
     }

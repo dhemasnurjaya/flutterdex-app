@@ -26,8 +26,8 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     );
 
     result.fold(
-      (l) => emit(PokemonListErrorState(message: l.message)),
-      (r) => emit(PokemonListLoadedState(pokemons: r)),
+      (failure) => emit(PokemonListErrorState(message: failure.message)),
+      (pokemons) => emit(PokemonListLoadedState(pokemons: pokemons)),
     );
   }
 }

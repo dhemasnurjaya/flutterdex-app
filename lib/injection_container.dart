@@ -7,7 +7,9 @@ import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_list.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,6 +57,11 @@ void setup() {
       repository: getIt(),
     ),
   );
+  getIt.registerLazySingleton<GetPokemon>(
+    () => GetPokemon(
+      repository: getIt(),
+    ),
+  );
 
   // blocs
   getIt.registerSingletonAsync<ThemeModeCubit>(
@@ -70,6 +77,11 @@ void setup() {
   getIt.registerFactory<PokemonListBloc>(
     () => PokemonListBloc(
       getPokemonList: getIt(),
+    ),
+  );
+  getIt.registerFactory<PokemonDetailBloc>(
+    () => PokemonDetailBloc(
+      getPokemon: getIt(),
     ),
   );
 

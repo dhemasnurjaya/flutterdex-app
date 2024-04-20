@@ -168,8 +168,9 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
         database.generations.id.equalsExp(database.abilities.generationId),
       ),
     ]);
-    // 9 = English
+    // 9 = English, 25 = scarlet-violet (latest)
     query.where(database.abilityFlavorTexts.languageId.equals(9));
+    query.where(database.abilityFlavorTexts.versionGroupId.equals(25));
     query.where(database.pokemonAbilities.isHidden.equals(false));
 
     final result = query
