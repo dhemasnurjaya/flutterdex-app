@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutterdex/core/domain/use_case.dart';
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
-import 'package:flutterdex/domain/repositories/poke_api_repository.dart';
+import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class GetPokemonList extends UseCase<List<Pokemon>, GetPokemonListParams> {
-  final PokeApiRepository repository;
+  final PokeapiRepository repository;
 
   GetPokemonList({required this.repository});
 

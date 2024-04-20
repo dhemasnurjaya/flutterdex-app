@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 
-abstract class PokeApiSqliteLocalSource {
+abstract class PokeApiLocalSource {
   Future<List<PokemonModel>> getPokemons({
     int limit = 20,
     int offset = 0,
@@ -14,7 +14,7 @@ abstract class PokeApiSqliteLocalSource {
   });
 }
 
-class PokeApiSqliteLocalSourceImpl implements PokeApiSqliteLocalSource {
+class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
   final PokeApiDatabase database;
 
   PokeApiSqliteLocalSourceImpl({required this.database});

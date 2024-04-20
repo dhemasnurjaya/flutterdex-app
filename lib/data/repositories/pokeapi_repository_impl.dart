@@ -1,16 +1,16 @@
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_sqlite_local_source.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/domain/entities/pokemon_type.dart';
-import 'package:flutterdex/domain/repositories/poke_api_repository.dart';
+import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class PokeApiRepositoryImpl implements PokeApiRepository {
-  final PokeApiSqliteLocalSource localSource;
+class PokeapiRepositoryImpl implements PokeapiRepository {
+  final PokeApiLocalSource localSource;
 
-  PokeApiRepositoryImpl({required this.localSource});
+  PokeapiRepositoryImpl({required this.localSource});
 
   @override
   Future<Either<Failure, List<Pokemon>>> getPokemonsWithType({
