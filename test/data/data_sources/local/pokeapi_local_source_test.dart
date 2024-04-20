@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
-import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_with_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_stat_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 
@@ -74,13 +74,13 @@ void main() {
     expect(result.first.type, expectedFirstPokemon.type);
   });
 
-  test('getPokemonDetail', () async {
+  test('getPokemonWithSpecies', () async {
     // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.getPokemon(id: 1);
+    final result = await pokeApiLocalSource.getPokemonWithSpecies(id: 1);
 
     // assert
-    expect(result, isA<PokemonDetailModel>());
+    expect(result, isA<PokemonWithSpeciesModel>());
   });
 
   test('getPokemonWithStats', () async {

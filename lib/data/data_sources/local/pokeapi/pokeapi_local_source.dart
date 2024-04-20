@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
-import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_with_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_stat_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 
@@ -15,7 +15,7 @@ abstract class PokeApiLocalSource {
     int offset = 0,
   });
 
-  Future<PokemonDetailModel> getPokemon({required int id});
+  Future<PokemonWithSpeciesModel> getPokemonWithSpecies({required int id});
 
   Future<List<PokemonWithStatModel>> getPokemonWithStats({required int id});
 }
@@ -71,7 +71,8 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
   }
 
   @override
-  Future<PokemonDetailModel> getPokemon({required int id}) async {
+  Future<PokemonWithSpeciesModel> getPokemonWithSpecies(
+      {required int id}) async {
     final pokemonSubquery = Subquery(
       database.select(database.pokemons)..where((tbl) => tbl.id.equals(id)),
       'p',
@@ -95,7 +96,7 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
     query.where(database.pokemonSpeciesFlavorText.versionId.equals(34));
 
     final result = query
-        .map((row) => PokemonDetailModel(
+        .map((row) => PokemonWithSpeciesModel(
               pokemon: row.readTable(pokemonSubquery),
               species: row.readTable(database.pokemonSpecies),
               flavorText: row.readTable(database.pokemonSpeciesFlavorText),
