@@ -2061,6 +2061,602 @@ class PokemonTypesCompanion extends UpdateCompanion<PokemonTypeModel> {
   }
 }
 
+class $StatsTable extends Stats with TableInfo<$StatsTable, StatModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StatsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _isBattleOnlyMeta =
+      const VerificationMeta('isBattleOnly');
+  @override
+  late final GeneratedColumn<bool> isBattleOnly = GeneratedColumn<bool>(
+      'is_battle_only', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_battle_only" IN (0, 1))'));
+  static const VerificationMeta _gameIndexMeta =
+      const VerificationMeta('gameIndex');
+  @override
+  late final GeneratedColumn<int> gameIndex = GeneratedColumn<int>(
+      'game_index', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _moveDamageClassIdMeta =
+      const VerificationMeta('moveDamageClassId');
+  @override
+  late final GeneratedColumn<int> moveDamageClassId = GeneratedColumn<int>(
+      'move_damage_class_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, isBattleOnly, gameIndex, moveDamageClassId, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_stat';
+  @override
+  VerificationContext validateIntegrity(Insertable<StatModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_battle_only')) {
+      context.handle(
+          _isBattleOnlyMeta,
+          isBattleOnly.isAcceptableOrUnknown(
+              data['is_battle_only']!, _isBattleOnlyMeta));
+    } else if (isInserting) {
+      context.missing(_isBattleOnlyMeta);
+    }
+    if (data.containsKey('game_index')) {
+      context.handle(_gameIndexMeta,
+          gameIndex.isAcceptableOrUnknown(data['game_index']!, _gameIndexMeta));
+    } else if (isInserting) {
+      context.missing(_gameIndexMeta);
+    }
+    if (data.containsKey('move_damage_class_id')) {
+      context.handle(
+          _moveDamageClassIdMeta,
+          moveDamageClassId.isAcceptableOrUnknown(
+              data['move_damage_class_id']!, _moveDamageClassIdMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StatModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StatModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      isBattleOnly: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_battle_only'])!,
+      gameIndex: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}game_index'])!,
+      moveDamageClassId: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}move_damage_class_id']),
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+    );
+  }
+
+  @override
+  $StatsTable createAlias(String alias) {
+    return $StatsTable(attachedDatabase, alias);
+  }
+}
+
+class StatModel extends DataClass implements Insertable<StatModel> {
+  final int id;
+  final bool isBattleOnly;
+  final int gameIndex;
+  final int? moveDamageClassId;
+  final String name;
+  const StatModel(
+      {required this.id,
+      required this.isBattleOnly,
+      required this.gameIndex,
+      this.moveDamageClassId,
+      required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['is_battle_only'] = Variable<bool>(isBattleOnly);
+    map['game_index'] = Variable<int>(gameIndex);
+    if (!nullToAbsent || moveDamageClassId != null) {
+      map['move_damage_class_id'] = Variable<int>(moveDamageClassId);
+    }
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  StatsCompanion toCompanion(bool nullToAbsent) {
+    return StatsCompanion(
+      id: Value(id),
+      isBattleOnly: Value(isBattleOnly),
+      gameIndex: Value(gameIndex),
+      moveDamageClassId: moveDamageClassId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(moveDamageClassId),
+      name: Value(name),
+    );
+  }
+
+  factory StatModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StatModel(
+      id: serializer.fromJson<int>(json['id']),
+      isBattleOnly: serializer.fromJson<bool>(json['isBattleOnly']),
+      gameIndex: serializer.fromJson<int>(json['gameIndex']),
+      moveDamageClassId: serializer.fromJson<int?>(json['moveDamageClassId']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'isBattleOnly': serializer.toJson<bool>(isBattleOnly),
+      'gameIndex': serializer.toJson<int>(gameIndex),
+      'moveDamageClassId': serializer.toJson<int?>(moveDamageClassId),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  StatModel copyWith(
+          {int? id,
+          bool? isBattleOnly,
+          int? gameIndex,
+          Value<int?> moveDamageClassId = const Value.absent(),
+          String? name}) =>
+      StatModel(
+        id: id ?? this.id,
+        isBattleOnly: isBattleOnly ?? this.isBattleOnly,
+        gameIndex: gameIndex ?? this.gameIndex,
+        moveDamageClassId: moveDamageClassId.present
+            ? moveDamageClassId.value
+            : this.moveDamageClassId,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('StatModel(')
+          ..write('id: $id, ')
+          ..write('isBattleOnly: $isBattleOnly, ')
+          ..write('gameIndex: $gameIndex, ')
+          ..write('moveDamageClassId: $moveDamageClassId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, isBattleOnly, gameIndex, moveDamageClassId, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StatModel &&
+          other.id == this.id &&
+          other.isBattleOnly == this.isBattleOnly &&
+          other.gameIndex == this.gameIndex &&
+          other.moveDamageClassId == this.moveDamageClassId &&
+          other.name == this.name);
+}
+
+class StatsCompanion extends UpdateCompanion<StatModel> {
+  final Value<int> id;
+  final Value<bool> isBattleOnly;
+  final Value<int> gameIndex;
+  final Value<int?> moveDamageClassId;
+  final Value<String> name;
+  const StatsCompanion({
+    this.id = const Value.absent(),
+    this.isBattleOnly = const Value.absent(),
+    this.gameIndex = const Value.absent(),
+    this.moveDamageClassId = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  StatsCompanion.insert({
+    this.id = const Value.absent(),
+    required bool isBattleOnly,
+    required int gameIndex,
+    this.moveDamageClassId = const Value.absent(),
+    required String name,
+  })  : isBattleOnly = Value(isBattleOnly),
+        gameIndex = Value(gameIndex),
+        name = Value(name);
+  static Insertable<StatModel> custom({
+    Expression<int>? id,
+    Expression<bool>? isBattleOnly,
+    Expression<int>? gameIndex,
+    Expression<int>? moveDamageClassId,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (isBattleOnly != null) 'is_battle_only': isBattleOnly,
+      if (gameIndex != null) 'game_index': gameIndex,
+      if (moveDamageClassId != null) 'move_damage_class_id': moveDamageClassId,
+      if (name != null) 'name': name,
+    });
+  }
+
+  StatsCompanion copyWith(
+      {Value<int>? id,
+      Value<bool>? isBattleOnly,
+      Value<int>? gameIndex,
+      Value<int?>? moveDamageClassId,
+      Value<String>? name}) {
+    return StatsCompanion(
+      id: id ?? this.id,
+      isBattleOnly: isBattleOnly ?? this.isBattleOnly,
+      gameIndex: gameIndex ?? this.gameIndex,
+      moveDamageClassId: moveDamageClassId ?? this.moveDamageClassId,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (isBattleOnly.present) {
+      map['is_battle_only'] = Variable<bool>(isBattleOnly.value);
+    }
+    if (gameIndex.present) {
+      map['game_index'] = Variable<int>(gameIndex.value);
+    }
+    if (moveDamageClassId.present) {
+      map['move_damage_class_id'] = Variable<int>(moveDamageClassId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StatsCompanion(')
+          ..write('id: $id, ')
+          ..write('isBattleOnly: $isBattleOnly, ')
+          ..write('gameIndex: $gameIndex, ')
+          ..write('moveDamageClassId: $moveDamageClassId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PokemonStatsTable extends PokemonStats
+    with TableInfo<$PokemonStatsTable, PokemonStatModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PokemonStatsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _baseStatMeta =
+      const VerificationMeta('baseStat');
+  @override
+  late final GeneratedColumn<int> baseStat = GeneratedColumn<int>(
+      'base_stat', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _effortMeta = const VerificationMeta('effort');
+  @override
+  late final GeneratedColumn<int> effort = GeneratedColumn<int>(
+      'effort', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _pokemonIdMeta =
+      const VerificationMeta('pokemonId');
+  @override
+  late final GeneratedColumn<int> pokemonId = GeneratedColumn<int>(
+      'pokemon_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_pokemon (id)'));
+  static const VerificationMeta _statIdMeta = const VerificationMeta('statId');
+  @override
+  late final GeneratedColumn<int> statId = GeneratedColumn<int>(
+      'stat_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_stat (id)'));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, baseStat, effort, pokemonId, statId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_pokemonstat';
+  @override
+  VerificationContext validateIntegrity(Insertable<PokemonStatModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('base_stat')) {
+      context.handle(_baseStatMeta,
+          baseStat.isAcceptableOrUnknown(data['base_stat']!, _baseStatMeta));
+    } else if (isInserting) {
+      context.missing(_baseStatMeta);
+    }
+    if (data.containsKey('effort')) {
+      context.handle(_effortMeta,
+          effort.isAcceptableOrUnknown(data['effort']!, _effortMeta));
+    } else if (isInserting) {
+      context.missing(_effortMeta);
+    }
+    if (data.containsKey('pokemon_id')) {
+      context.handle(_pokemonIdMeta,
+          pokemonId.isAcceptableOrUnknown(data['pokemon_id']!, _pokemonIdMeta));
+    }
+    if (data.containsKey('stat_id')) {
+      context.handle(_statIdMeta,
+          statId.isAcceptableOrUnknown(data['stat_id']!, _statIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PokemonStatModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PokemonStatModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      baseStat: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}base_stat'])!,
+      effort: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}effort'])!,
+      pokemonId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}pokemon_id']),
+      statId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}stat_id']),
+    );
+  }
+
+  @override
+  $PokemonStatsTable createAlias(String alias) {
+    return $PokemonStatsTable(attachedDatabase, alias);
+  }
+}
+
+class PokemonStatModel extends DataClass
+    implements Insertable<PokemonStatModel> {
+  final int id;
+  final int baseStat;
+  final int effort;
+  final int? pokemonId;
+  final int? statId;
+  const PokemonStatModel(
+      {required this.id,
+      required this.baseStat,
+      required this.effort,
+      this.pokemonId,
+      this.statId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['base_stat'] = Variable<int>(baseStat);
+    map['effort'] = Variable<int>(effort);
+    if (!nullToAbsent || pokemonId != null) {
+      map['pokemon_id'] = Variable<int>(pokemonId);
+    }
+    if (!nullToAbsent || statId != null) {
+      map['stat_id'] = Variable<int>(statId);
+    }
+    return map;
+  }
+
+  PokemonStatsCompanion toCompanion(bool nullToAbsent) {
+    return PokemonStatsCompanion(
+      id: Value(id),
+      baseStat: Value(baseStat),
+      effort: Value(effort),
+      pokemonId: pokemonId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pokemonId),
+      statId:
+          statId == null && nullToAbsent ? const Value.absent() : Value(statId),
+    );
+  }
+
+  factory PokemonStatModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PokemonStatModel(
+      id: serializer.fromJson<int>(json['id']),
+      baseStat: serializer.fromJson<int>(json['baseStat']),
+      effort: serializer.fromJson<int>(json['effort']),
+      pokemonId: serializer.fromJson<int?>(json['pokemonId']),
+      statId: serializer.fromJson<int?>(json['statId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'baseStat': serializer.toJson<int>(baseStat),
+      'effort': serializer.toJson<int>(effort),
+      'pokemonId': serializer.toJson<int?>(pokemonId),
+      'statId': serializer.toJson<int?>(statId),
+    };
+  }
+
+  PokemonStatModel copyWith(
+          {int? id,
+          int? baseStat,
+          int? effort,
+          Value<int?> pokemonId = const Value.absent(),
+          Value<int?> statId = const Value.absent()}) =>
+      PokemonStatModel(
+        id: id ?? this.id,
+        baseStat: baseStat ?? this.baseStat,
+        effort: effort ?? this.effort,
+        pokemonId: pokemonId.present ? pokemonId.value : this.pokemonId,
+        statId: statId.present ? statId.value : this.statId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PokemonStatModel(')
+          ..write('id: $id, ')
+          ..write('baseStat: $baseStat, ')
+          ..write('effort: $effort, ')
+          ..write('pokemonId: $pokemonId, ')
+          ..write('statId: $statId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, baseStat, effort, pokemonId, statId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PokemonStatModel &&
+          other.id == this.id &&
+          other.baseStat == this.baseStat &&
+          other.effort == this.effort &&
+          other.pokemonId == this.pokemonId &&
+          other.statId == this.statId);
+}
+
+class PokemonStatsCompanion extends UpdateCompanion<PokemonStatModel> {
+  final Value<int> id;
+  final Value<int> baseStat;
+  final Value<int> effort;
+  final Value<int?> pokemonId;
+  final Value<int?> statId;
+  const PokemonStatsCompanion({
+    this.id = const Value.absent(),
+    this.baseStat = const Value.absent(),
+    this.effort = const Value.absent(),
+    this.pokemonId = const Value.absent(),
+    this.statId = const Value.absent(),
+  });
+  PokemonStatsCompanion.insert({
+    this.id = const Value.absent(),
+    required int baseStat,
+    required int effort,
+    this.pokemonId = const Value.absent(),
+    this.statId = const Value.absent(),
+  })  : baseStat = Value(baseStat),
+        effort = Value(effort);
+  static Insertable<PokemonStatModel> custom({
+    Expression<int>? id,
+    Expression<int>? baseStat,
+    Expression<int>? effort,
+    Expression<int>? pokemonId,
+    Expression<int>? statId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (baseStat != null) 'base_stat': baseStat,
+      if (effort != null) 'effort': effort,
+      if (pokemonId != null) 'pokemon_id': pokemonId,
+      if (statId != null) 'stat_id': statId,
+    });
+  }
+
+  PokemonStatsCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? baseStat,
+      Value<int>? effort,
+      Value<int?>? pokemonId,
+      Value<int?>? statId}) {
+    return PokemonStatsCompanion(
+      id: id ?? this.id,
+      baseStat: baseStat ?? this.baseStat,
+      effort: effort ?? this.effort,
+      pokemonId: pokemonId ?? this.pokemonId,
+      statId: statId ?? this.statId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (baseStat.present) {
+      map['base_stat'] = Variable<int>(baseStat.value);
+    }
+    if (effort.present) {
+      map['effort'] = Variable<int>(effort.value);
+    }
+    if (pokemonId.present) {
+      map['pokemon_id'] = Variable<int>(pokemonId.value);
+    }
+    if (statId.present) {
+      map['stat_id'] = Variable<int>(statId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PokemonStatsCompanion(')
+          ..write('id: $id, ')
+          ..write('baseStat: $baseStat, ')
+          ..write('effort: $effort, ')
+          ..write('pokemonId: $pokemonId, ')
+          ..write('statId: $statId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$PokeApiDatabase extends GeneratedDatabase {
   _$PokeApiDatabase(QueryExecutor e) : super(e);
   late final $PokemonSpeciesTable pokemonSpecies = $PokemonSpeciesTable(this);
@@ -2069,10 +2665,19 @@ abstract class _$PokeApiDatabase extends GeneratedDatabase {
       $PokemonSpeciesFlavorTextTable(this);
   late final $TypesTable types = $TypesTable(this);
   late final $PokemonTypesTable pokemonTypes = $PokemonTypesTable(this);
+  late final $StatsTable stats = $StatsTable(this);
+  late final $PokemonStatsTable pokemonStats = $PokemonStatsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [pokemonSpecies, pokemons, pokemonSpeciesFlavorText, types, pokemonTypes];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        pokemonSpecies,
+        pokemons,
+        pokemonSpeciesFlavorText,
+        types,
+        pokemonTypes,
+        stats,
+        pokemonStats
+      ];
 }

@@ -5,8 +5,10 @@ import 'package:drift/native.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species_flavor_text.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_stats.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_types.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemons.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/tables/stats.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/types.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -20,7 +22,9 @@ part 'pokeapi_database.g.dart';
   PokemonSpecies,
   PokemonSpeciesFlavorText,
   PokemonTypes,
+  PokemonStats,
   Types,
+  Stats,
 ])
 class PokeApiDatabase extends _$PokeApiDatabase {
   PokeApiDatabase({QueryExecutor? executor})

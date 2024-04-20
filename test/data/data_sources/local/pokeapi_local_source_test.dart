@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_with_stat_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 
 LazyDatabase _openTestConnection(File dbFile) {
@@ -80,6 +81,15 @@ void main() {
 
     // assert
     expect(result, isA<PokemonDetailModel>());
+  });
+
+  test('getPokemonWithStats', () async {
+    // nothing to arrange
+    // act
+    final result = await pokeApiLocalSource.getPokemonWithStats(id: 1);
+
+    // assert
+    expect(result, isA<List<PokemonWithStatModel>>());
   });
 
   tearDown(() {
