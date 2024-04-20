@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
+import 'package:flutterdex/data/models/pokemon_detail_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 
 abstract class PokeApiLocalSource {
@@ -12,6 +13,8 @@ abstract class PokeApiLocalSource {
     int limit = 20,
     int offset = 0,
   });
+
+  Future<PokemonDetailModel> getPokemon({required int id});
 }
 
 class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
@@ -60,6 +63,41 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
               type: row.readTable(database.types),
             ))
         .get();
+
+    return result;
+  }
+
+  @override
+  Future<PokemonDetailModel> getPokemon({required int id}) async {
+    final pokemonSubquery = Subquery(
+      database.select(database.pokemons)..where((tbl) => tbl.id.equals(id)),
+      'p',
+    );
+
+    final query = database.select(pokemonSubquery).join([
+      leftOuterJoin(
+        database.pokemonSpecies,
+        pokemonSubquery
+            .ref(database.pokemons.pokemonSpeciesId)
+            .equalsExp(database.pokemonSpecies.id),
+      ),
+      leftOuterJoin(
+        database.pokemonSpeciesFlavorText,
+        database.pokemonSpeciesFlavorText.pokemonSpeciesId
+            .equalsExp(database.pokemonSpecies.id),
+      ),
+    ]);
+    // 9 = English, 34 = Pokemon Shield
+    query.where(database.pokemonSpeciesFlavorText.languageId.equals(9));
+    query.where(database.pokemonSpeciesFlavorText.versionId.equals(34));
+
+    final result = query
+        .map((row) => PokemonDetailModel(
+              pokemon: row.readTable(pokemonSubquery),
+              species: row.readTable(database.pokemonSpecies),
+              flavorText: row.readTable(database.pokemonSpeciesFlavorText),
+            ))
+        .getSingle();
 
     return result;
   }
