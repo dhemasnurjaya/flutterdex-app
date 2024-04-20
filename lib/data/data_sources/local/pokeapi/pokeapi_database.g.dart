@@ -1327,6 +1327,784 @@ class PokemonsCompanion extends UpdateCompanion<PokemonModel> {
   }
 }
 
+class $GenerationsTable extends Generations
+    with TableInfo<$GenerationsTable, GenerationModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GenerationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _regionIdMeta =
+      const VerificationMeta('regionId');
+  @override
+  late final GeneratedColumn<int> regionId = GeneratedColumn<int>(
+      'region_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, regionId, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_generation';
+  @override
+  VerificationContext validateIntegrity(Insertable<GenerationModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('region_id')) {
+      context.handle(_regionIdMeta,
+          regionId.isAcceptableOrUnknown(data['region_id']!, _regionIdMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GenerationModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GenerationModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      regionId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}region_id']),
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+    );
+  }
+
+  @override
+  $GenerationsTable createAlias(String alias) {
+    return $GenerationsTable(attachedDatabase, alias);
+  }
+}
+
+class GenerationModel extends DataClass implements Insertable<GenerationModel> {
+  final int id;
+  final int? regionId;
+  final String name;
+  const GenerationModel({required this.id, this.regionId, required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || regionId != null) {
+      map['region_id'] = Variable<int>(regionId);
+    }
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  GenerationsCompanion toCompanion(bool nullToAbsent) {
+    return GenerationsCompanion(
+      id: Value(id),
+      regionId: regionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(regionId),
+      name: Value(name),
+    );
+  }
+
+  factory GenerationModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GenerationModel(
+      id: serializer.fromJson<int>(json['id']),
+      regionId: serializer.fromJson<int?>(json['regionId']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'regionId': serializer.toJson<int?>(regionId),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  GenerationModel copyWith(
+          {int? id,
+          Value<int?> regionId = const Value.absent(),
+          String? name}) =>
+      GenerationModel(
+        id: id ?? this.id,
+        regionId: regionId.present ? regionId.value : this.regionId,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('GenerationModel(')
+          ..write('id: $id, ')
+          ..write('regionId: $regionId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, regionId, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GenerationModel &&
+          other.id == this.id &&
+          other.regionId == this.regionId &&
+          other.name == this.name);
+}
+
+class GenerationsCompanion extends UpdateCompanion<GenerationModel> {
+  final Value<int> id;
+  final Value<int?> regionId;
+  final Value<String> name;
+  const GenerationsCompanion({
+    this.id = const Value.absent(),
+    this.regionId = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  GenerationsCompanion.insert({
+    this.id = const Value.absent(),
+    this.regionId = const Value.absent(),
+    required String name,
+  }) : name = Value(name);
+  static Insertable<GenerationModel> custom({
+    Expression<int>? id,
+    Expression<int>? regionId,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (regionId != null) 'region_id': regionId,
+      if (name != null) 'name': name,
+    });
+  }
+
+  GenerationsCompanion copyWith(
+      {Value<int>? id, Value<int?>? regionId, Value<String>? name}) {
+    return GenerationsCompanion(
+      id: id ?? this.id,
+      regionId: regionId ?? this.regionId,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (regionId.present) {
+      map['region_id'] = Variable<int>(regionId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GenerationsCompanion(')
+          ..write('id: $id, ')
+          ..write('regionId: $regionId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AbilitiesTable extends Abilities
+    with TableInfo<$AbilitiesTable, AbilityModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AbilitiesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _isMainSeriesMeta =
+      const VerificationMeta('isMainSeries');
+  @override
+  late final GeneratedColumn<bool> isMainSeries = GeneratedColumn<bool>(
+      'is_main_series', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_main_series" IN (0, 1))'));
+  static const VerificationMeta _generationIdMeta =
+      const VerificationMeta('generationId');
+  @override
+  late final GeneratedColumn<int> generationId = GeneratedColumn<int>(
+      'generation_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_generation (id)'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, isMainSeries, generationId, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_ability';
+  @override
+  VerificationContext validateIntegrity(Insertable<AbilityModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_main_series')) {
+      context.handle(
+          _isMainSeriesMeta,
+          isMainSeries.isAcceptableOrUnknown(
+              data['is_main_series']!, _isMainSeriesMeta));
+    } else if (isInserting) {
+      context.missing(_isMainSeriesMeta);
+    }
+    if (data.containsKey('generation_id')) {
+      context.handle(
+          _generationIdMeta,
+          generationId.isAcceptableOrUnknown(
+              data['generation_id']!, _generationIdMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AbilityModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AbilityModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      isMainSeries: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_main_series'])!,
+      generationId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}generation_id']),
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+    );
+  }
+
+  @override
+  $AbilitiesTable createAlias(String alias) {
+    return $AbilitiesTable(attachedDatabase, alias);
+  }
+}
+
+class AbilityModel extends DataClass implements Insertable<AbilityModel> {
+  final int id;
+  final bool isMainSeries;
+  final int? generationId;
+  final String name;
+  const AbilityModel(
+      {required this.id,
+      required this.isMainSeries,
+      this.generationId,
+      required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['is_main_series'] = Variable<bool>(isMainSeries);
+    if (!nullToAbsent || generationId != null) {
+      map['generation_id'] = Variable<int>(generationId);
+    }
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  AbilitiesCompanion toCompanion(bool nullToAbsent) {
+    return AbilitiesCompanion(
+      id: Value(id),
+      isMainSeries: Value(isMainSeries),
+      generationId: generationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(generationId),
+      name: Value(name),
+    );
+  }
+
+  factory AbilityModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AbilityModel(
+      id: serializer.fromJson<int>(json['id']),
+      isMainSeries: serializer.fromJson<bool>(json['isMainSeries']),
+      generationId: serializer.fromJson<int?>(json['generationId']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'isMainSeries': serializer.toJson<bool>(isMainSeries),
+      'generationId': serializer.toJson<int?>(generationId),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  AbilityModel copyWith(
+          {int? id,
+          bool? isMainSeries,
+          Value<int?> generationId = const Value.absent(),
+          String? name}) =>
+      AbilityModel(
+        id: id ?? this.id,
+        isMainSeries: isMainSeries ?? this.isMainSeries,
+        generationId:
+            generationId.present ? generationId.value : this.generationId,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AbilityModel(')
+          ..write('id: $id, ')
+          ..write('isMainSeries: $isMainSeries, ')
+          ..write('generationId: $generationId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, isMainSeries, generationId, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AbilityModel &&
+          other.id == this.id &&
+          other.isMainSeries == this.isMainSeries &&
+          other.generationId == this.generationId &&
+          other.name == this.name);
+}
+
+class AbilitiesCompanion extends UpdateCompanion<AbilityModel> {
+  final Value<int> id;
+  final Value<bool> isMainSeries;
+  final Value<int?> generationId;
+  final Value<String> name;
+  const AbilitiesCompanion({
+    this.id = const Value.absent(),
+    this.isMainSeries = const Value.absent(),
+    this.generationId = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  AbilitiesCompanion.insert({
+    this.id = const Value.absent(),
+    required bool isMainSeries,
+    this.generationId = const Value.absent(),
+    required String name,
+  })  : isMainSeries = Value(isMainSeries),
+        name = Value(name);
+  static Insertable<AbilityModel> custom({
+    Expression<int>? id,
+    Expression<bool>? isMainSeries,
+    Expression<int>? generationId,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (isMainSeries != null) 'is_main_series': isMainSeries,
+      if (generationId != null) 'generation_id': generationId,
+      if (name != null) 'name': name,
+    });
+  }
+
+  AbilitiesCompanion copyWith(
+      {Value<int>? id,
+      Value<bool>? isMainSeries,
+      Value<int?>? generationId,
+      Value<String>? name}) {
+    return AbilitiesCompanion(
+      id: id ?? this.id,
+      isMainSeries: isMainSeries ?? this.isMainSeries,
+      generationId: generationId ?? this.generationId,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (isMainSeries.present) {
+      map['is_main_series'] = Variable<bool>(isMainSeries.value);
+    }
+    if (generationId.present) {
+      map['generation_id'] = Variable<int>(generationId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AbilitiesCompanion(')
+          ..write('id: $id, ')
+          ..write('isMainSeries: $isMainSeries, ')
+          ..write('generationId: $generationId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PokemonAbilitiesTable extends PokemonAbilities
+    with TableInfo<$PokemonAbilitiesTable, PokemonAbilityModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PokemonAbilitiesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _isHiddenMeta =
+      const VerificationMeta('isHidden');
+  @override
+  late final GeneratedColumn<bool> isHidden = GeneratedColumn<bool>(
+      'is_hidden', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_hidden" IN (0, 1))'));
+  static const VerificationMeta _slotMeta = const VerificationMeta('slot');
+  @override
+  late final GeneratedColumn<int> slot = GeneratedColumn<int>(
+      'slot', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _abilityIdMeta =
+      const VerificationMeta('abilityId');
+  @override
+  late final GeneratedColumn<int> abilityId = GeneratedColumn<int>(
+      'ability_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_ability (id)'));
+  static const VerificationMeta _pokemonIdMeta =
+      const VerificationMeta('pokemonId');
+  @override
+  late final GeneratedColumn<int> pokemonId = GeneratedColumn<int>(
+      'pokemon_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, isHidden, slot, abilityId, pokemonId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_pokemonability';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PokemonAbilityModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_hidden')) {
+      context.handle(_isHiddenMeta,
+          isHidden.isAcceptableOrUnknown(data['is_hidden']!, _isHiddenMeta));
+    } else if (isInserting) {
+      context.missing(_isHiddenMeta);
+    }
+    if (data.containsKey('slot')) {
+      context.handle(
+          _slotMeta, slot.isAcceptableOrUnknown(data['slot']!, _slotMeta));
+    } else if (isInserting) {
+      context.missing(_slotMeta);
+    }
+    if (data.containsKey('ability_id')) {
+      context.handle(_abilityIdMeta,
+          abilityId.isAcceptableOrUnknown(data['ability_id']!, _abilityIdMeta));
+    }
+    if (data.containsKey('pokemon_id')) {
+      context.handle(_pokemonIdMeta,
+          pokemonId.isAcceptableOrUnknown(data['pokemon_id']!, _pokemonIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PokemonAbilityModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PokemonAbilityModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      isHidden: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_hidden'])!,
+      slot: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}slot'])!,
+      abilityId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ability_id']),
+      pokemonId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}pokemon_id']),
+    );
+  }
+
+  @override
+  $PokemonAbilitiesTable createAlias(String alias) {
+    return $PokemonAbilitiesTable(attachedDatabase, alias);
+  }
+}
+
+class PokemonAbilityModel extends DataClass
+    implements Insertable<PokemonAbilityModel> {
+  final int id;
+  final bool isHidden;
+  final int slot;
+  final int? abilityId;
+  final int? pokemonId;
+  const PokemonAbilityModel(
+      {required this.id,
+      required this.isHidden,
+      required this.slot,
+      this.abilityId,
+      this.pokemonId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['is_hidden'] = Variable<bool>(isHidden);
+    map['slot'] = Variable<int>(slot);
+    if (!nullToAbsent || abilityId != null) {
+      map['ability_id'] = Variable<int>(abilityId);
+    }
+    if (!nullToAbsent || pokemonId != null) {
+      map['pokemon_id'] = Variable<int>(pokemonId);
+    }
+    return map;
+  }
+
+  PokemonAbilitiesCompanion toCompanion(bool nullToAbsent) {
+    return PokemonAbilitiesCompanion(
+      id: Value(id),
+      isHidden: Value(isHidden),
+      slot: Value(slot),
+      abilityId: abilityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(abilityId),
+      pokemonId: pokemonId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pokemonId),
+    );
+  }
+
+  factory PokemonAbilityModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PokemonAbilityModel(
+      id: serializer.fromJson<int>(json['id']),
+      isHidden: serializer.fromJson<bool>(json['isHidden']),
+      slot: serializer.fromJson<int>(json['slot']),
+      abilityId: serializer.fromJson<int?>(json['abilityId']),
+      pokemonId: serializer.fromJson<int?>(json['pokemonId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'isHidden': serializer.toJson<bool>(isHidden),
+      'slot': serializer.toJson<int>(slot),
+      'abilityId': serializer.toJson<int?>(abilityId),
+      'pokemonId': serializer.toJson<int?>(pokemonId),
+    };
+  }
+
+  PokemonAbilityModel copyWith(
+          {int? id,
+          bool? isHidden,
+          int? slot,
+          Value<int?> abilityId = const Value.absent(),
+          Value<int?> pokemonId = const Value.absent()}) =>
+      PokemonAbilityModel(
+        id: id ?? this.id,
+        isHidden: isHidden ?? this.isHidden,
+        slot: slot ?? this.slot,
+        abilityId: abilityId.present ? abilityId.value : this.abilityId,
+        pokemonId: pokemonId.present ? pokemonId.value : this.pokemonId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PokemonAbilityModel(')
+          ..write('id: $id, ')
+          ..write('isHidden: $isHidden, ')
+          ..write('slot: $slot, ')
+          ..write('abilityId: $abilityId, ')
+          ..write('pokemonId: $pokemonId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, isHidden, slot, abilityId, pokemonId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PokemonAbilityModel &&
+          other.id == this.id &&
+          other.isHidden == this.isHidden &&
+          other.slot == this.slot &&
+          other.abilityId == this.abilityId &&
+          other.pokemonId == this.pokemonId);
+}
+
+class PokemonAbilitiesCompanion extends UpdateCompanion<PokemonAbilityModel> {
+  final Value<int> id;
+  final Value<bool> isHidden;
+  final Value<int> slot;
+  final Value<int?> abilityId;
+  final Value<int?> pokemonId;
+  const PokemonAbilitiesCompanion({
+    this.id = const Value.absent(),
+    this.isHidden = const Value.absent(),
+    this.slot = const Value.absent(),
+    this.abilityId = const Value.absent(),
+    this.pokemonId = const Value.absent(),
+  });
+  PokemonAbilitiesCompanion.insert({
+    this.id = const Value.absent(),
+    required bool isHidden,
+    required int slot,
+    this.abilityId = const Value.absent(),
+    this.pokemonId = const Value.absent(),
+  })  : isHidden = Value(isHidden),
+        slot = Value(slot);
+  static Insertable<PokemonAbilityModel> custom({
+    Expression<int>? id,
+    Expression<bool>? isHidden,
+    Expression<int>? slot,
+    Expression<int>? abilityId,
+    Expression<int>? pokemonId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (isHidden != null) 'is_hidden': isHidden,
+      if (slot != null) 'slot': slot,
+      if (abilityId != null) 'ability_id': abilityId,
+      if (pokemonId != null) 'pokemon_id': pokemonId,
+    });
+  }
+
+  PokemonAbilitiesCompanion copyWith(
+      {Value<int>? id,
+      Value<bool>? isHidden,
+      Value<int>? slot,
+      Value<int?>? abilityId,
+      Value<int?>? pokemonId}) {
+    return PokemonAbilitiesCompanion(
+      id: id ?? this.id,
+      isHidden: isHidden ?? this.isHidden,
+      slot: slot ?? this.slot,
+      abilityId: abilityId ?? this.abilityId,
+      pokemonId: pokemonId ?? this.pokemonId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (isHidden.present) {
+      map['is_hidden'] = Variable<bool>(isHidden.value);
+    }
+    if (slot.present) {
+      map['slot'] = Variable<int>(slot.value);
+    }
+    if (abilityId.present) {
+      map['ability_id'] = Variable<int>(abilityId.value);
+    }
+    if (pokemonId.present) {
+      map['pokemon_id'] = Variable<int>(pokemonId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PokemonAbilitiesCompanion(')
+          ..write('id: $id, ')
+          ..write('isHidden: $isHidden, ')
+          ..write('slot: $slot, ')
+          ..write('abilityId: $abilityId, ')
+          ..write('pokemonId: $pokemonId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PokemonSpeciesFlavorTextTable extends PokemonSpeciesFlavorText
     with
         TableInfo<$PokemonSpeciesFlavorTextTable,
@@ -2657,16 +3435,331 @@ class PokemonStatsCompanion extends UpdateCompanion<PokemonStatModel> {
   }
 }
 
+class $AbilityFlavorTextsTable extends AbilityFlavorTexts
+    with TableInfo<$AbilityFlavorTextsTable, AbilityFlavorTextModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AbilityFlavorTextsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _abilityIdMeta =
+      const VerificationMeta('abilityId');
+  @override
+  late final GeneratedColumn<int> abilityId = GeneratedColumn<int>(
+      'ability_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_ability (id)'));
+  static const VerificationMeta _languageIdMeta =
+      const VerificationMeta('languageId');
+  @override
+  late final GeneratedColumn<int> languageId = GeneratedColumn<int>(
+      'language_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _versionGroupIdMeta =
+      const VerificationMeta('versionGroupId');
+  @override
+  late final GeneratedColumn<int> versionGroupId = GeneratedColumn<int>(
+      'version_group_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _flavorTextMeta =
+      const VerificationMeta('flavorText');
+  @override
+  late final GeneratedColumn<String> flavorText = GeneratedColumn<String>(
+      'flavor_text', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 500),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, abilityId, languageId, versionGroupId, flavorText];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_abilityflavortext';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<AbilityFlavorTextModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('ability_id')) {
+      context.handle(_abilityIdMeta,
+          abilityId.isAcceptableOrUnknown(data['ability_id']!, _abilityIdMeta));
+    }
+    if (data.containsKey('language_id')) {
+      context.handle(
+          _languageIdMeta,
+          languageId.isAcceptableOrUnknown(
+              data['language_id']!, _languageIdMeta));
+    }
+    if (data.containsKey('version_group_id')) {
+      context.handle(
+          _versionGroupIdMeta,
+          versionGroupId.isAcceptableOrUnknown(
+              data['version_group_id']!, _versionGroupIdMeta));
+    }
+    if (data.containsKey('flavor_text')) {
+      context.handle(
+          _flavorTextMeta,
+          flavorText.isAcceptableOrUnknown(
+              data['flavor_text']!, _flavorTextMeta));
+    } else if (isInserting) {
+      context.missing(_flavorTextMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AbilityFlavorTextModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AbilityFlavorTextModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      abilityId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ability_id']),
+      languageId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}language_id']),
+      versionGroupId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}version_group_id']),
+      flavorText: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}flavor_text'])!,
+    );
+  }
+
+  @override
+  $AbilityFlavorTextsTable createAlias(String alias) {
+    return $AbilityFlavorTextsTable(attachedDatabase, alias);
+  }
+}
+
+class AbilityFlavorTextModel extends DataClass
+    implements Insertable<AbilityFlavorTextModel> {
+  final int id;
+  final int? abilityId;
+  final int? languageId;
+  final int? versionGroupId;
+  final String flavorText;
+  const AbilityFlavorTextModel(
+      {required this.id,
+      this.abilityId,
+      this.languageId,
+      this.versionGroupId,
+      required this.flavorText});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || abilityId != null) {
+      map['ability_id'] = Variable<int>(abilityId);
+    }
+    if (!nullToAbsent || languageId != null) {
+      map['language_id'] = Variable<int>(languageId);
+    }
+    if (!nullToAbsent || versionGroupId != null) {
+      map['version_group_id'] = Variable<int>(versionGroupId);
+    }
+    map['flavor_text'] = Variable<String>(flavorText);
+    return map;
+  }
+
+  AbilityFlavorTextsCompanion toCompanion(bool nullToAbsent) {
+    return AbilityFlavorTextsCompanion(
+      id: Value(id),
+      abilityId: abilityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(abilityId),
+      languageId: languageId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(languageId),
+      versionGroupId: versionGroupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(versionGroupId),
+      flavorText: Value(flavorText),
+    );
+  }
+
+  factory AbilityFlavorTextModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AbilityFlavorTextModel(
+      id: serializer.fromJson<int>(json['id']),
+      abilityId: serializer.fromJson<int?>(json['abilityId']),
+      languageId: serializer.fromJson<int?>(json['languageId']),
+      versionGroupId: serializer.fromJson<int?>(json['versionGroupId']),
+      flavorText: serializer.fromJson<String>(json['flavorText']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'abilityId': serializer.toJson<int?>(abilityId),
+      'languageId': serializer.toJson<int?>(languageId),
+      'versionGroupId': serializer.toJson<int?>(versionGroupId),
+      'flavorText': serializer.toJson<String>(flavorText),
+    };
+  }
+
+  AbilityFlavorTextModel copyWith(
+          {int? id,
+          Value<int?> abilityId = const Value.absent(),
+          Value<int?> languageId = const Value.absent(),
+          Value<int?> versionGroupId = const Value.absent(),
+          String? flavorText}) =>
+      AbilityFlavorTextModel(
+        id: id ?? this.id,
+        abilityId: abilityId.present ? abilityId.value : this.abilityId,
+        languageId: languageId.present ? languageId.value : this.languageId,
+        versionGroupId:
+            versionGroupId.present ? versionGroupId.value : this.versionGroupId,
+        flavorText: flavorText ?? this.flavorText,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AbilityFlavorTextModel(')
+          ..write('id: $id, ')
+          ..write('abilityId: $abilityId, ')
+          ..write('languageId: $languageId, ')
+          ..write('versionGroupId: $versionGroupId, ')
+          ..write('flavorText: $flavorText')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, abilityId, languageId, versionGroupId, flavorText);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AbilityFlavorTextModel &&
+          other.id == this.id &&
+          other.abilityId == this.abilityId &&
+          other.languageId == this.languageId &&
+          other.versionGroupId == this.versionGroupId &&
+          other.flavorText == this.flavorText);
+}
+
+class AbilityFlavorTextsCompanion
+    extends UpdateCompanion<AbilityFlavorTextModel> {
+  final Value<int> id;
+  final Value<int?> abilityId;
+  final Value<int?> languageId;
+  final Value<int?> versionGroupId;
+  final Value<String> flavorText;
+  const AbilityFlavorTextsCompanion({
+    this.id = const Value.absent(),
+    this.abilityId = const Value.absent(),
+    this.languageId = const Value.absent(),
+    this.versionGroupId = const Value.absent(),
+    this.flavorText = const Value.absent(),
+  });
+  AbilityFlavorTextsCompanion.insert({
+    this.id = const Value.absent(),
+    this.abilityId = const Value.absent(),
+    this.languageId = const Value.absent(),
+    this.versionGroupId = const Value.absent(),
+    required String flavorText,
+  }) : flavorText = Value(flavorText);
+  static Insertable<AbilityFlavorTextModel> custom({
+    Expression<int>? id,
+    Expression<int>? abilityId,
+    Expression<int>? languageId,
+    Expression<int>? versionGroupId,
+    Expression<String>? flavorText,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (abilityId != null) 'ability_id': abilityId,
+      if (languageId != null) 'language_id': languageId,
+      if (versionGroupId != null) 'version_group_id': versionGroupId,
+      if (flavorText != null) 'flavor_text': flavorText,
+    });
+  }
+
+  AbilityFlavorTextsCompanion copyWith(
+      {Value<int>? id,
+      Value<int?>? abilityId,
+      Value<int?>? languageId,
+      Value<int?>? versionGroupId,
+      Value<String>? flavorText}) {
+    return AbilityFlavorTextsCompanion(
+      id: id ?? this.id,
+      abilityId: abilityId ?? this.abilityId,
+      languageId: languageId ?? this.languageId,
+      versionGroupId: versionGroupId ?? this.versionGroupId,
+      flavorText: flavorText ?? this.flavorText,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (abilityId.present) {
+      map['ability_id'] = Variable<int>(abilityId.value);
+    }
+    if (languageId.present) {
+      map['language_id'] = Variable<int>(languageId.value);
+    }
+    if (versionGroupId.present) {
+      map['version_group_id'] = Variable<int>(versionGroupId.value);
+    }
+    if (flavorText.present) {
+      map['flavor_text'] = Variable<String>(flavorText.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AbilityFlavorTextsCompanion(')
+          ..write('id: $id, ')
+          ..write('abilityId: $abilityId, ')
+          ..write('languageId: $languageId, ')
+          ..write('versionGroupId: $versionGroupId, ')
+          ..write('flavorText: $flavorText')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$PokeApiDatabase extends GeneratedDatabase {
   _$PokeApiDatabase(QueryExecutor e) : super(e);
   late final $PokemonSpeciesTable pokemonSpecies = $PokemonSpeciesTable(this);
   late final $PokemonsTable pokemons = $PokemonsTable(this);
+  late final $GenerationsTable generations = $GenerationsTable(this);
+  late final $AbilitiesTable abilities = $AbilitiesTable(this);
+  late final $PokemonAbilitiesTable pokemonAbilities =
+      $PokemonAbilitiesTable(this);
   late final $PokemonSpeciesFlavorTextTable pokemonSpeciesFlavorText =
       $PokemonSpeciesFlavorTextTable(this);
   late final $TypesTable types = $TypesTable(this);
   late final $PokemonTypesTable pokemonTypes = $PokemonTypesTable(this);
   late final $StatsTable stats = $StatsTable(this);
   late final $PokemonStatsTable pokemonStats = $PokemonStatsTable(this);
+  late final $AbilityFlavorTextsTable abilityFlavorTexts =
+      $AbilityFlavorTextsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2674,10 +3767,14 @@ abstract class _$PokeApiDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
         pokemonSpecies,
         pokemons,
+        generations,
+        abilities,
+        pokemonAbilities,
         pokemonSpeciesFlavorText,
         types,
         pokemonTypes,
         stats,
-        pokemonStats
+        pokemonStats,
+        abilityFlavorTexts
       ];
 }
