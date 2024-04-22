@@ -7,7 +7,7 @@ ThemeData lightTheme = ThemeData(
     seedColor: const Color(0xFF6F43C0),
   ),
   useMaterial3: true,
-  fontFamily: GoogleFonts.dmSans().fontFamily,
+  fontFamily: GoogleFonts.firaSans().fontFamily,
 );
 
 /// App dark theme
@@ -17,5 +17,5 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
   ),
   useMaterial3: true,
-  fontFamily: GoogleFonts.dmSans().fontFamily,
+  fontFamily: GoogleFonts.firaSans().fontFamily,
 );

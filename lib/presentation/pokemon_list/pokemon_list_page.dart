@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/widgets/error_retry_widget.dart';
-import 'package:flutterdex/core/router/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_list/pokemon_card.dart';
 
 @RoutePage()
 class PokemonListPage extends StatefulWidget {
@@ -56,20 +56,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
                 }
               }
 
-              return ListTile(
-                title: Text(_pokemons[index].name),
-                subtitle: Text(
-                  _pokemons[index].types.map((e) => e.name).join(', '),
-                ),
-                trailing: Text(
-                  '#${_pokemons[index].id.toString().padLeft(4, '0')}',
-                ),
-                onTap: () {
-                  context.router.push(
-                    PokemonDetailRoute(pokemonId: _pokemons[index].id),
-                  );
-                },
-              );
+              return PokemonCard(pokemon: _pokemons[index]);
             },
           );
         },

@@ -29,6 +29,14 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
             return ListView(
               children: [
                 const Text(
+                  'Species',
+                  textAlign: TextAlign.center,
+                ),
+                ListTile(
+                  title: Text(state.pokemon.species.name),
+                  subtitle: Text(state.pokemon.species.description),
+                ),
+                const Text(
                   'Abilities',
                   textAlign: TextAlign.center,
                 ),

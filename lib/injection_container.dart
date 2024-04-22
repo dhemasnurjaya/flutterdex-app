@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterdex/core/data/local/config.dart';
 import 'package:flutterdex/core/data/local/theme_mode_config.dart';
 import 'package:flutterdex/core/network/network.dart';
@@ -86,4 +87,10 @@ void setup() {
   );
 
   // others
+  getIt.registerSingletonAsync<AssetManifest>(
+    () async {
+      final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+      return assetManifest;
+    },
+  );
 }

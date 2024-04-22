@@ -6,6 +6,7 @@ import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail.dart';
 import 'package:flutterdex/domain/entities/pokemon_generation.dart';
+import 'package:flutterdex/domain/entities/pokemon_species.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/entities/pokemon_type.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
@@ -76,6 +77,8 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
       final pokemonWithAbilities =
           await localSource.getPokemonWithAbilities(id: id);
       final pokemonWithStats = await localSource.getPokemonWithStats(id: id);
+      final pokemonWithSpecies =
+          await localSource.getPokemonWithSpecies(id: id);
 
       final abilityEntities = pokemonWithAbilities
           .map(
@@ -100,9 +103,15 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
             ),
           )
           .toList();
+      final speciesEntity = PokemonSpecies(
+        id: pokemonWithSpecies.pokemon.id,
+        name: pokemonWithSpecies.species.name,
+        description: pokemonWithSpecies.flavorText.flavorText,
+      );
 
       return right(PokemonDetail(
         id: pokemonWithStats.first.pokemon.id,
+        species: speciesEntity,
         abilities: abilityEntities,
         stats: statEntities,
       ));
