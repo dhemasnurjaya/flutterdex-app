@@ -4,7 +4,7 @@ import 'package:flutterdex/domain/entities/pokemon_detail.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract class PokeapiRepository {
-  Future<Either<Failure, List<Pokemon>>> getPokemonsWithType({
+  Future<Either<Failure, List<Pokemon>>> listPokemonSpeciesWithType({
     int limit = 20,
     int offset = 0,
   });

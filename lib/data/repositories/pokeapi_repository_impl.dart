@@ -18,16 +18,16 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   PokeapiRepositoryImpl({required this.localSource});
 
   @override
-  Future<Either<Failure, List<Pokemon>>> getPokemonsWithType({
+  Future<Either<Failure, List<Pokemon>>> listPokemonSpeciesWithType({
     int limit = 20,
     int offset = 0,
   }) async {
     try {
-      final result =
-          await localSource.getPokemonsWithType(limit: limit, offset: offset);
+      final result = await localSource.listPokemonSpeciesWithType(
+          limit: limit, offset: offset);
       final pokemons = result
-          .map((e) => PokemonWithTypeModel(
-                pokemon: e.pokemon,
+          .map((e) => PokemonSpeciesWithTypeModel(
+                pokemonSpecies: e.pokemonSpecies,
                 type: e.type,
               ))
           .toList();
@@ -36,8 +36,8 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
       // map pokemon model to entity
       for (final e in pokemons) {
         // add type to existing pokemon entity
-        if (mergedEntities.containsKey(e.pokemon.id)) {
-          mergedEntities[e.pokemon.id]!.types.add(
+        if (mergedEntities.containsKey(e.pokemonSpecies.id)) {
+          mergedEntities[e.pokemonSpecies.id]!.types.add(
                 PokemonType(
                   id: e.type.id,
                   name: e.type.name,
@@ -47,15 +47,9 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         }
 
         // create new pokemon entity
-        mergedEntities[e.pokemon.id] = Pokemon(
-          id: e.pokemon.id,
-          name: e.pokemon.name,
-          order: e.pokemon.order,
-          height: e.pokemon.height,
-          weight: e.pokemon.weight,
-          isDefault: e.pokemon.isDefault,
-          pokemonSpeciesId: e.pokemon.pokemonSpeciesId,
-          baseExperience: e.pokemon.baseExperience,
+        mergedEntities[e.pokemonSpecies.id] = Pokemon(
+          id: e.pokemonSpecies.id,
+          name: e.pokemonSpecies.name,
           types: [
             PokemonType(
               id: e.type.id,
@@ -75,8 +69,8 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   Future<Either<Failure, PokemonDetail>> getPokemon({required int id}) async {
     try {
       final pokemonWithAbilities =
-          await localSource.getPokemonWithAbilities(id: id);
-      final pokemonWithStats = await localSource.getPokemonWithStats(id: id);
+          await localSource.listPokemonWithAbilities(id: id);
+      final pokemonWithStats = await localSource.listPokemonWithStats(id: id);
       final pokemonWithSpecies =
           await localSource.getPokemonWithSpecies(id: id);
 

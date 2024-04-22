@@ -1,11 +1,11 @@
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 
-class PokemonWithTypeModel {
-  final PokemonModel pokemon;
+class PokemonSpeciesWithTypeModel {
+  final PokemonSpeciesModel pokemonSpecies;
   final TypeModel type;
 
-  PokemonWithTypeModel({
-    required this.pokemon,
+  PokemonSpeciesWithTypeModel({
+    required this.pokemonSpecies,
     required this.type,
   });
 }

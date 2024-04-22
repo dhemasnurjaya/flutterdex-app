@@ -30,6 +30,7 @@ class PokemonCard extends StatelessWidget {
             children: [
               const SizedBox(width: 4),
               _pokemonImage(pokemon.id),
+              const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,

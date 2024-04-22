@@ -37,8 +37,9 @@ void main() {
         PokeApiSqliteLocalSourceImpl(database: pokeApiDatabase);
   });
 
-  final expectedFirstPokemon = PokemonWithTypeModel(
-    pokemon: const PokemonModel(
+  test('listPokemons', () async {
+    // arrange
+    const expectedFirstPokemon = PokemonModel(
       id: 1,
       name: 'bulbasaur',
       order: 1,
@@ -47,41 +48,60 @@ void main() {
       isDefault: true,
       pokemonSpeciesId: 1,
       baseExperience: 64,
-    ),
-    type: const TypeModel(
-      id: 12,
-      name: 'grass',
-    ),
-  );
+    );
 
-  test('getPokemons', () async {
-    // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.getPokemons();
+    final result = await pokeApiLocalSource.listPokemons();
 
     // assert
     expect(result, isA<List<PokemonModel>>());
-    expect(result.first, expectedFirstPokemon.pokemon);
+    expect(result.first, expectedFirstPokemon);
   });
 
-  test('getPokemonWithAbilities', () async {
+  test('listPokemonWithAbilities', () async {
     // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.getPokemonWithAbilities(id: 1);
+    final result = await pokeApiLocalSource.listPokemonWithAbilities(id: 1);
 
     // assert
     expect(result, isA<List<PokemonWithAbilityModel>>());
   });
 
-  test('getPokemonsWithType', () async {
-    // nothing to arrange
+  test('listPokemonSpeciesWithType', () async {
+    // arrange
+    const expectedPokemonSpecies = PokemonSpeciesModel(
+      id: 1,
+      name: 'bulbasaur',
+      order: 1,
+      genderRate: 1,
+      captureRate: 45,
+      baseHappiness: 50,
+      isBaby: false,
+      hatchCounter: 20,
+      hasGenderDifferences: false,
+      formsSwitchable: false,
+      evolutionChainId: 1,
+      generationId: 1,
+      growthRateId: 4,
+      pokemonColorId: 5,
+      pokemonHabitatId: 3,
+      pokemonShapeId: 8,
+      isLegendary: false,
+      isMythical: false,
+      evolvesFromSpeciesId: null,
+    );
+    const expectedType = TypeModel(
+      id: 12,
+      name: 'grass',
+    );
+
     // act
-    final result = await pokeApiLocalSource.getPokemonsWithType();
+    final result = await pokeApiLocalSource.listPokemonSpeciesWithType();
 
     // assert
-    expect(result, isA<List<PokemonWithTypeModel>>());
-    expect(result.first.pokemon, expectedFirstPokemon.pokemon);
-    expect(result.first.type, expectedFirstPokemon.type);
+    expect(result, isA<List<PokemonSpeciesWithTypeModel>>());
+    expect(result.first.pokemonSpecies, expectedPokemonSpecies);
+    expect(result.first.type, expectedType);
   });
 
   test('getPokemonWithSpecies', () async {
@@ -93,10 +113,10 @@ void main() {
     expect(result, isA<PokemonWithSpeciesModel>());
   });
 
-  test('getPokemonWithStats', () async {
+  test('listPokemonWithStats', () async {
     // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.getPokemonWithStats(id: 1);
+    final result = await pokeApiLocalSource.listPokemonWithStats(id: 1);
 
     // assert
     expect(result, isA<List<PokemonWithStatModel>>());

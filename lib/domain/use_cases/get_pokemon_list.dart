@@ -14,7 +14,7 @@ class GetPokemonList extends UseCase<List<Pokemon>, GetPokemonListParams> {
   Future<Either<Failure, List<Pokemon>>> execute(
     GetPokemonListParams params,
   ) async {
-    return repository.getPokemonsWithType(
+    return repository.listPokemonSpeciesWithType(
       limit: params.limit,
       offset: params.offset,
     );
