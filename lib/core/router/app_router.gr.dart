@@ -26,7 +26,7 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: PokemonDetailPage(
-          pokemonId: args.pokemonId,
+          pokemon: args.pokemon,
           key: args.key,
         ),
       );
@@ -58,13 +58,13 @@ class AppSettingsRoute extends PageRouteInfo<void> {
 /// [PokemonDetailPage]
 class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
   PokemonDetailRoute({
-    required int pokemonId,
+    required Pokemon pokemon,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           PokemonDetailRoute.name,
           args: PokemonDetailRouteArgs(
-            pokemonId: pokemonId,
+            pokemon: pokemon,
             key: key,
           ),
           initialChildren: children,
@@ -78,17 +78,17 @@ class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
 
 class PokemonDetailRouteArgs {
   const PokemonDetailRouteArgs({
-    required this.pokemonId,
+    required this.pokemon,
     this.key,
   });
 
-  final int pokemonId;
+  final Pokemon pokemon;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'PokemonDetailRouteArgs{pokemonId: $pokemonId, key: $key}';
+    return 'PokemonDetailRouteArgs{pokemon: $pokemon, key: $key}';
   }
 }
 

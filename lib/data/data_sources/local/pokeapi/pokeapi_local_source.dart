@@ -93,9 +93,12 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
             .equalsExp(database.pokemonSpecies.id),
       ),
     ]);
-    // 9 = English, 34 = Pokemon Shield
+    // 9 = English
     query.where(database.pokemonSpeciesFlavorText.languageId.equals(9));
-    query.where(database.pokemonSpeciesFlavorText.versionId.equals(34));
+    query.orderBy([
+      OrderingTerm.asc(database.pokemonSpeciesFlavorText.versionId),
+    ]);
+    query.limit(1);
 
     final result = query
         .map((row) => PokemonWithSpeciesModel(

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/widgets/error_retry_widget.dart';
+import 'package:flutterdex/core/router/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/pokemon_card.dart';
@@ -25,41 +26,57 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pokemon List'),
-      ),
-      body: BlocConsumer<PokemonListBloc, PokemonListState>(
-        listener: (context, state) {
-          if (state is PokemonListLoadedState) {
-            _isLastPage = state.pokemons.isEmpty;
-            _pokemons.addAll(state.pokemons);
+    const appBar = SliverAppBar(
+      title: Text('Pokemon List'),
+      floating: true,
+    );
+    final pokemonList = SliverList.builder(
+      // +1 for progress indicator
+      itemCount: _pokemons.length + 1,
+      itemBuilder: (context, index) {
+        if (index == _pokemons.length) {
+          if (_isError) {
+            return ErrorRetryWidget(onTapRetry: _getPokemons);
+          } else {
+            if (_isLastPage) {
+              return const SizedBox();
+            }
+            return const ListTile(
+              title: Center(child: CircularProgressIndicator()),
+            );
           }
+        }
 
-          _isError = state is PokemonListErrorState;
-        },
-        builder: (context, state) {
-          return ListView.builder(
-            controller: _pokemonScrollCtl,
-            itemCount: _pokemons.length + 1, // +1 for progress indicator
-            itemBuilder: (context, index) {
-              if (index == _pokemons.length) {
-                if (_isError) {
-                  return ErrorRetryWidget(onTapRetry: _getPokemons);
-                } else {
-                  if (_isLastPage) {
-                    return const SizedBox();
-                  }
-                  return const ListTile(
-                    title: Center(child: CircularProgressIndicator()),
-                  );
-                }
-              }
+        return PokemonCard(
+          pokemon: _pokemons[index],
+          onTap: () {
+            context.router.push(
+              PokemonDetailRoute(pokemon: _pokemons[index]),
+            );
+          },
+        );
+      },
+    );
 
-              return PokemonCard(pokemon: _pokemons[index]);
-            },
-          );
+    return Scaffold(
+      body: BlocListener<PokemonListBloc, PokemonListState>(
+        listener: (context, state) {
+          setState(() {
+            if (state is PokemonListLoadedState) {
+              _isLastPage = state.pokemons.isEmpty;
+              _pokemons.addAll(state.pokemons);
+            }
+
+            _isError = state is PokemonListErrorState;
+          });
         },
+        child: CustomScrollView(
+          controller: _pokemonScrollCtl,
+          slivers: [
+            appBar,
+            pokemonList,
+          ],
+        ),
       ),
     );
   }
