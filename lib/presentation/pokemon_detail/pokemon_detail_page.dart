@@ -106,44 +106,44 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             fontSize: 20,
           ),
     );
-    final appBar = SliverAppBar(
-      title: pokemonName,
-      actions: [pokemonNumber, const SizedBox(width: 16)],
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_new_outlined,
-          color: darken(pokemonColors[widget.pokemon.types.first.name]!, 40),
-        ),
-        onPressed: () => context.router.maybePop(),
-      ),
-      pinned: true,
-      backgroundColor: pokemonColors[widget.pokemon.types.first.name],
-      expandedHeight: 350,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Container(
-          color: pokemonColors[widget.pokemon.types.first.name],
-          child: Column(
-            children: [
-              const SizedBox(height: 90),
-              pokemonSprite,
-              pokemonTypes,
-            ],
-          ),
-        ),
+    final header = Container(
+      padding: const EdgeInsets.only(top: 8, bottom: 24),
+      color: pokemonColors[widget.pokemon.types.first.name],
+      child: Column(
+        children: [
+          pokemonSprite,
+          const SizedBox(height: 16),
+          pokemonTypes,
+        ],
       ),
     );
 
     return Scaffold(
+      appBar: AppBar(
+        title: pokemonName,
+        actions: [pokemonNumber, const SizedBox(width: 16)],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: darken(pokemonColors[widget.pokemon.types.first.name]!, 40),
+          ),
+          onPressed: () => context.router.maybePop(),
+        ),
+        backgroundColor: pokemonColors[widget.pokemon.types.first.name],
+        surfaceTintColor: Colors.transparent,
+      ),
       body: BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
         builder: (context, state) {
           if (state is PokemonDetailLoadedState) {
-            return CustomScrollView(
-              slivers: [
-                appBar,
-                SliverList.list(
-                  children: const [
-                    SizedBox(height: 1000),
-                  ],
+            return Column(
+              children: [
+                header,
+                Expanded(
+                  child: ListView(
+                    children: const [
+                      SizedBox(height: 1000),
+                    ],
+                  ),
                 ),
               ],
             );
