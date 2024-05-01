@@ -77,7 +77,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         RotationTransition(
           turns: Tween(begin: 0.0, end: 1.0).animate(_animationController!),
           child: Image.asset(
-            'assets/images/pokeball.png',
+            'assets/images/pokeball-flat.png',
             height: 250,
             width: 250,
             opacity: const AlwaysStoppedAnimation(0.1),

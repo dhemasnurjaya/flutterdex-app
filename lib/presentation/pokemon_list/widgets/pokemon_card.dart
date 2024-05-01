@@ -37,7 +37,7 @@ class PokemonCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(12),
           child: Image.asset(
-            'assets/images/pokeball.png',
+            'assets/images/pokeball-flat.png',
             opacity: const AlwaysStoppedAnimation(0.05),
           ),
         ),

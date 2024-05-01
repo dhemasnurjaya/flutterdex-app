@@ -14,7 +14,7 @@ class PokemonSprite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const placeholderSpritePath = 'assets/images/pokeball.png';
+    const placeholderSpritePath = 'assets/images/pokeball.webp';
     final spritesPath = 'assets/sprites/pokemon/$pokemonId.webp';
     final isSpriteAvailable =
         getIt<AssetManifest>().listAssets().contains(spritesPath);
