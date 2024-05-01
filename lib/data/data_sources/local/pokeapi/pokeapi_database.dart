@@ -9,6 +9,7 @@ import 'package:flutterdex/data/data_sources/local/pokeapi/tables/generations.da
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_abilities.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species_flavor_text.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species_names.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_stats.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_types.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemons.dart';
@@ -25,6 +26,7 @@ part 'pokeapi_database.g.dart';
   Pokemons,
   PokemonAbilities,
   PokemonSpecies,
+  PokemonSpeciesNames,
   PokemonSpeciesFlavorText,
   PokemonTypes,
   PokemonStats,

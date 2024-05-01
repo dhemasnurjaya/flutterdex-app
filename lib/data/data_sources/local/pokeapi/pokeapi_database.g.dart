@@ -2105,6 +2105,315 @@ class PokemonAbilitiesCompanion extends UpdateCompanion<PokemonAbilityModel> {
   }
 }
 
+class $PokemonSpeciesNamesTable extends PokemonSpeciesNames
+    with TableInfo<$PokemonSpeciesNamesTable, PokemonSpeciesNameModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PokemonSpeciesNamesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _genusMeta = const VerificationMeta('genus');
+  @override
+  late final GeneratedColumn<String> genus = GeneratedColumn<String>(
+      'genus', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 30),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _languageIdMeta =
+      const VerificationMeta('languageId');
+  @override
+  late final GeneratedColumn<int> languageId = GeneratedColumn<int>(
+      'language_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _pokemonSpeciesIdMeta =
+      const VerificationMeta('pokemonSpeciesId');
+  @override
+  late final GeneratedColumn<int> pokemonSpeciesId = GeneratedColumn<int>(
+      'pokemon_species_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_pokemonspecies (id)'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, genus, languageId, pokemonSpeciesId, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_pokemonspeciesname';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PokemonSpeciesNameModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('genus')) {
+      context.handle(
+          _genusMeta, genus.isAcceptableOrUnknown(data['genus']!, _genusMeta));
+    } else if (isInserting) {
+      context.missing(_genusMeta);
+    }
+    if (data.containsKey('language_id')) {
+      context.handle(
+          _languageIdMeta,
+          languageId.isAcceptableOrUnknown(
+              data['language_id']!, _languageIdMeta));
+    }
+    if (data.containsKey('pokemon_species_id')) {
+      context.handle(
+          _pokemonSpeciesIdMeta,
+          pokemonSpeciesId.isAcceptableOrUnknown(
+              data['pokemon_species_id']!, _pokemonSpeciesIdMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PokemonSpeciesNameModel map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PokemonSpeciesNameModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      genus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}genus'])!,
+      languageId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}language_id']),
+      pokemonSpeciesId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}pokemon_species_id']),
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+    );
+  }
+
+  @override
+  $PokemonSpeciesNamesTable createAlias(String alias) {
+    return $PokemonSpeciesNamesTable(attachedDatabase, alias);
+  }
+}
+
+class PokemonSpeciesNameModel extends DataClass
+    implements Insertable<PokemonSpeciesNameModel> {
+  final int id;
+  final String genus;
+  final int? languageId;
+  final int? pokemonSpeciesId;
+  final String name;
+  const PokemonSpeciesNameModel(
+      {required this.id,
+      required this.genus,
+      this.languageId,
+      this.pokemonSpeciesId,
+      required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['genus'] = Variable<String>(genus);
+    if (!nullToAbsent || languageId != null) {
+      map['language_id'] = Variable<int>(languageId);
+    }
+    if (!nullToAbsent || pokemonSpeciesId != null) {
+      map['pokemon_species_id'] = Variable<int>(pokemonSpeciesId);
+    }
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  PokemonSpeciesNamesCompanion toCompanion(bool nullToAbsent) {
+    return PokemonSpeciesNamesCompanion(
+      id: Value(id),
+      genus: Value(genus),
+      languageId: languageId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(languageId),
+      pokemonSpeciesId: pokemonSpeciesId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pokemonSpeciesId),
+      name: Value(name),
+    );
+  }
+
+  factory PokemonSpeciesNameModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PokemonSpeciesNameModel(
+      id: serializer.fromJson<int>(json['id']),
+      genus: serializer.fromJson<String>(json['genus']),
+      languageId: serializer.fromJson<int?>(json['languageId']),
+      pokemonSpeciesId: serializer.fromJson<int?>(json['pokemonSpeciesId']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'genus': serializer.toJson<String>(genus),
+      'languageId': serializer.toJson<int?>(languageId),
+      'pokemonSpeciesId': serializer.toJson<int?>(pokemonSpeciesId),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  PokemonSpeciesNameModel copyWith(
+          {int? id,
+          String? genus,
+          Value<int?> languageId = const Value.absent(),
+          Value<int?> pokemonSpeciesId = const Value.absent(),
+          String? name}) =>
+      PokemonSpeciesNameModel(
+        id: id ?? this.id,
+        genus: genus ?? this.genus,
+        languageId: languageId.present ? languageId.value : this.languageId,
+        pokemonSpeciesId: pokemonSpeciesId.present
+            ? pokemonSpeciesId.value
+            : this.pokemonSpeciesId,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PokemonSpeciesNameModel(')
+          ..write('id: $id, ')
+          ..write('genus: $genus, ')
+          ..write('languageId: $languageId, ')
+          ..write('pokemonSpeciesId: $pokemonSpeciesId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, genus, languageId, pokemonSpeciesId, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PokemonSpeciesNameModel &&
+          other.id == this.id &&
+          other.genus == this.genus &&
+          other.languageId == this.languageId &&
+          other.pokemonSpeciesId == this.pokemonSpeciesId &&
+          other.name == this.name);
+}
+
+class PokemonSpeciesNamesCompanion
+    extends UpdateCompanion<PokemonSpeciesNameModel> {
+  final Value<int> id;
+  final Value<String> genus;
+  final Value<int?> languageId;
+  final Value<int?> pokemonSpeciesId;
+  final Value<String> name;
+  const PokemonSpeciesNamesCompanion({
+    this.id = const Value.absent(),
+    this.genus = const Value.absent(),
+    this.languageId = const Value.absent(),
+    this.pokemonSpeciesId = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  PokemonSpeciesNamesCompanion.insert({
+    this.id = const Value.absent(),
+    required String genus,
+    this.languageId = const Value.absent(),
+    this.pokemonSpeciesId = const Value.absent(),
+    required String name,
+  })  : genus = Value(genus),
+        name = Value(name);
+  static Insertable<PokemonSpeciesNameModel> custom({
+    Expression<int>? id,
+    Expression<String>? genus,
+    Expression<int>? languageId,
+    Expression<int>? pokemonSpeciesId,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (genus != null) 'genus': genus,
+      if (languageId != null) 'language_id': languageId,
+      if (pokemonSpeciesId != null) 'pokemon_species_id': pokemonSpeciesId,
+      if (name != null) 'name': name,
+    });
+  }
+
+  PokemonSpeciesNamesCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? genus,
+      Value<int?>? languageId,
+      Value<int?>? pokemonSpeciesId,
+      Value<String>? name}) {
+    return PokemonSpeciesNamesCompanion(
+      id: id ?? this.id,
+      genus: genus ?? this.genus,
+      languageId: languageId ?? this.languageId,
+      pokemonSpeciesId: pokemonSpeciesId ?? this.pokemonSpeciesId,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (genus.present) {
+      map['genus'] = Variable<String>(genus.value);
+    }
+    if (languageId.present) {
+      map['language_id'] = Variable<int>(languageId.value);
+    }
+    if (pokemonSpeciesId.present) {
+      map['pokemon_species_id'] = Variable<int>(pokemonSpeciesId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PokemonSpeciesNamesCompanion(')
+          ..write('id: $id, ')
+          ..write('genus: $genus, ')
+          ..write('languageId: $languageId, ')
+          ..write('pokemonSpeciesId: $pokemonSpeciesId, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PokemonSpeciesFlavorTextTable extends PokemonSpeciesFlavorText
     with
         TableInfo<$PokemonSpeciesFlavorTextTable,
@@ -3752,6 +4061,8 @@ abstract class _$PokeApiDatabase extends GeneratedDatabase {
   late final $AbilitiesTable abilities = $AbilitiesTable(this);
   late final $PokemonAbilitiesTable pokemonAbilities =
       $PokemonAbilitiesTable(this);
+  late final $PokemonSpeciesNamesTable pokemonSpeciesNames =
+      $PokemonSpeciesNamesTable(this);
   late final $PokemonSpeciesFlavorTextTable pokemonSpeciesFlavorText =
       $PokemonSpeciesFlavorTextTable(this);
   late final $TypesTable types = $TypesTable(this);
@@ -3770,6 +4081,7 @@ abstract class _$PokeApiDatabase extends GeneratedDatabase {
         generations,
         abilities,
         pokemonAbilities,
+        pokemonSpeciesNames,
         pokemonSpeciesFlavorText,
         types,
         pokemonTypes,

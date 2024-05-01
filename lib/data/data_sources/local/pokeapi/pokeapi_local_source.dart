@@ -52,6 +52,11 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
 
     final query = database.select(pokemonSpeciesSubquery).join([
       leftOuterJoin(
+        database.pokemonSpeciesNames,
+        database.pokemonSpeciesNames.pokemonSpeciesId
+            .equalsExp(pokemonSpeciesSubquery.ref(database.pokemonSpecies.id)),
+      ),
+      leftOuterJoin(
         database.pokemonTypes,
         database.pokemonTypes.pokemonId
             .equalsExp(pokemonSpeciesSubquery.ref(database.pokemonSpecies.id)),
@@ -61,10 +66,13 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
         database.types.id.equalsExp(database.pokemonTypes.typeId),
       ),
     ]);
+    // 9 = English
+    query.where(database.pokemonSpeciesNames.languageId.equals(9));
 
     final result = query
         .map((row) => PokemonSpeciesWithTypeModel(
               pokemonSpecies: row.readTable(pokemonSpeciesSubquery),
+              pokemonSpeciesName: row.readTable(database.pokemonSpeciesNames),
               type: row.readTable(database.types),
             ))
         .get();

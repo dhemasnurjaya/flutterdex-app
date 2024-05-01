@@ -28,6 +28,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
       final pokemons = result
           .map((e) => PokemonSpeciesWithTypeModel(
                 pokemonSpecies: e.pokemonSpecies,
+                pokemonSpeciesName: e.pokemonSpeciesName,
                 type: e.type,
               ))
           .toList();
@@ -50,6 +51,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         mergedEntities[e.pokemonSpecies.id] = Pokemon(
           id: e.pokemonSpecies.id,
           name: e.pokemonSpecies.name,
+          genus: e.pokemonSpeciesName.genus,
           types: [
             PokemonType(
               id: e.type.id,
