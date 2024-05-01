@@ -93,6 +93,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         )
       ],
     );
+    final pokemonGenus = Text(
+      widget.pokemon.genus.toTitleCase(),
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: darken(widget.baseColor, 40),
+            fontWeight: FontWeight.bold,
+          ),
+    );
     final pokemonTypes = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: widget.pokemon.types
@@ -108,13 +115,15 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           ),
     );
     final header = Container(
-      padding: const EdgeInsets.only(top: 8, bottom: 24),
+      padding: const EdgeInsets.only(top: 8, bottom: 20),
       color: widget.baseColor,
       child: Column(
         children: [
           pokemonSprite,
           const SizedBox(height: 16),
           pokemonTypes,
+          const SizedBox(height: 4),
+          pokemonGenus,
         ],
       ),
     );
