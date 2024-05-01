@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_list/pokemon_sprite.dart';
-import 'package:flutterdex/presentation/pokemon_list/pokemon_type_chip.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
@@ -175,7 +175,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       vsync: this,
       duration: const Duration(seconds: 5),
     );
-    _animationController?.repeat();
+    Future.delayed(const Duration(milliseconds: 250), () {
+      _animationController?.repeat();
+    });
 
     // get pokemon detail
     BlocProvider.of<PokemonDetailBloc>(context).add(

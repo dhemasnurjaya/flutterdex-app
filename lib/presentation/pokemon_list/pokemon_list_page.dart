@@ -5,7 +5,7 @@ import 'package:flutterdex/core/presentation/widgets/error_retry_widget.dart';
 import 'package:flutterdex/core/router/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_list/pokemon_card.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_card.dart';
 
 @RoutePage()
 class PokemonListPage extends StatefulWidget {
