@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
-import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
@@ -12,9 +11,11 @@ import 'package:flutterdex/utilities/string_extension.dart';
 @RoutePage()
 class PokemonDetailPage extends StatefulWidget {
   final Pokemon pokemon;
+  final Color baseColor;
 
   const PokemonDetailPage({
     required this.pokemon,
+    required this.baseColor,
     super.key,
   });
 
@@ -66,7 +67,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     final pokemonName = Text(
       widget.pokemon.name.toTitleCase(),
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: darken(pokemonColors[widget.pokemon.types.first.name]!, 40),
+            color: darken(widget.baseColor, 40),
             fontWeight: FontWeight.bold,
           ),
     );
@@ -101,14 +102,14 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     final pokemonNumber = Text(
       '#${widget.pokemon.id.toString().padLeft(4, '0')}',
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: darken(pokemonColors[widget.pokemon.types.first.name]!, 25),
+            color: darken(widget.baseColor, 25),
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
     );
     final header = Container(
       padding: const EdgeInsets.only(top: 8, bottom: 24),
-      color: pokemonColors[widget.pokemon.types.first.name],
+      color: widget.baseColor,
       child: Column(
         children: [
           pokemonSprite,
@@ -125,43 +126,27 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_outlined,
-            color: darken(pokemonColors[widget.pokemon.types.first.name]!, 40),
+            color: darken(widget.baseColor, 40),
           ),
           onPressed: () => context.router.maybePop(),
         ),
-        backgroundColor: pokemonColors[widget.pokemon.types.first.name],
+        backgroundColor: widget.baseColor,
         surfaceTintColor: Colors.transparent,
       ),
       body: BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
         builder: (context, state) {
-          if (state is PokemonDetailLoadedState) {
-            return Column(
-              children: [
-                header,
-                Expanded(
-                  child: ListView(
-                    children: const [
-                      SizedBox(height: 1000),
-                    ],
-                  ),
+          return Column(
+            children: [
+              header,
+              Expanded(
+                child: ListView(
+                  children: const [
+                    SizedBox(height: 1000),
+                  ],
                 ),
-              ],
-            );
-          }
-
-          if (state is PokemonDetailLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (state is PokemonDetailErrorState) {
-            return Center(
-              child: Text(state.message),
-            );
-          }
-
-          return const SizedBox();
+              ),
+            ],
+          );
         },
       ),
     );

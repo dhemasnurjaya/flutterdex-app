@@ -27,6 +27,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: PokemonDetailPage(
           pokemon: args.pokemon,
+          baseColor: args.baseColor,
           key: args.key,
         ),
       );
@@ -59,12 +60,14 @@ class AppSettingsRoute extends PageRouteInfo<void> {
 class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
   PokemonDetailRoute({
     required Pokemon pokemon,
+    required Color baseColor,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           PokemonDetailRoute.name,
           args: PokemonDetailRouteArgs(
             pokemon: pokemon,
+            baseColor: baseColor,
             key: key,
           ),
           initialChildren: children,
@@ -79,16 +82,19 @@ class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
 class PokemonDetailRouteArgs {
   const PokemonDetailRouteArgs({
     required this.pokemon,
+    required this.baseColor,
     this.key,
   });
 
   final Pokemon pokemon;
 
+  final Color baseColor;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'PokemonDetailRouteArgs{pokemon: $pokemon, key: $key}';
+    return 'PokemonDetailRouteArgs{pokemon: $pokemon, baseColor: $baseColor, key: $key}';
   }
 }
 
