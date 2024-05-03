@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_chart.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
@@ -75,7 +76,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       alignment: Alignment.center,
       children: [
         RotationTransition(
-          turns: Tween(begin: 0.0, end: 1.0).animate(_animationController!),
+          turns: CurvedAnimation(
+            parent: Tween(begin: 0.0, end: 1.0).animate(_animationController!),
+            curve: Curves.easeInOut,
+          ),
           child: Image.asset(
             'assets/images/pokeball-flat.png',
             height: 250,
@@ -147,18 +151,47 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           return Column(
             children: [
               header,
-              Expanded(
-                child: ListView(
-                  children: const [
-                    SizedBox(height: 1000),
-                  ],
-                ),
-              ),
+              _buildBody(state),
             ],
           );
         },
       ),
     );
+  }
+
+  Widget _buildBody(PokemonDetailState state) {
+    if (state is PokemonDetailLoadedState) {
+      return Expanded(
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                  state.pokemon.species.description.replaceAll('\n', ' '),
+                  style: Theme.of(context).textTheme.bodyLarge),
+            ),
+            const Text(
+              'Abilities',
+              textAlign: TextAlign.center,
+            ),
+            ...state.pokemon.abilities.map<Widget>(
+              (e) => ListTile(
+                title: Text(e.name),
+                subtitle: Text(e.description),
+                leading: Text(e.generation.name.split('-').last.toUpperCase()),
+              ),
+            ),
+            const Text(
+              'Stats',
+              textAlign: TextAlign.center,
+            ),
+            PokemonStatsChart(state.pokemon.stats),
+          ],
+        ),
+      );
+    }
+
+    return const SizedBox();
   }
 
   @override
@@ -169,7 +202,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       vsync: this,
       duration: const Duration(seconds: 5),
     );
-    Future.delayed(const Duration(milliseconds: 250), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       _animationController?.repeat();
     });
 
