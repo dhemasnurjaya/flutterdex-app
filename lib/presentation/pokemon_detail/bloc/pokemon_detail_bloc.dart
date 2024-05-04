@@ -24,7 +24,7 @@ class PokemonDetailBloc extends Bloc<PokemonDetailEvent, PokemonDetailState> {
         message: failure.message,
         cause: failure.cause,
       )),
-      (pokemon) => emit(PokemonDetailLoadedState(pokemon: pokemon)),
+      (pokemon) => emit(PokemonDetailLoadedState(pokemonDetail: pokemon)),
     );
   }
 }

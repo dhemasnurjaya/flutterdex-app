@@ -37,10 +37,11 @@ void main() {
         PokeApiSqliteLocalSourceImpl(database: pokeApiDatabase);
   });
 
-  test('listPokemons', () async {
+  test('getPokemon', () async {
     // arrange
-    const expectedFirstPokemon = PokemonModel(
-      id: 1,
+    const pokemonId = 1;
+    const expectedPokemon = PokemonModel(
+      id: pokemonId,
       name: 'bulbasaur',
       order: 1,
       height: 7,
@@ -51,23 +52,23 @@ void main() {
     );
 
     // act
-    final result = await pokeApiLocalSource.listPokemons();
+    final result = await pokeApiLocalSource.getPokemon(id: pokemonId);
 
     // assert
-    expect(result, isA<List<PokemonModel>>());
-    expect(result.first, expectedFirstPokemon);
+    expect(result, isA<PokemonModel>());
+    expect(result, expectedPokemon);
   });
 
-  test('listPokemonWithAbilities', () async {
+  test('getPokemonAbilities', () async {
     // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.listPokemonWithAbilities(id: 1);
+    final result = await pokeApiLocalSource.getPokemonAbilities(id: 1);
 
     // assert
     expect(result, isA<List<PokemonWithAbilityModel>>());
   });
 
-  test('listPokemonSpeciesWithType', () async {
+  test('getPokemonSpeciesAndTypes', () async {
     // arrange
     const expectedPokemonSpecies = PokemonSpeciesModel(
       id: 1,
@@ -96,7 +97,7 @@ void main() {
     );
 
     // act
-    final result = await pokeApiLocalSource.listPokemonSpeciesWithType();
+    final result = await pokeApiLocalSource.getPokemonSpeciesAndTypes();
 
     // assert
     expect(result, isA<List<PokemonSpeciesWithTypeModel>>());
@@ -104,19 +105,19 @@ void main() {
     expect(result.first.type, expectedType);
   });
 
-  test('getPokemonWithSpecies', () async {
+  test('getPokemonSpecies', () async {
     // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.getPokemonWithSpecies(id: 1);
+    final result = await pokeApiLocalSource.getPokemonSpecies(id: 1);
 
     // assert
     expect(result, isA<PokemonWithSpeciesModel>());
   });
 
-  test('listPokemonWithStats', () async {
+  test('getPokemonStats', () async {
     // nothing to arrange
     // act
-    final result = await pokeApiLocalSource.listPokemonWithStats(id: 1);
+    final result = await pokeApiLocalSource.getPokemonStats(id: 1);
 
     // assert
     expect(result, isA<List<PokemonWithStatModel>>());

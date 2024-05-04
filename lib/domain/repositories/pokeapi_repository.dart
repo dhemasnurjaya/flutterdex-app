@@ -1,13 +1,13 @@
 import 'package:flutterdex/core/error/failure.dart';
-import 'package:flutterdex/domain/entities/pokemon.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract class PokeapiRepository {
-  Future<Either<Failure, List<Pokemon>>> listPokemonSpeciesWithType({
+  Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonBasicInfoList({
     int limit = 20,
     int offset = 0,
   });
 
-  Future<Either<Failure, PokemonDetail>> getPokemon({required int id});
+  Future<Either<Failure, PokemonDetail>> getPokemonDetail({required int id});
 }

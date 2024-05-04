@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterdex/domain/entities/pokemon.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_info.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
@@ -11,7 +11,7 @@ import 'package:flutterdex/utilities/string_extension.dart';
 
 @RoutePage()
 class PokemonDetailPage extends StatefulWidget {
-  final Pokemon pokemon;
+  final PokemonBasicInfo pokemon;
   final Color baseColor;
 
   const PokemonDetailPage({
@@ -163,34 +163,43 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     if (state is PokemonDetailLoadedState) {
       return Expanded(
         child: ListView(
+          padding: const EdgeInsets.all(16),
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                  state.pokemon.species.description.replaceAll('\n', ' '),
-                  style: Theme.of(context).textTheme.bodyLarge),
+            const Text('About'),
+            Text(state.pokemonDetail.species.description.replaceAll('\n', ' '),
+                style: Theme.of(context).textTheme.bodyLarge),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    const Text('Height'),
+                    Text('${state.pokemonDetail.pokemon.height! / 10} m'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text('Weight'),
+                    Text('${state.pokemonDetail.pokemon.weight! / 10} kg'),
+                  ],
+                )
+              ],
             ),
-            const Text(
-              'Abilities',
-              textAlign: TextAlign.center,
-            ),
-            ...state.pokemon.abilities.map<Widget>(
+            // ---
+            const SizedBox(height: 16),
+            const Text('Abilities'),
+            ...state.pokemonDetail.abilities.map<Widget>(
               (e) => ListTile(
-                title: Text(e.name),
+                contentPadding: EdgeInsets.zero,
+                title: Text(e.name.toTitleCase(splitter: '-')),
                 subtitle: Text(e.description),
-                leading: Text(e.generation.name.split('-').last.toUpperCase()),
+                trailing: Text(e.generation.name),
               ),
             ),
-            const Text(
-              'Stats',
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: PokemonStatsInfo(
-                pokemonStats: state.pokemon.stats,
-                baseColor: widget.baseColor,
-              ),
+            const SizedBox(height: 16),
+            const Text('Base Stats'),
+            PokemonStatsInfo(
+              pokemonStats: state.pokemonDetail.stats,
+              baseColor: widget.baseColor,
             ),
           ],
         ),

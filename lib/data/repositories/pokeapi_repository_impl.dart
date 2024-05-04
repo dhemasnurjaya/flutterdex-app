@@ -1,8 +1,8 @@
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
-import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail.dart';
 import 'package:flutterdex/domain/entities/pokemon_generation.dart';
@@ -18,24 +18,17 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   PokeapiRepositoryImpl({required this.localSource});
 
   @override
-  Future<Either<Failure, List<Pokemon>>> listPokemonSpeciesWithType({
+  Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonBasicInfoList({
     int limit = 20,
     int offset = 0,
   }) async {
     try {
-      final result = await localSource.listPokemonSpeciesWithType(
+      final result = await localSource.getPokemonSpeciesAndTypes(
           limit: limit, offset: offset);
-      final pokemons = result
-          .map((e) => PokemonSpeciesWithTypeModel(
-                pokemonSpecies: e.pokemonSpecies,
-                pokemonSpeciesName: e.pokemonSpeciesName,
-                type: e.type,
-              ))
-          .toList();
-      final mergedEntities = <int, Pokemon>{};
+      final mergedEntities = <int, PokemonBasicInfo>{};
 
       // map pokemon model to entity
-      for (final e in pokemons) {
+      for (final e in result) {
         // add type to existing pokemon entity
         if (mergedEntities.containsKey(e.pokemonSpecies.id)) {
           mergedEntities[e.pokemonSpecies.id]!.types.add(
@@ -48,7 +41,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         }
 
         // create new pokemon entity
-        mergedEntities[e.pokemonSpecies.id] = Pokemon(
+        mergedEntities[e.pokemonSpecies.id] = PokemonBasicInfo(
           id: e.pokemonSpecies.id,
           name: e.pokemonSpecies.name,
           genus: e.pokemonSpeciesName.genus,
@@ -68,14 +61,21 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, PokemonDetail>> getPokemon({required int id}) async {
+  Future<Either<Failure, PokemonDetail>> getPokemonDetail(
+      {required int id}) async {
     try {
+      final pokemon = await localSource.getPokemon(id: id);
       final pokemonWithAbilities =
-          await localSource.listPokemonWithAbilities(id: id);
-      final pokemonWithStats = await localSource.listPokemonWithStats(id: id);
-      final pokemonWithSpecies =
-          await localSource.getPokemonWithSpecies(id: id);
+          await localSource.getPokemonAbilities(id: id);
+      final pokemonWithStats = await localSource.getPokemonStats(id: id);
+      final pokemonWithSpecies = await localSource.getPokemonSpecies(id: id);
 
+      final pokemonEntity = Pokemon(
+        id: pokemon.id,
+        name: pokemon.name,
+        weight: pokemon.weight,
+        height: pokemon.height,
+      );
       final abilityEntities = pokemonWithAbilities
           .map(
             (e) => PokemonAbility(
@@ -107,6 +107,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
       return right(PokemonDetail(
         id: pokemonWithStats.first.pokemon.id,
+        pokemon: pokemonEntity,
         species: speciesEntity,
         abilities: abilityEntities,
         stats: statEntities,

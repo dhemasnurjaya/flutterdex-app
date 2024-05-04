@@ -1,15 +1,13 @@
-import 'package:flutterdex/domain/entities/pokemon_type.dart';
-
 class Pokemon {
   final int id;
   final String name;
-  final String genus;
-  final List<PokemonType> types;
+  final int? weight;
+  final int? height;
 
   const Pokemon({
     required this.id,
     required this.name,
-    required this.genus,
-    required this.types,
+    required this.weight,
+    required this.height,
   });
 }

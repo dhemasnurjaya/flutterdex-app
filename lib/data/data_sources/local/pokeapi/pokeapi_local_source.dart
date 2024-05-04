@@ -6,22 +6,18 @@ import 'package:flutterdex/data/models/pokemon_with_stat_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_type_model.dart';
 
 abstract class PokeApiLocalSource {
-  Future<List<PokemonModel>> listPokemons({
+  Future<List<PokemonSpeciesWithTypeModel>> getPokemonSpeciesAndTypes({
     int limit = 20,
     int offset = 0,
   });
 
-  Future<List<PokemonSpeciesWithTypeModel>> listPokemonSpeciesWithType({
-    int limit = 20,
-    int offset = 0,
-  });
+  Future<PokemonModel> getPokemon({required int id});
 
-  Future<PokemonWithSpeciesModel> getPokemonWithSpecies({required int id});
+  Future<PokemonWithSpeciesModel> getPokemonSpecies({required int id});
 
-  Future<List<PokemonWithStatModel>> listPokemonWithStats({required int id});
+  Future<List<PokemonWithStatModel>> getPokemonStats({required int id});
 
-  Future<List<PokemonWithAbilityModel>> listPokemonWithAbilities(
-      {required int id});
+  Future<List<PokemonWithAbilityModel>> getPokemonAbilities({required int id});
 }
 
 class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
@@ -30,18 +26,7 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
   PokeApiSqliteLocalSourceImpl({required this.database});
 
   @override
-  Future<List<PokemonModel>> listPokemons({
-    int limit = 20,
-    int offset = 0,
-  }) async {
-    final result = await (database.select(database.pokemons)
-          ..limit(limit, offset: offset))
-        .get();
-    return result;
-  }
-
-  @override
-  Future<List<PokemonSpeciesWithTypeModel>> listPokemonSpeciesWithType({
+  Future<List<PokemonSpeciesWithTypeModel>> getPokemonSpeciesAndTypes({
     int limit = 20,
     int offset = 0,
   }) async {
@@ -81,8 +66,15 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
   }
 
   @override
-  Future<PokemonWithSpeciesModel> getPokemonWithSpecies(
-      {required int id}) async {
+  Future<PokemonModel> getPokemon({required int id}) async {
+    final result = await (database.select(database.pokemons)
+          ..where((tbl) => tbl.id.equals(id)))
+        .getSingle();
+    return result;
+  }
+
+  @override
+  Future<PokemonWithSpeciesModel> getPokemonSpecies({required int id}) async {
     final pokemonSubquery = Subquery(
       database.select(database.pokemons)..where((tbl) => tbl.id.equals(id)),
       'p',
@@ -120,8 +112,7 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
   }
 
   @override
-  Future<List<PokemonWithStatModel>> listPokemonWithStats(
-      {required int id}) async {
+  Future<List<PokemonWithStatModel>> getPokemonStats({required int id}) async {
     final pokemonSubquery = Subquery(
       database.select(database.pokemons)..where((tbl) => tbl.id.equals(id)),
       'p',
@@ -151,7 +142,7 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
   }
 
   @override
-  Future<List<PokemonWithAbilityModel>> listPokemonWithAbilities(
+  Future<List<PokemonWithAbilityModel>> getPokemonAbilities(
       {required int id}) async {
     final pokemonSubquery = Subquery(
       database.select(database.pokemons)..where((tbl) => tbl.id.equals(id)),

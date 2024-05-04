@@ -19,7 +19,7 @@ class PokemonListLoadingState extends PokemonListState {
 }
 
 class PokemonListLoadedState extends PokemonListState {
-  final List<Pokemon> pokemons;
+  final List<PokemonBasicInfo> pokemons;
 
   const PokemonListLoadedState({required this.pokemons});
 

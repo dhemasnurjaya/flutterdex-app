@@ -59,7 +59,7 @@ class AppSettingsRoute extends PageRouteInfo<void> {
 /// [PokemonDetailPage]
 class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
   PokemonDetailRoute({
-    required Pokemon pokemon,
+    required PokemonBasicInfo pokemon,
     required Color baseColor,
     Key? key,
     List<PageRouteInfo>? children,
@@ -86,7 +86,7 @@ class PokemonDetailRouteArgs {
     this.key,
   });
 
-  final Pokemon pokemon;
+  final PokemonBasicInfo pokemon;
 
   final Color baseColor;
 

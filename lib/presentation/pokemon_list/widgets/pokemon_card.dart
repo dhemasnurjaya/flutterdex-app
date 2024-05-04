@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterdex/domain/entities/pokemon.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
@@ -7,7 +7,7 @@ import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
 class PokemonCard extends StatelessWidget {
-  final Pokemon pokemon;
+  final PokemonBasicInfo pokemon;
   final Function() onTap;
 
   const PokemonCard({
