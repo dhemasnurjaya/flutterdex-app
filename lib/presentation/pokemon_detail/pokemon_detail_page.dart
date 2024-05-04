@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_chart.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_info.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
@@ -185,7 +185,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
               'Stats',
               textAlign: TextAlign.center,
             ),
-            PokemonStatsChart(state.pokemon.stats),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: PokemonStatsInfo(
+                pokemonStats: state.pokemon.stats,
+                baseColor: widget.baseColor,
+              ),
+            ),
           ],
         ),
       );
