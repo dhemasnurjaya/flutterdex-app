@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
@@ -25,46 +27,12 @@ class PokemonDetailPage extends StatefulWidget {
 }
 
 class _PokemonDetailPageState extends State<PokemonDetailPage>
-    with SingleTickerProviderStateMixin {
-  AnimationController? _animationController;
+    with TickerProviderStateMixin {
+  AnimationController? _pokeballAnimationCtl;
+  AnimationController? _dataAnimationCtl;
 
   @override
   Widget build(BuildContext context) {
-    // final oldColumn = Column(
-    //   children: [
-    //     const Text(
-    //       'Species',
-    //       textAlign: TextAlign.center,
-    //     ),
-    //     ListTile(
-    //       title: Text(state.pokemon.species.name),
-    //       subtitle: Text(state.pokemon.species.description),
-    //     ),
-    //     const Text(
-    //       'Abilities',
-    //       textAlign: TextAlign.center,
-    //     ),
-    //     ...state.pokemon.abilities.map<Widget>(
-    //       (e) => ListTile(
-    //         title: Text(e.name),
-    //         subtitle: Text(e.description),
-    //         leading: Text(e.generation.name.split('-').last.toUpperCase()),
-    //       ),
-    //     ),
-    //     const Text(
-    //       'Stats',
-    //       textAlign: TextAlign.center,
-    //     ),
-    //     ...state.pokemon.stats.map<Widget>(
-    //       (e) => ListTile(
-    //         title: Text(e.name),
-    //         subtitle: Text('${e.baseStat}'),
-    //         leading: Text('+${e.effort}'),
-    //       ),
-    //     ),
-    //   ],
-    // );
-
     final pokemonName = Text(
       widget.pokemon.name.toTitleCase(),
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -77,7 +45,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       children: [
         RotationTransition(
           turns: CurvedAnimation(
-            parent: Tween(begin: 0.0, end: 1.0).animate(_animationController!),
+            parent: Tween(begin: 0.0, end: 1.0).animate(_pokeballAnimationCtl!),
             curve: Curves.easeInOut,
           ),
           child: Image.asset(
@@ -146,7 +114,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         backgroundColor: widget.baseColor,
         surfaceTintColor: Colors.transparent,
       ),
-      body: BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+      body: BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
+        listener: (context, state) {
+          if (state is PokemonDetailLoadedState) {
+            // start fade in animation
+            _dataAnimationCtl?.forward();
+          }
+        },
         builder: (context, state) {
           return Column(
             children: [
@@ -161,47 +135,92 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
 
   Widget _buildBody(PokemonDetailState state) {
     if (state is PokemonDetailLoadedState) {
-      return Expanded(
-        child: ListView(
+      final pokemonDescription = Card(
+        child: Padding(
           padding: const EdgeInsets.all(16),
-          children: [
-            const Text('About'),
-            Text(state.pokemonDetail.species.description.replaceAll('\n', ' '),
-                style: Theme.of(context).textTheme.bodyLarge),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    const Text('Height'),
-                    Text('${state.pokemonDetail.pokemon.height! / 10} m'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('Weight'),
-                    Text('${state.pokemonDetail.pokemon.weight! / 10} kg'),
-                  ],
-                )
-              ],
-            ),
-            // ---
-            const SizedBox(height: 16),
-            const Text('Abilities'),
-            ...state.pokemonDetail.abilities.map<Widget>(
-              (e) => ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(e.name.toTitleCase(splitter: '-')),
-                subtitle: Text(e.description),
-                trailing: Text(e.generation.name),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text('Base Stats'),
-            PokemonStatsInfo(
-              pokemonStats: state.pokemonDetail.stats,
-              baseColor: widget.baseColor,
-            ),
-          ],
+          child: Text(
+              state.pokemonDetail.species.description
+                  .replaceAll(RegExp(r'\s+'), ' ')
+                  .trim(),
+              style: Theme.of(context).textTheme.bodyLarge),
+        ),
+      );
+
+      final pokemonInfoGrid = GridView.count(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 3,
+        children: [
+          _buildInfoCard(
+            'Height',
+            '${state.pokemonDetail.pokemon.height! / 10}',
+            'm',
+          ),
+          _buildInfoCard(
+            'Weight',
+            '${state.pokemonDetail.pokemon.weight! / 10}',
+            'kg',
+          ),
+          _buildInfoCard(
+            'Happiness',
+            state.pokemonDetail.species.baseHappinessPercentage
+                .toStringAsFixed(1),
+            '%',
+          ),
+          _buildInfoCard(
+            'Capture Rate',
+            state.pokemonDetail.species.capturePercentage.toStringAsFixed(1),
+            '%',
+          ),
+          _buildInfoCard(
+            'Male Rate',
+            state.pokemonDetail.species.malePercentage?.toStringAsFixed(1) ??
+                '-',
+            '%',
+          ),
+          _buildInfoCard(
+            'Female Rate',
+            state.pokemonDetail.species.femalePercentage?.toStringAsFixed(1) ??
+                '-',
+            '%',
+          ),
+        ],
+      );
+
+      final pokemonStats = Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: PokemonStatsInfo(
+            pokemonStats: state.pokemonDetail.stats,
+            baseColor: widget.baseColor,
+          ),
+        ),
+      );
+
+      final pokemonAbilities = Card(
+        child: Column(
+            children: state.pokemonDetail.abilities
+                .map<Widget>((e) => ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      title: Text(e.name.toTitleCase(splitter: '-')),
+                      subtitle: Text(e.description),
+                      trailing: Text(e.generation.name),
+                    ))
+                .toList()),
+      );
+
+      return Expanded(
+        child: FadeTransition(
+          opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
+          child: ListView(
+            padding: const EdgeInsets.all(8),
+            children: [
+              pokemonDescription,
+              pokemonInfoGrid,
+              pokemonStats,
+              pokemonAbilities,
+            ],
+          ),
         ),
       );
     }
@@ -209,17 +228,56 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     return const SizedBox();
   }
 
+  Widget _buildInfoCard(String title, String value, String unit) {
+    return Card(
+      child: Stack(
+        children: [
+          Positioned(
+            top: 8,
+            left: 8,
+            right: 8,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Center(
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+          ),
+          Positioned(
+            bottom: 8,
+            left: 8,
+            right: 8,
+            child: Text(
+              unit,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
+    _pokeballAnimationCtl = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
     );
     Future.delayed(const Duration(milliseconds: 500), () {
-      _animationController?.repeat();
+      _pokeballAnimationCtl?.repeat();
     });
+
+    _dataAnimationCtl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
 
     // get pokemon detail
     BlocProvider.of<PokemonDetailBloc>(context).add(
@@ -229,7 +287,8 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
 
   @override
   void dispose() {
-    _animationController?.dispose();
+    _pokeballAnimationCtl?.dispose();
+    _dataAnimationCtl?.dispose();
     super.dispose();
   }
 }

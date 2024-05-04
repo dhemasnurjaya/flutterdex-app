@@ -103,6 +103,9 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         id: pokemonWithSpecies.pokemon.id,
         name: pokemonWithSpecies.species.name,
         description: pokemonWithSpecies.flavorText.flavorText,
+        genderRate: pokemonWithSpecies.species.genderRate,
+        captureRate: pokemonWithSpecies.species.captureRate,
+        baseHappiness: pokemonWithSpecies.species.baseHappiness,
       );
 
       return right(PokemonDetail(

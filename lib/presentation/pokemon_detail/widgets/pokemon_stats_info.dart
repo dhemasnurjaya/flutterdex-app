@@ -25,15 +25,19 @@ class PokemonStatsInfo extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 30,
-              child: Text(stat.baseStat.toString()),
+              width: 36,
+              child: Text(
+                stat.baseStat.toString(),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
             Expanded(
               child: LinearProgressIndicator(
                 value: stat.baseStat / 255,
-                minHeight: 10,
+                minHeight: 14,
                 color: darken(baseColor, 20),
                 backgroundColor: lighten(baseColor, 70),
+                borderRadius: BorderRadius.circular(6),
               ),
             ),
           ],
@@ -48,8 +52,7 @@ class PokemonStatsInfo extends StatelessWidget {
       );
     }).toList();
 
-    return AspectRatio(
-      aspectRatio: 8 / 5,
+    return IntrinsicHeight(
       child: Column(
         children: statRows,
       ),
