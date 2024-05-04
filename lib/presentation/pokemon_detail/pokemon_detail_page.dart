@@ -86,8 +86,8 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             fontSize: 20,
           ),
     );
-    final header = Container(
-      padding: const EdgeInsets.only(top: 8, bottom: 20),
+    final background = Container(
+      padding: const EdgeInsets.only(top: 8),
       color: widget.baseColor,
       child: Column(
         children: [
@@ -122,10 +122,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           }
         },
         builder: (context, state) {
-          return Column(
+          return Stack(
             children: [
-              header,
-              _buildBody(state),
+              background,
+              _buildForeground(state),
             ],
           );
         },
@@ -133,7 +133,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     );
   }
 
-  Widget _buildBody(PokemonDetailState state) {
+  Widget _buildForeground(PokemonDetailState state) {
     if (state is PokemonDetailLoadedState) {
       final pokemonDescription = Card(
         child: Padding(
@@ -209,11 +209,11 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
                 .toList()),
       );
 
-      return Expanded(
-        child: FadeTransition(
-          opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
-          child: ListView(
-            padding: const EdgeInsets.all(8),
+      final body = FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
             children: [
               pokemonDescription,
               pokemonInfoGrid,
@@ -221,6 +221,30 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
               pokemonAbilities,
             ],
           ),
+        ),
+      );
+
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 350),
+            Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, -8),
+                    ),
+                  ]),
+              child: body,
+            ),
+          ],
         ),
       );
     }
