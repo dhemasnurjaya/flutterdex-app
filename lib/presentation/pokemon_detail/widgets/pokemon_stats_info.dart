@@ -37,7 +37,6 @@ class PokemonStatsInfo extends StatelessWidget {
                 minHeight: 14,
                 color: darken(baseColor, 20),
                 backgroundColor: lighten(baseColor, 70),
-                borderRadius: BorderRadius.circular(6),
               ),
             ),
           ],

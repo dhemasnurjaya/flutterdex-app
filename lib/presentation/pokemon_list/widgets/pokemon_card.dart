@@ -53,8 +53,13 @@ class PokemonCard extends StatelessWidget {
     final pokemonCard = Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
         color: pokemonColors[pokemon.types.first.name],
+        boxShadow: [
+          BoxShadow(
+            color: darken(pokemonColors[pokemon.types.first.name]!, 20),
+            blurRadius: 4,
+          )
+        ],
       ),
       height: 100,
       child: Row(

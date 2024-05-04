@@ -134,74 +134,84 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
   }
 
   Widget _buildForeground(PokemonDetailState state) {
+    Widget body = Container(height: MediaQuery.of(context).size.height / 1.5);
+
     if (state is PokemonDetailLoadedState) {
-      final pokemonDescription = Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Text(
-              state.pokemonDetail.species.description
-                  .replaceAll(RegExp(r'\s+'), ' ')
-                  .trim(),
-              style: Theme.of(context).textTheme.bodyLarge),
+      final pokemonDescription = _buildAboutItem(
+        padding: const EdgeInsets.all(8),
+        title: 'Description',
+        child: Text(
+          state.pokemonDetail.species.description
+              .replaceAll(RegExp(r'\s+'), ' ')
+              .trim(),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       );
 
-      final pokemonInfoGrid = GridView.count(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: 3,
-        children: [
-          _buildInfoCard(
-            'Height',
-            '${state.pokemonDetail.pokemon.height! / 10}',
-            'm',
-          ),
-          _buildInfoCard(
-            'Weight',
-            '${state.pokemonDetail.pokemon.weight! / 10}',
-            'kg',
-          ),
-          _buildInfoCard(
-            'Happiness',
-            state.pokemonDetail.species.baseHappinessPercentage
-                .toStringAsFixed(1),
-            '%',
-          ),
-          _buildInfoCard(
-            'Capture Rate',
-            state.pokemonDetail.species.capturePercentage.toStringAsFixed(1),
-            '%',
-          ),
-          _buildInfoCard(
-            'Male Rate',
-            state.pokemonDetail.species.malePercentage?.toStringAsFixed(1) ??
-                '-',
-            '%',
-          ),
-          _buildInfoCard(
-            'Female Rate',
-            state.pokemonDetail.species.femalePercentage?.toStringAsFixed(1) ??
-                '-',
-            '%',
-          ),
-        ],
-      );
-
-      final pokemonStats = Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: PokemonStatsInfo(
-            pokemonStats: state.pokemonDetail.stats,
-            baseColor: widget.baseColor,
-          ),
+      final pokemonInfoGrid = _buildAboutItem(
+        titlePadding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        title: 'Basic Info',
+        child: GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 3,
+          children: [
+            _buildInfoGridItem(
+              'Height',
+              '${state.pokemonDetail.pokemon.height! / 10}',
+              'm',
+            ),
+            _buildInfoGridItem(
+              'Weight',
+              '${state.pokemonDetail.pokemon.weight! / 10}',
+              'kg',
+            ),
+            _buildInfoGridItem(
+              'Happiness',
+              state.pokemonDetail.species.baseHappinessPercentage
+                  .toStringAsFixed(1),
+              '%',
+            ),
+            _buildInfoGridItem(
+              'Capture Rate',
+              state.pokemonDetail.species.capturePercentage.toStringAsFixed(1),
+              '%',
+            ),
+            _buildInfoGridItem(
+              'Male Rate',
+              state.pokemonDetail.species.malePercentage?.toStringAsFixed(1) ??
+                  '-',
+              '%',
+            ),
+            _buildInfoGridItem(
+              'Female Rate',
+              state.pokemonDetail.species.femalePercentage
+                      ?.toStringAsFixed(1) ??
+                  '-',
+              '%',
+            ),
+          ],
         ),
       );
 
-      final pokemonAbilities = Card(
+      final pokemonStats = _buildAboutItem(
+        title: 'Base Stats',
+        child: PokemonStatsInfo(
+          pokemonStats: state.pokemonDetail.stats,
+          baseColor: widget.baseColor,
+        ),
+        padding: const EdgeInsets.all(8),
+      );
+
+      final pokemonAbilities = _buildAboutItem(
+        titlePadding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        title: 'Abilities',
         child: Column(
             children: state.pokemonDetail.abilities
                 .map<Widget>((e) => ListTile(
-                      contentPadding: const EdgeInsets.all(16),
+                      contentPadding: const EdgeInsets.all(8),
                       title: Text(e.name.toTitleCase(splitter: '-')),
                       subtitle: Text(e.description),
                       trailing: Text(e.generation.name),
@@ -209,51 +219,83 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
                 .toList()),
       );
 
-      final body = FadeTransition(
+      body = FadeTransition(
         opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              pokemonDescription,
-              pokemonInfoGrid,
-              pokemonStats,
-              pokemonAbilities,
-            ],
-          ),
-        ),
-      );
-
-      return SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 350),
-            Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10,
-                      offset: Offset(0, -8),
-                    ),
-                  ]),
-              child: body,
-            ),
+            pokemonDescription,
+            pokemonInfoGrid,
+            pokemonStats,
+            pokemonAbilities,
           ],
         ),
       );
     }
 
-    return const SizedBox();
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(top: 350),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, -8),
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: body,
+        ),
+      ),
+    );
   }
 
-  Widget _buildInfoCard(String title, String value, String unit) {
-    return Card(
+  Widget _buildAboutItem({
+    required String title,
+    required Widget child,
+    EdgeInsets padding = EdgeInsets.zero,
+    EdgeInsets titlePadding = EdgeInsets.zero,
+  }) {
+    return Padding(
+      padding: padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: titlePadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: darken(widget.baseColor, 20)),
+                ),
+                Divider(
+                  color: darken(widget.baseColor, 20),
+                  thickness: 0.5,
+                ),
+              ],
+            ),
+          ),
+          child,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoGridItem(String title, String value, String unit) {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          border: Border.all(
+        color: lighten(widget.baseColor, 10),
+      )),
       child: Stack(
         children: [
           Positioned(
