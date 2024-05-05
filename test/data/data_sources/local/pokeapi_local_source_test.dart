@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/models/pokemon_with_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_stat_model.dart';
@@ -112,6 +113,21 @@ void main() {
 
     // assert
     expect(result, isA<PokemonWithSpeciesModel>());
+  });
+
+  test('getPokemonSpeciesEvolutions', () async {
+    // arrange
+    const tPokemonId = 1;
+    final tExpectedNames = ['bulbasaur', 'ivysaur', 'venusaur'];
+
+    // act
+    final result = await pokeApiLocalSource.getPokemonSpeciesEvolutions(
+      id: tPokemonId,
+    );
+
+    // assert
+    expect(result, isA<List<PokemonWithEvolutionModel>>());
+    expect(result.map((e) => e.species.name), tExpectedNames);
   });
 
   test('getPokemonStats', () async {

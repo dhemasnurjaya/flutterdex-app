@@ -5,8 +5,10 @@ import 'package:drift/native.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/abilities.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/ability_flavor_texts.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/tables/evolution_triggers.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/generations.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_abilities.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_evolutions.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species_flavor_text.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/tables/pokemon_species_names.dart';
@@ -25,6 +27,7 @@ part 'pokeapi_database.g.dart';
 @DriftDatabase(tables: [
   Pokemons,
   PokemonAbilities,
+  PokemonEvolutions,
   PokemonSpecies,
   PokemonSpeciesNames,
   PokemonSpeciesFlavorText,
@@ -32,6 +35,7 @@ part 'pokeapi_database.g.dart';
   PokemonStats,
   Abilities,
   AbilityFlavorTexts,
+  EvolutionTriggers,
   Generations,
   Types,
   Stats,

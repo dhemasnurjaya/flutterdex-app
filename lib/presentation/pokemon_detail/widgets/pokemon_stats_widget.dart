@@ -3,11 +3,11 @@ import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
-class PokemonStatsInfo extends StatelessWidget {
+class PokemonStatsWidget extends StatelessWidget {
   final List<PokemonStat> pokemonStats;
   final Color baseColor;
 
-  const PokemonStatsInfo({
+  const PokemonStatsWidget({
     required this.pokemonStats,
     required this.baseColor,
     super.key,

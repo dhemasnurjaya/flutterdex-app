@@ -20,7 +20,8 @@ class PokemonSpecies extends Table {
   IntColumn get pokemonShapeId => integer().nullable()();
   BoolColumn get isLegendary => boolean()();
   BoolColumn get isMythical => boolean()();
-  IntColumn get evolvesFromSpeciesId => integer().nullable()();
+  IntColumn get evolvesFromSpeciesId =>
+      integer().nullable().references(PokemonSpecies, #id)();
 
   @override
   String get tableName => 'pokemon_v2_pokemonspecies';

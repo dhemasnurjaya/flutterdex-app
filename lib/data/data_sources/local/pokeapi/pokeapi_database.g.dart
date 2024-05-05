@@ -140,7 +140,10 @@ class $PokemonSpeciesTable extends PokemonSpecies
   @override
   late final GeneratedColumn<int> evolvesFromSpeciesId = GeneratedColumn<int>(
       'evolves_from_species_id', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_pokemonspecies (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -2105,6 +2108,1148 @@ class PokemonAbilitiesCompanion extends UpdateCompanion<PokemonAbilityModel> {
   }
 }
 
+class $EvolutionTriggersTable extends EvolutionTriggers
+    with TableInfo<$EvolutionTriggersTable, EvolutionTriggerModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EvolutionTriggersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_evolutiontrigger';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<EvolutionTriggerModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  EvolutionTriggerModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EvolutionTriggerModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+    );
+  }
+
+  @override
+  $EvolutionTriggersTable createAlias(String alias) {
+    return $EvolutionTriggersTable(attachedDatabase, alias);
+  }
+}
+
+class EvolutionTriggerModel extends DataClass
+    implements Insertable<EvolutionTriggerModel> {
+  final int id;
+  final String name;
+  const EvolutionTriggerModel({required this.id, required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  EvolutionTriggersCompanion toCompanion(bool nullToAbsent) {
+    return EvolutionTriggersCompanion(
+      id: Value(id),
+      name: Value(name),
+    );
+  }
+
+  factory EvolutionTriggerModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EvolutionTriggerModel(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  EvolutionTriggerModel copyWith({int? id, String? name}) =>
+      EvolutionTriggerModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('EvolutionTriggerModel(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EvolutionTriggerModel &&
+          other.id == this.id &&
+          other.name == this.name);
+}
+
+class EvolutionTriggersCompanion
+    extends UpdateCompanion<EvolutionTriggerModel> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> rowid;
+  const EvolutionTriggersCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EvolutionTriggersCompanion.insert({
+    required int id,
+    required String name,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name);
+  static Insertable<EvolutionTriggerModel> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EvolutionTriggersCompanion copyWith(
+      {Value<int>? id, Value<String>? name, Value<int>? rowid}) {
+    return EvolutionTriggersCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EvolutionTriggersCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PokemonEvolutionsTable extends PokemonEvolutions
+    with TableInfo<$PokemonEvolutionsTable, PokemonEvolutionModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PokemonEvolutionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _minLevelMeta =
+      const VerificationMeta('minLevel');
+  @override
+  late final GeneratedColumn<int> minLevel = GeneratedColumn<int>(
+      'min_level', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _timeOfDayMeta =
+      const VerificationMeta('timeOfDay');
+  @override
+  late final GeneratedColumn<String> timeOfDay = GeneratedColumn<String>(
+      'time_of_day', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _minHappinessMeta =
+      const VerificationMeta('minHappiness');
+  @override
+  late final GeneratedColumn<int> minHappiness = GeneratedColumn<int>(
+      'min_happiness', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _minAffectionMeta =
+      const VerificationMeta('minAffection');
+  @override
+  late final GeneratedColumn<int> minAffection = GeneratedColumn<int>(
+      'min_affection', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _relativePhysicalStatsMeta =
+      const VerificationMeta('relativePhysicalStats');
+  @override
+  late final GeneratedColumn<int> relativePhysicalStats = GeneratedColumn<int>(
+      'relative_physical_stats', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _needsOverworldRainMeta =
+      const VerificationMeta('needsOverworldRain');
+  @override
+  late final GeneratedColumn<bool> needsOverworldRain = GeneratedColumn<bool>(
+      'needs_overworld_rain', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("needs_overworld_rain" IN (0, 1))'));
+  static const VerificationMeta _turnUpsideDownMeta =
+      const VerificationMeta('turnUpsideDown');
+  @override
+  late final GeneratedColumn<bool> turnUpsideDown = GeneratedColumn<bool>(
+      'turn_upside_down', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("turn_upside_down" IN (0, 1))'));
+  static const VerificationMeta _evolutionTriggerIdMeta =
+      const VerificationMeta('evolutionTriggerId');
+  @override
+  late final GeneratedColumn<int> evolutionTriggerId = GeneratedColumn<int>(
+      'evolution_trigger_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_evolutiontrigger (id)'));
+  static const VerificationMeta _evolvedSpeciesIdMeta =
+      const VerificationMeta('evolvedSpeciesId');
+  @override
+  late final GeneratedColumn<int> evolvedSpeciesId = GeneratedColumn<int>(
+      'evolved_species_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pokemon_v2_pokemonspecies (id)'));
+  static const VerificationMeta _genderIdMeta =
+      const VerificationMeta('genderId');
+  @override
+  late final GeneratedColumn<int> genderId = GeneratedColumn<int>(
+      'gender_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _knownMoveIdMeta =
+      const VerificationMeta('knownMoveId');
+  @override
+  late final GeneratedColumn<int> knownMoveId = GeneratedColumn<int>(
+      'known_move_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _knownMoveTypeIdMeta =
+      const VerificationMeta('knownMoveTypeId');
+  @override
+  late final GeneratedColumn<int> knownMoveTypeId = GeneratedColumn<int>(
+      'known_move_type_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _partySpeciesIdMeta =
+      const VerificationMeta('partySpeciesId');
+  @override
+  late final GeneratedColumn<int> partySpeciesId = GeneratedColumn<int>(
+      'party_species_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _partyTypeIdMeta =
+      const VerificationMeta('partyTypeId');
+  @override
+  late final GeneratedColumn<int> partyTypeId = GeneratedColumn<int>(
+      'party_type_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _tradeSpeciesIdMeta =
+      const VerificationMeta('tradeSpeciesId');
+  @override
+  late final GeneratedColumn<int> tradeSpeciesId = GeneratedColumn<int>(
+      'trade_species_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _minBeautyMeta =
+      const VerificationMeta('minBeauty');
+  @override
+  late final GeneratedColumn<int> minBeauty = GeneratedColumn<int>(
+      'min_beauty', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _evolutionItemIdMeta =
+      const VerificationMeta('evolutionItemId');
+  @override
+  late final GeneratedColumn<int> evolutionItemId = GeneratedColumn<int>(
+      'evolution_item_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _heldItemIdMeta =
+      const VerificationMeta('heldItemId');
+  @override
+  late final GeneratedColumn<int> heldItemId = GeneratedColumn<int>(
+      'held_item_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _locationIdMeta =
+      const VerificationMeta('locationId');
+  @override
+  late final GeneratedColumn<int> locationId = GeneratedColumn<int>(
+      'location_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        minLevel,
+        timeOfDay,
+        minHappiness,
+        minAffection,
+        relativePhysicalStats,
+        needsOverworldRain,
+        turnUpsideDown,
+        evolutionTriggerId,
+        evolvedSpeciesId,
+        genderId,
+        knownMoveId,
+        knownMoveTypeId,
+        partySpeciesId,
+        partyTypeId,
+        tradeSpeciesId,
+        minBeauty,
+        evolutionItemId,
+        heldItemId,
+        locationId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pokemon_v2_pokemonevolution';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PokemonEvolutionModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('min_level')) {
+      context.handle(_minLevelMeta,
+          minLevel.isAcceptableOrUnknown(data['min_level']!, _minLevelMeta));
+    }
+    if (data.containsKey('time_of_day')) {
+      context.handle(
+          _timeOfDayMeta,
+          timeOfDay.isAcceptableOrUnknown(
+              data['time_of_day']!, _timeOfDayMeta));
+    }
+    if (data.containsKey('min_happiness')) {
+      context.handle(
+          _minHappinessMeta,
+          minHappiness.isAcceptableOrUnknown(
+              data['min_happiness']!, _minHappinessMeta));
+    }
+    if (data.containsKey('min_affection')) {
+      context.handle(
+          _minAffectionMeta,
+          minAffection.isAcceptableOrUnknown(
+              data['min_affection']!, _minAffectionMeta));
+    }
+    if (data.containsKey('relative_physical_stats')) {
+      context.handle(
+          _relativePhysicalStatsMeta,
+          relativePhysicalStats.isAcceptableOrUnknown(
+              data['relative_physical_stats']!, _relativePhysicalStatsMeta));
+    }
+    if (data.containsKey('needs_overworld_rain')) {
+      context.handle(
+          _needsOverworldRainMeta,
+          needsOverworldRain.isAcceptableOrUnknown(
+              data['needs_overworld_rain']!, _needsOverworldRainMeta));
+    } else if (isInserting) {
+      context.missing(_needsOverworldRainMeta);
+    }
+    if (data.containsKey('turn_upside_down')) {
+      context.handle(
+          _turnUpsideDownMeta,
+          turnUpsideDown.isAcceptableOrUnknown(
+              data['turn_upside_down']!, _turnUpsideDownMeta));
+    } else if (isInserting) {
+      context.missing(_turnUpsideDownMeta);
+    }
+    if (data.containsKey('evolution_trigger_id')) {
+      context.handle(
+          _evolutionTriggerIdMeta,
+          evolutionTriggerId.isAcceptableOrUnknown(
+              data['evolution_trigger_id']!, _evolutionTriggerIdMeta));
+    }
+    if (data.containsKey('evolved_species_id')) {
+      context.handle(
+          _evolvedSpeciesIdMeta,
+          evolvedSpeciesId.isAcceptableOrUnknown(
+              data['evolved_species_id']!, _evolvedSpeciesIdMeta));
+    }
+    if (data.containsKey('gender_id')) {
+      context.handle(_genderIdMeta,
+          genderId.isAcceptableOrUnknown(data['gender_id']!, _genderIdMeta));
+    }
+    if (data.containsKey('known_move_id')) {
+      context.handle(
+          _knownMoveIdMeta,
+          knownMoveId.isAcceptableOrUnknown(
+              data['known_move_id']!, _knownMoveIdMeta));
+    }
+    if (data.containsKey('known_move_type_id')) {
+      context.handle(
+          _knownMoveTypeIdMeta,
+          knownMoveTypeId.isAcceptableOrUnknown(
+              data['known_move_type_id']!, _knownMoveTypeIdMeta));
+    }
+    if (data.containsKey('party_species_id')) {
+      context.handle(
+          _partySpeciesIdMeta,
+          partySpeciesId.isAcceptableOrUnknown(
+              data['party_species_id']!, _partySpeciesIdMeta));
+    }
+    if (data.containsKey('party_type_id')) {
+      context.handle(
+          _partyTypeIdMeta,
+          partyTypeId.isAcceptableOrUnknown(
+              data['party_type_id']!, _partyTypeIdMeta));
+    }
+    if (data.containsKey('trade_species_id')) {
+      context.handle(
+          _tradeSpeciesIdMeta,
+          tradeSpeciesId.isAcceptableOrUnknown(
+              data['trade_species_id']!, _tradeSpeciesIdMeta));
+    }
+    if (data.containsKey('min_beauty')) {
+      context.handle(_minBeautyMeta,
+          minBeauty.isAcceptableOrUnknown(data['min_beauty']!, _minBeautyMeta));
+    }
+    if (data.containsKey('evolution_item_id')) {
+      context.handle(
+          _evolutionItemIdMeta,
+          evolutionItemId.isAcceptableOrUnknown(
+              data['evolution_item_id']!, _evolutionItemIdMeta));
+    }
+    if (data.containsKey('held_item_id')) {
+      context.handle(
+          _heldItemIdMeta,
+          heldItemId.isAcceptableOrUnknown(
+              data['held_item_id']!, _heldItemIdMeta));
+    }
+    if (data.containsKey('location_id')) {
+      context.handle(
+          _locationIdMeta,
+          locationId.isAcceptableOrUnknown(
+              data['location_id']!, _locationIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PokemonEvolutionModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PokemonEvolutionModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      minLevel: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}min_level']),
+      timeOfDay: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}time_of_day']),
+      minHappiness: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}min_happiness']),
+      minAffection: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}min_affection']),
+      relativePhysicalStats: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}relative_physical_stats']),
+      needsOverworldRain: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}needs_overworld_rain'])!,
+      turnUpsideDown: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}turn_upside_down'])!,
+      evolutionTriggerId: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}evolution_trigger_id']),
+      evolvedSpeciesId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}evolved_species_id']),
+      genderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}gender_id']),
+      knownMoveId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}known_move_id']),
+      knownMoveTypeId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}known_move_type_id']),
+      partySpeciesId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}party_species_id']),
+      partyTypeId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}party_type_id']),
+      tradeSpeciesId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}trade_species_id']),
+      minBeauty: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}min_beauty']),
+      evolutionItemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}evolution_item_id']),
+      heldItemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}held_item_id']),
+      locationId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}location_id']),
+    );
+  }
+
+  @override
+  $PokemonEvolutionsTable createAlias(String alias) {
+    return $PokemonEvolutionsTable(attachedDatabase, alias);
+  }
+}
+
+class PokemonEvolutionModel extends DataClass
+    implements Insertable<PokemonEvolutionModel> {
+  final int id;
+  final int? minLevel;
+  final String? timeOfDay;
+  final int? minHappiness;
+  final int? minAffection;
+  final int? relativePhysicalStats;
+  final bool needsOverworldRain;
+  final bool turnUpsideDown;
+  final int? evolutionTriggerId;
+  final int? evolvedSpeciesId;
+  final int? genderId;
+  final int? knownMoveId;
+  final int? knownMoveTypeId;
+  final int? partySpeciesId;
+  final int? partyTypeId;
+  final int? tradeSpeciesId;
+  final int? minBeauty;
+  final int? evolutionItemId;
+  final int? heldItemId;
+  final int? locationId;
+  const PokemonEvolutionModel(
+      {required this.id,
+      this.minLevel,
+      this.timeOfDay,
+      this.minHappiness,
+      this.minAffection,
+      this.relativePhysicalStats,
+      required this.needsOverworldRain,
+      required this.turnUpsideDown,
+      this.evolutionTriggerId,
+      this.evolvedSpeciesId,
+      this.genderId,
+      this.knownMoveId,
+      this.knownMoveTypeId,
+      this.partySpeciesId,
+      this.partyTypeId,
+      this.tradeSpeciesId,
+      this.minBeauty,
+      this.evolutionItemId,
+      this.heldItemId,
+      this.locationId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || minLevel != null) {
+      map['min_level'] = Variable<int>(minLevel);
+    }
+    if (!nullToAbsent || timeOfDay != null) {
+      map['time_of_day'] = Variable<String>(timeOfDay);
+    }
+    if (!nullToAbsent || minHappiness != null) {
+      map['min_happiness'] = Variable<int>(minHappiness);
+    }
+    if (!nullToAbsent || minAffection != null) {
+      map['min_affection'] = Variable<int>(minAffection);
+    }
+    if (!nullToAbsent || relativePhysicalStats != null) {
+      map['relative_physical_stats'] = Variable<int>(relativePhysicalStats);
+    }
+    map['needs_overworld_rain'] = Variable<bool>(needsOverworldRain);
+    map['turn_upside_down'] = Variable<bool>(turnUpsideDown);
+    if (!nullToAbsent || evolutionTriggerId != null) {
+      map['evolution_trigger_id'] = Variable<int>(evolutionTriggerId);
+    }
+    if (!nullToAbsent || evolvedSpeciesId != null) {
+      map['evolved_species_id'] = Variable<int>(evolvedSpeciesId);
+    }
+    if (!nullToAbsent || genderId != null) {
+      map['gender_id'] = Variable<int>(genderId);
+    }
+    if (!nullToAbsent || knownMoveId != null) {
+      map['known_move_id'] = Variable<int>(knownMoveId);
+    }
+    if (!nullToAbsent || knownMoveTypeId != null) {
+      map['known_move_type_id'] = Variable<int>(knownMoveTypeId);
+    }
+    if (!nullToAbsent || partySpeciesId != null) {
+      map['party_species_id'] = Variable<int>(partySpeciesId);
+    }
+    if (!nullToAbsent || partyTypeId != null) {
+      map['party_type_id'] = Variable<int>(partyTypeId);
+    }
+    if (!nullToAbsent || tradeSpeciesId != null) {
+      map['trade_species_id'] = Variable<int>(tradeSpeciesId);
+    }
+    if (!nullToAbsent || minBeauty != null) {
+      map['min_beauty'] = Variable<int>(minBeauty);
+    }
+    if (!nullToAbsent || evolutionItemId != null) {
+      map['evolution_item_id'] = Variable<int>(evolutionItemId);
+    }
+    if (!nullToAbsent || heldItemId != null) {
+      map['held_item_id'] = Variable<int>(heldItemId);
+    }
+    if (!nullToAbsent || locationId != null) {
+      map['location_id'] = Variable<int>(locationId);
+    }
+    return map;
+  }
+
+  PokemonEvolutionsCompanion toCompanion(bool nullToAbsent) {
+    return PokemonEvolutionsCompanion(
+      id: Value(id),
+      minLevel: minLevel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minLevel),
+      timeOfDay: timeOfDay == null && nullToAbsent
+          ? const Value.absent()
+          : Value(timeOfDay),
+      minHappiness: minHappiness == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minHappiness),
+      minAffection: minAffection == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minAffection),
+      relativePhysicalStats: relativePhysicalStats == null && nullToAbsent
+          ? const Value.absent()
+          : Value(relativePhysicalStats),
+      needsOverworldRain: Value(needsOverworldRain),
+      turnUpsideDown: Value(turnUpsideDown),
+      evolutionTriggerId: evolutionTriggerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evolutionTriggerId),
+      evolvedSpeciesId: evolvedSpeciesId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evolvedSpeciesId),
+      genderId: genderId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(genderId),
+      knownMoveId: knownMoveId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(knownMoveId),
+      knownMoveTypeId: knownMoveTypeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(knownMoveTypeId),
+      partySpeciesId: partySpeciesId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partySpeciesId),
+      partyTypeId: partyTypeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partyTypeId),
+      tradeSpeciesId: tradeSpeciesId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tradeSpeciesId),
+      minBeauty: minBeauty == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minBeauty),
+      evolutionItemId: evolutionItemId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evolutionItemId),
+      heldItemId: heldItemId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(heldItemId),
+      locationId: locationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(locationId),
+    );
+  }
+
+  factory PokemonEvolutionModel.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PokemonEvolutionModel(
+      id: serializer.fromJson<int>(json['id']),
+      minLevel: serializer.fromJson<int?>(json['minLevel']),
+      timeOfDay: serializer.fromJson<String?>(json['timeOfDay']),
+      minHappiness: serializer.fromJson<int?>(json['minHappiness']),
+      minAffection: serializer.fromJson<int?>(json['minAffection']),
+      relativePhysicalStats:
+          serializer.fromJson<int?>(json['relativePhysicalStats']),
+      needsOverworldRain: serializer.fromJson<bool>(json['needsOverworldRain']),
+      turnUpsideDown: serializer.fromJson<bool>(json['turnUpsideDown']),
+      evolutionTriggerId: serializer.fromJson<int?>(json['evolutionTriggerId']),
+      evolvedSpeciesId: serializer.fromJson<int?>(json['evolvedSpeciesId']),
+      genderId: serializer.fromJson<int?>(json['genderId']),
+      knownMoveId: serializer.fromJson<int?>(json['knownMoveId']),
+      knownMoveTypeId: serializer.fromJson<int?>(json['knownMoveTypeId']),
+      partySpeciesId: serializer.fromJson<int?>(json['partySpeciesId']),
+      partyTypeId: serializer.fromJson<int?>(json['partyTypeId']),
+      tradeSpeciesId: serializer.fromJson<int?>(json['tradeSpeciesId']),
+      minBeauty: serializer.fromJson<int?>(json['minBeauty']),
+      evolutionItemId: serializer.fromJson<int?>(json['evolutionItemId']),
+      heldItemId: serializer.fromJson<int?>(json['heldItemId']),
+      locationId: serializer.fromJson<int?>(json['locationId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'minLevel': serializer.toJson<int?>(minLevel),
+      'timeOfDay': serializer.toJson<String?>(timeOfDay),
+      'minHappiness': serializer.toJson<int?>(minHappiness),
+      'minAffection': serializer.toJson<int?>(minAffection),
+      'relativePhysicalStats': serializer.toJson<int?>(relativePhysicalStats),
+      'needsOverworldRain': serializer.toJson<bool>(needsOverworldRain),
+      'turnUpsideDown': serializer.toJson<bool>(turnUpsideDown),
+      'evolutionTriggerId': serializer.toJson<int?>(evolutionTriggerId),
+      'evolvedSpeciesId': serializer.toJson<int?>(evolvedSpeciesId),
+      'genderId': serializer.toJson<int?>(genderId),
+      'knownMoveId': serializer.toJson<int?>(knownMoveId),
+      'knownMoveTypeId': serializer.toJson<int?>(knownMoveTypeId),
+      'partySpeciesId': serializer.toJson<int?>(partySpeciesId),
+      'partyTypeId': serializer.toJson<int?>(partyTypeId),
+      'tradeSpeciesId': serializer.toJson<int?>(tradeSpeciesId),
+      'minBeauty': serializer.toJson<int?>(minBeauty),
+      'evolutionItemId': serializer.toJson<int?>(evolutionItemId),
+      'heldItemId': serializer.toJson<int?>(heldItemId),
+      'locationId': serializer.toJson<int?>(locationId),
+    };
+  }
+
+  PokemonEvolutionModel copyWith(
+          {int? id,
+          Value<int?> minLevel = const Value.absent(),
+          Value<String?> timeOfDay = const Value.absent(),
+          Value<int?> minHappiness = const Value.absent(),
+          Value<int?> minAffection = const Value.absent(),
+          Value<int?> relativePhysicalStats = const Value.absent(),
+          bool? needsOverworldRain,
+          bool? turnUpsideDown,
+          Value<int?> evolutionTriggerId = const Value.absent(),
+          Value<int?> evolvedSpeciesId = const Value.absent(),
+          Value<int?> genderId = const Value.absent(),
+          Value<int?> knownMoveId = const Value.absent(),
+          Value<int?> knownMoveTypeId = const Value.absent(),
+          Value<int?> partySpeciesId = const Value.absent(),
+          Value<int?> partyTypeId = const Value.absent(),
+          Value<int?> tradeSpeciesId = const Value.absent(),
+          Value<int?> minBeauty = const Value.absent(),
+          Value<int?> evolutionItemId = const Value.absent(),
+          Value<int?> heldItemId = const Value.absent(),
+          Value<int?> locationId = const Value.absent()}) =>
+      PokemonEvolutionModel(
+        id: id ?? this.id,
+        minLevel: minLevel.present ? minLevel.value : this.minLevel,
+        timeOfDay: timeOfDay.present ? timeOfDay.value : this.timeOfDay,
+        minHappiness:
+            minHappiness.present ? minHappiness.value : this.minHappiness,
+        minAffection:
+            minAffection.present ? minAffection.value : this.minAffection,
+        relativePhysicalStats: relativePhysicalStats.present
+            ? relativePhysicalStats.value
+            : this.relativePhysicalStats,
+        needsOverworldRain: needsOverworldRain ?? this.needsOverworldRain,
+        turnUpsideDown: turnUpsideDown ?? this.turnUpsideDown,
+        evolutionTriggerId: evolutionTriggerId.present
+            ? evolutionTriggerId.value
+            : this.evolutionTriggerId,
+        evolvedSpeciesId: evolvedSpeciesId.present
+            ? evolvedSpeciesId.value
+            : this.evolvedSpeciesId,
+        genderId: genderId.present ? genderId.value : this.genderId,
+        knownMoveId: knownMoveId.present ? knownMoveId.value : this.knownMoveId,
+        knownMoveTypeId: knownMoveTypeId.present
+            ? knownMoveTypeId.value
+            : this.knownMoveTypeId,
+        partySpeciesId:
+            partySpeciesId.present ? partySpeciesId.value : this.partySpeciesId,
+        partyTypeId: partyTypeId.present ? partyTypeId.value : this.partyTypeId,
+        tradeSpeciesId:
+            tradeSpeciesId.present ? tradeSpeciesId.value : this.tradeSpeciesId,
+        minBeauty: minBeauty.present ? minBeauty.value : this.minBeauty,
+        evolutionItemId: evolutionItemId.present
+            ? evolutionItemId.value
+            : this.evolutionItemId,
+        heldItemId: heldItemId.present ? heldItemId.value : this.heldItemId,
+        locationId: locationId.present ? locationId.value : this.locationId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PokemonEvolutionModel(')
+          ..write('id: $id, ')
+          ..write('minLevel: $minLevel, ')
+          ..write('timeOfDay: $timeOfDay, ')
+          ..write('minHappiness: $minHappiness, ')
+          ..write('minAffection: $minAffection, ')
+          ..write('relativePhysicalStats: $relativePhysicalStats, ')
+          ..write('needsOverworldRain: $needsOverworldRain, ')
+          ..write('turnUpsideDown: $turnUpsideDown, ')
+          ..write('evolutionTriggerId: $evolutionTriggerId, ')
+          ..write('evolvedSpeciesId: $evolvedSpeciesId, ')
+          ..write('genderId: $genderId, ')
+          ..write('knownMoveId: $knownMoveId, ')
+          ..write('knownMoveTypeId: $knownMoveTypeId, ')
+          ..write('partySpeciesId: $partySpeciesId, ')
+          ..write('partyTypeId: $partyTypeId, ')
+          ..write('tradeSpeciesId: $tradeSpeciesId, ')
+          ..write('minBeauty: $minBeauty, ')
+          ..write('evolutionItemId: $evolutionItemId, ')
+          ..write('heldItemId: $heldItemId, ')
+          ..write('locationId: $locationId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      minLevel,
+      timeOfDay,
+      minHappiness,
+      minAffection,
+      relativePhysicalStats,
+      needsOverworldRain,
+      turnUpsideDown,
+      evolutionTriggerId,
+      evolvedSpeciesId,
+      genderId,
+      knownMoveId,
+      knownMoveTypeId,
+      partySpeciesId,
+      partyTypeId,
+      tradeSpeciesId,
+      minBeauty,
+      evolutionItemId,
+      heldItemId,
+      locationId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PokemonEvolutionModel &&
+          other.id == this.id &&
+          other.minLevel == this.minLevel &&
+          other.timeOfDay == this.timeOfDay &&
+          other.minHappiness == this.minHappiness &&
+          other.minAffection == this.minAffection &&
+          other.relativePhysicalStats == this.relativePhysicalStats &&
+          other.needsOverworldRain == this.needsOverworldRain &&
+          other.turnUpsideDown == this.turnUpsideDown &&
+          other.evolutionTriggerId == this.evolutionTriggerId &&
+          other.evolvedSpeciesId == this.evolvedSpeciesId &&
+          other.genderId == this.genderId &&
+          other.knownMoveId == this.knownMoveId &&
+          other.knownMoveTypeId == this.knownMoveTypeId &&
+          other.partySpeciesId == this.partySpeciesId &&
+          other.partyTypeId == this.partyTypeId &&
+          other.tradeSpeciesId == this.tradeSpeciesId &&
+          other.minBeauty == this.minBeauty &&
+          other.evolutionItemId == this.evolutionItemId &&
+          other.heldItemId == this.heldItemId &&
+          other.locationId == this.locationId);
+}
+
+class PokemonEvolutionsCompanion
+    extends UpdateCompanion<PokemonEvolutionModel> {
+  final Value<int> id;
+  final Value<int?> minLevel;
+  final Value<String?> timeOfDay;
+  final Value<int?> minHappiness;
+  final Value<int?> minAffection;
+  final Value<int?> relativePhysicalStats;
+  final Value<bool> needsOverworldRain;
+  final Value<bool> turnUpsideDown;
+  final Value<int?> evolutionTriggerId;
+  final Value<int?> evolvedSpeciesId;
+  final Value<int?> genderId;
+  final Value<int?> knownMoveId;
+  final Value<int?> knownMoveTypeId;
+  final Value<int?> partySpeciesId;
+  final Value<int?> partyTypeId;
+  final Value<int?> tradeSpeciesId;
+  final Value<int?> minBeauty;
+  final Value<int?> evolutionItemId;
+  final Value<int?> heldItemId;
+  final Value<int?> locationId;
+  const PokemonEvolutionsCompanion({
+    this.id = const Value.absent(),
+    this.minLevel = const Value.absent(),
+    this.timeOfDay = const Value.absent(),
+    this.minHappiness = const Value.absent(),
+    this.minAffection = const Value.absent(),
+    this.relativePhysicalStats = const Value.absent(),
+    this.needsOverworldRain = const Value.absent(),
+    this.turnUpsideDown = const Value.absent(),
+    this.evolutionTriggerId = const Value.absent(),
+    this.evolvedSpeciesId = const Value.absent(),
+    this.genderId = const Value.absent(),
+    this.knownMoveId = const Value.absent(),
+    this.knownMoveTypeId = const Value.absent(),
+    this.partySpeciesId = const Value.absent(),
+    this.partyTypeId = const Value.absent(),
+    this.tradeSpeciesId = const Value.absent(),
+    this.minBeauty = const Value.absent(),
+    this.evolutionItemId = const Value.absent(),
+    this.heldItemId = const Value.absent(),
+    this.locationId = const Value.absent(),
+  });
+  PokemonEvolutionsCompanion.insert({
+    this.id = const Value.absent(),
+    this.minLevel = const Value.absent(),
+    this.timeOfDay = const Value.absent(),
+    this.minHappiness = const Value.absent(),
+    this.minAffection = const Value.absent(),
+    this.relativePhysicalStats = const Value.absent(),
+    required bool needsOverworldRain,
+    required bool turnUpsideDown,
+    this.evolutionTriggerId = const Value.absent(),
+    this.evolvedSpeciesId = const Value.absent(),
+    this.genderId = const Value.absent(),
+    this.knownMoveId = const Value.absent(),
+    this.knownMoveTypeId = const Value.absent(),
+    this.partySpeciesId = const Value.absent(),
+    this.partyTypeId = const Value.absent(),
+    this.tradeSpeciesId = const Value.absent(),
+    this.minBeauty = const Value.absent(),
+    this.evolutionItemId = const Value.absent(),
+    this.heldItemId = const Value.absent(),
+    this.locationId = const Value.absent(),
+  })  : needsOverworldRain = Value(needsOverworldRain),
+        turnUpsideDown = Value(turnUpsideDown);
+  static Insertable<PokemonEvolutionModel> custom({
+    Expression<int>? id,
+    Expression<int>? minLevel,
+    Expression<String>? timeOfDay,
+    Expression<int>? minHappiness,
+    Expression<int>? minAffection,
+    Expression<int>? relativePhysicalStats,
+    Expression<bool>? needsOverworldRain,
+    Expression<bool>? turnUpsideDown,
+    Expression<int>? evolutionTriggerId,
+    Expression<int>? evolvedSpeciesId,
+    Expression<int>? genderId,
+    Expression<int>? knownMoveId,
+    Expression<int>? knownMoveTypeId,
+    Expression<int>? partySpeciesId,
+    Expression<int>? partyTypeId,
+    Expression<int>? tradeSpeciesId,
+    Expression<int>? minBeauty,
+    Expression<int>? evolutionItemId,
+    Expression<int>? heldItemId,
+    Expression<int>? locationId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (minLevel != null) 'min_level': minLevel,
+      if (timeOfDay != null) 'time_of_day': timeOfDay,
+      if (minHappiness != null) 'min_happiness': minHappiness,
+      if (minAffection != null) 'min_affection': minAffection,
+      if (relativePhysicalStats != null)
+        'relative_physical_stats': relativePhysicalStats,
+      if (needsOverworldRain != null)
+        'needs_overworld_rain': needsOverworldRain,
+      if (turnUpsideDown != null) 'turn_upside_down': turnUpsideDown,
+      if (evolutionTriggerId != null)
+        'evolution_trigger_id': evolutionTriggerId,
+      if (evolvedSpeciesId != null) 'evolved_species_id': evolvedSpeciesId,
+      if (genderId != null) 'gender_id': genderId,
+      if (knownMoveId != null) 'known_move_id': knownMoveId,
+      if (knownMoveTypeId != null) 'known_move_type_id': knownMoveTypeId,
+      if (partySpeciesId != null) 'party_species_id': partySpeciesId,
+      if (partyTypeId != null) 'party_type_id': partyTypeId,
+      if (tradeSpeciesId != null) 'trade_species_id': tradeSpeciesId,
+      if (minBeauty != null) 'min_beauty': minBeauty,
+      if (evolutionItemId != null) 'evolution_item_id': evolutionItemId,
+      if (heldItemId != null) 'held_item_id': heldItemId,
+      if (locationId != null) 'location_id': locationId,
+    });
+  }
+
+  PokemonEvolutionsCompanion copyWith(
+      {Value<int>? id,
+      Value<int?>? minLevel,
+      Value<String?>? timeOfDay,
+      Value<int?>? minHappiness,
+      Value<int?>? minAffection,
+      Value<int?>? relativePhysicalStats,
+      Value<bool>? needsOverworldRain,
+      Value<bool>? turnUpsideDown,
+      Value<int?>? evolutionTriggerId,
+      Value<int?>? evolvedSpeciesId,
+      Value<int?>? genderId,
+      Value<int?>? knownMoveId,
+      Value<int?>? knownMoveTypeId,
+      Value<int?>? partySpeciesId,
+      Value<int?>? partyTypeId,
+      Value<int?>? tradeSpeciesId,
+      Value<int?>? minBeauty,
+      Value<int?>? evolutionItemId,
+      Value<int?>? heldItemId,
+      Value<int?>? locationId}) {
+    return PokemonEvolutionsCompanion(
+      id: id ?? this.id,
+      minLevel: minLevel ?? this.minLevel,
+      timeOfDay: timeOfDay ?? this.timeOfDay,
+      minHappiness: minHappiness ?? this.minHappiness,
+      minAffection: minAffection ?? this.minAffection,
+      relativePhysicalStats:
+          relativePhysicalStats ?? this.relativePhysicalStats,
+      needsOverworldRain: needsOverworldRain ?? this.needsOverworldRain,
+      turnUpsideDown: turnUpsideDown ?? this.turnUpsideDown,
+      evolutionTriggerId: evolutionTriggerId ?? this.evolutionTriggerId,
+      evolvedSpeciesId: evolvedSpeciesId ?? this.evolvedSpeciesId,
+      genderId: genderId ?? this.genderId,
+      knownMoveId: knownMoveId ?? this.knownMoveId,
+      knownMoveTypeId: knownMoveTypeId ?? this.knownMoveTypeId,
+      partySpeciesId: partySpeciesId ?? this.partySpeciesId,
+      partyTypeId: partyTypeId ?? this.partyTypeId,
+      tradeSpeciesId: tradeSpeciesId ?? this.tradeSpeciesId,
+      minBeauty: minBeauty ?? this.minBeauty,
+      evolutionItemId: evolutionItemId ?? this.evolutionItemId,
+      heldItemId: heldItemId ?? this.heldItemId,
+      locationId: locationId ?? this.locationId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (minLevel.present) {
+      map['min_level'] = Variable<int>(minLevel.value);
+    }
+    if (timeOfDay.present) {
+      map['time_of_day'] = Variable<String>(timeOfDay.value);
+    }
+    if (minHappiness.present) {
+      map['min_happiness'] = Variable<int>(minHappiness.value);
+    }
+    if (minAffection.present) {
+      map['min_affection'] = Variable<int>(minAffection.value);
+    }
+    if (relativePhysicalStats.present) {
+      map['relative_physical_stats'] =
+          Variable<int>(relativePhysicalStats.value);
+    }
+    if (needsOverworldRain.present) {
+      map['needs_overworld_rain'] = Variable<bool>(needsOverworldRain.value);
+    }
+    if (turnUpsideDown.present) {
+      map['turn_upside_down'] = Variable<bool>(turnUpsideDown.value);
+    }
+    if (evolutionTriggerId.present) {
+      map['evolution_trigger_id'] = Variable<int>(evolutionTriggerId.value);
+    }
+    if (evolvedSpeciesId.present) {
+      map['evolved_species_id'] = Variable<int>(evolvedSpeciesId.value);
+    }
+    if (genderId.present) {
+      map['gender_id'] = Variable<int>(genderId.value);
+    }
+    if (knownMoveId.present) {
+      map['known_move_id'] = Variable<int>(knownMoveId.value);
+    }
+    if (knownMoveTypeId.present) {
+      map['known_move_type_id'] = Variable<int>(knownMoveTypeId.value);
+    }
+    if (partySpeciesId.present) {
+      map['party_species_id'] = Variable<int>(partySpeciesId.value);
+    }
+    if (partyTypeId.present) {
+      map['party_type_id'] = Variable<int>(partyTypeId.value);
+    }
+    if (tradeSpeciesId.present) {
+      map['trade_species_id'] = Variable<int>(tradeSpeciesId.value);
+    }
+    if (minBeauty.present) {
+      map['min_beauty'] = Variable<int>(minBeauty.value);
+    }
+    if (evolutionItemId.present) {
+      map['evolution_item_id'] = Variable<int>(evolutionItemId.value);
+    }
+    if (heldItemId.present) {
+      map['held_item_id'] = Variable<int>(heldItemId.value);
+    }
+    if (locationId.present) {
+      map['location_id'] = Variable<int>(locationId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PokemonEvolutionsCompanion(')
+          ..write('id: $id, ')
+          ..write('minLevel: $minLevel, ')
+          ..write('timeOfDay: $timeOfDay, ')
+          ..write('minHappiness: $minHappiness, ')
+          ..write('minAffection: $minAffection, ')
+          ..write('relativePhysicalStats: $relativePhysicalStats, ')
+          ..write('needsOverworldRain: $needsOverworldRain, ')
+          ..write('turnUpsideDown: $turnUpsideDown, ')
+          ..write('evolutionTriggerId: $evolutionTriggerId, ')
+          ..write('evolvedSpeciesId: $evolvedSpeciesId, ')
+          ..write('genderId: $genderId, ')
+          ..write('knownMoveId: $knownMoveId, ')
+          ..write('knownMoveTypeId: $knownMoveTypeId, ')
+          ..write('partySpeciesId: $partySpeciesId, ')
+          ..write('partyTypeId: $partyTypeId, ')
+          ..write('tradeSpeciesId: $tradeSpeciesId, ')
+          ..write('minBeauty: $minBeauty, ')
+          ..write('evolutionItemId: $evolutionItemId, ')
+          ..write('heldItemId: $heldItemId, ')
+          ..write('locationId: $locationId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PokemonSpeciesNamesTable extends PokemonSpeciesNames
     with TableInfo<$PokemonSpeciesNamesTable, PokemonSpeciesNameModel> {
   @override
@@ -4061,6 +5206,10 @@ abstract class _$PokeApiDatabase extends GeneratedDatabase {
   late final $AbilitiesTable abilities = $AbilitiesTable(this);
   late final $PokemonAbilitiesTable pokemonAbilities =
       $PokemonAbilitiesTable(this);
+  late final $EvolutionTriggersTable evolutionTriggers =
+      $EvolutionTriggersTable(this);
+  late final $PokemonEvolutionsTable pokemonEvolutions =
+      $PokemonEvolutionsTable(this);
   late final $PokemonSpeciesNamesTable pokemonSpeciesNames =
       $PokemonSpeciesNamesTable(this);
   late final $PokemonSpeciesFlavorTextTable pokemonSpeciesFlavorText =
@@ -4081,6 +5230,8 @@ abstract class _$PokeApiDatabase extends GeneratedDatabase {
         generations,
         abilities,
         pokemonAbilities,
+        evolutionTriggers,
+        pokemonEvolutions,
         pokemonSpeciesNames,
         pokemonSpeciesFlavorText,
         types,

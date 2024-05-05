@@ -1,5 +1,6 @@
 import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
+import 'package:flutterdex/domain/entities/pokemon_evolution.dart';
 import 'package:flutterdex/domain/entities/pokemon_species.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 
@@ -9,6 +10,7 @@ class PokemonDetail {
   final PokemonSpecies species;
   final List<PokemonAbility> abilities;
   final List<PokemonStat> stats;
+  final List<PokemonEvolution> evolutions;
 
   const PokemonDetail({
     required this.id,
@@ -16,5 +18,6 @@ class PokemonDetail {
     required this.species,
     required this.abilities,
     required this.stats,
+    required this.evolutions,
   });
 }

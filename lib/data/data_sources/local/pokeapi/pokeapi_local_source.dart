@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
+import 'package:flutterdex/data/models/pokemon_with_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_with_stat_model.dart';
@@ -14,6 +15,9 @@ abstract class PokeApiLocalSource {
   Future<PokemonModel> getPokemon({required int id});
 
   Future<PokemonWithSpeciesModel> getPokemonSpecies({required int id});
+
+  Future<List<PokemonWithEvolutionModel>> getPokemonSpeciesEvolutions(
+      {required int id});
 
   Future<List<PokemonWithStatModel>> getPokemonStats({required int id});
 
@@ -109,6 +113,110 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
         .getSingle();
 
     return result;
+  }
+
+  @override
+  Future<List<PokemonWithEvolutionModel>> getPokemonSpeciesEvolutions(
+      {required int id}) async {
+    final baseSpecies = await (database.select(database.pokemonSpecies)
+          ..where((tbl) => tbl.id.equals(id))
+          ..limit(1))
+        .getSingle();
+
+    Future<PokemonWithEvolutionModel?> getEvolution(
+      Subquery<PokemonSpeciesModel> speciesSubquery,
+      GeneratedColumn<int> speciesColumn,
+      GeneratedColumn<int> speciesColumnEqualTo,
+    ) async {
+      final query = database.select(speciesSubquery).join([
+        leftOuterJoin(
+          database.pokemonEvolutions,
+          speciesSubquery.ref(speciesColumn).equalsExp(speciesColumnEqualTo),
+        ),
+        leftOuterJoin(
+          database.evolutionTriggers,
+          database.pokemonEvolutions.evolutionTriggerId
+              .equalsExp(database.evolutionTriggers.id),
+        ),
+      ]);
+      query.limit(1);
+
+      return await query
+          .map((row) => PokemonWithEvolutionModel(
+                species: row.readTable(speciesSubquery),
+                evolution: row.readTableOrNull(database.pokemonEvolutions),
+                evolutionTrigger:
+                    row.readTableOrNull(database.evolutionTriggers),
+              ))
+          .getSingleOrNull();
+    }
+
+    final evolutions = <PokemonWithEvolutionModel>[];
+
+    // current evolution
+    final currentEvolution = await getEvolution(
+      Subquery(
+        database.select(database.pokemonSpecies)
+          ..where((tbl) => tbl.id.equals(baseSpecies.id)),
+        'ps',
+      ),
+      database.pokemonSpecies.id,
+      database.pokemonEvolutions.evolvedSpeciesId,
+    );
+    if (currentEvolution != null) {
+      evolutions.add(currentEvolution);
+    }
+
+    // find forward evolutions
+    var baseSpeciesId = baseSpecies.id;
+    while (true) {
+      final result = await getEvolution(
+        Subquery(
+          database.select(database.pokemonSpecies)
+            ..where((tbl) => tbl.evolvesFromSpeciesId.equals(baseSpeciesId)),
+          'ps',
+        ),
+        database.pokemonSpecies.id,
+        database.pokemonEvolutions.evolvedSpeciesId,
+      );
+
+      if (result == null) {
+        break;
+      }
+
+      evolutions.add(result);
+      baseSpeciesId = result.species.id;
+    }
+
+    // find backward evolutions
+    var evolveFromSpeciesId = baseSpecies.evolvesFromSpeciesId;
+    while (true) {
+      if (evolveFromSpeciesId == null) {
+        break;
+      }
+
+      final result = await getEvolution(
+        Subquery(
+          database.select(database.pokemonSpecies)
+            ..where((tbl) => tbl.id.equals(evolveFromSpeciesId!)),
+          'ps',
+        ),
+        database.pokemonSpecies.evolvesFromSpeciesId,
+        database.pokemonEvolutions.evolvedSpeciesId,
+      );
+
+      if (result == null) {
+        break;
+      }
+
+      evolutions.add(result);
+      evolveFromSpeciesId = result.species.evolvesFromSpeciesId;
+    }
+
+    // sort by id ascending
+    evolutions.sort((a, b) => a.species.id.compareTo(b.species.id));
+
+    return evolutions;
   }
 
   @override

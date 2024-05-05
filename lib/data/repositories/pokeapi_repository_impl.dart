@@ -5,6 +5,7 @@ import 'package:flutterdex/domain/entities/pokemon.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail.dart';
+import 'package:flutterdex/domain/entities/pokemon_evolution.dart';
 import 'package:flutterdex/domain/entities/pokemon_generation.dart';
 import 'package:flutterdex/domain/entities/pokemon_species.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
@@ -69,6 +70,8 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
           await localSource.getPokemonAbilities(id: id);
       final pokemonWithStats = await localSource.getPokemonStats(id: id);
       final pokemonWithSpecies = await localSource.getPokemonSpecies(id: id);
+      final pokemonEvolutions =
+          await localSource.getPokemonSpeciesEvolutions(id: id);
 
       final pokemonEntity = Pokemon(
         id: pokemon.id,
@@ -107,6 +110,25 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         captureRate: pokemonWithSpecies.species.captureRate,
         baseHappiness: pokemonWithSpecies.species.baseHappiness,
       );
+      final evolutionEntities = pokemonEvolutions
+          .map(
+            (e) => PokemonEvolution(
+              id: e.species.id,
+              name: e.species.name,
+              trigger: EvolutionTrigger.values
+                  .where((el) => el.index == e.evolutionTrigger?.id)
+                  .firstOrNull,
+              minLevel: e.evolution?.minLevel,
+              timeOfDay: e.evolution?.timeOfDay,
+              minHappiness: e.evolution?.minHappiness,
+              minAffection: e.evolution?.minAffection,
+              relativePhysicalStats: e.evolution?.relativePhysicalStats,
+              minBeauty: e.evolution?.minBeauty,
+              needsOverworldRain: e.evolution?.needsOverworldRain ?? false,
+              turnUpsideDown: e.evolution?.turnUpsideDown ?? false,
+            ),
+          )
+          .toList();
 
       return right(PokemonDetail(
         id: pokemonWithStats.first.pokemon.id,
@@ -114,6 +136,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         species: speciesEntity,
         abilities: abilityEntities,
         stats: statEntities,
+        evolutions: evolutionEntities,
       ));
     } on Exception catch (e) {
       return left(UnknownFailure(message: e.toString(), cause: e));

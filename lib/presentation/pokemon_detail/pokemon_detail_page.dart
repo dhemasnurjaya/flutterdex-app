@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_info.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_evolution_widget.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
@@ -197,7 +196,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
 
       final pokemonStats = _buildAboutItem(
         title: 'Base Stats',
-        child: PokemonStatsInfo(
+        child: PokemonStatsWidget(
           pokemonStats: state.pokemonDetail.stats,
           baseColor: widget.baseColor,
         ),
@@ -219,6 +218,20 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
                 .toList()),
       );
 
+      final pokemonEvolutions = _buildAboutItem(
+        title: 'Evolutions',
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: state.pokemonDetail.evolutions.map<Widget>((e) {
+            return PokemonEvolutionWidget(
+              pokemonEvolution: e,
+              highlighted: e.id == state.pokemonDetail.pokemon.id,
+              baseColor: widget.baseColor,
+            );
+          }).toList(),
+        ),
+      );
+
       body = FadeTransition(
         opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
         child: Column(
@@ -228,6 +241,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             pokemonInfoGrid,
             pokemonStats,
             pokemonAbilities,
+            pokemonEvolutions,
           ],
         ),
       );
