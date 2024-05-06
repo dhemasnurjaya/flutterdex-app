@@ -123,7 +123,7 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
           ..limit(1))
         .getSingle();
 
-    Future<PokemonWithEvolutionModel?> getEvolution(
+    Future<List<PokemonWithEvolutionModel>> getEvolution(
       Subquery<PokemonSpeciesModel> speciesSubquery,
       GeneratedColumn<int> speciesColumn,
       GeneratedColumn<int> speciesColumnEqualTo,
@@ -148,7 +148,7 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
                 evolutionTrigger:
                     row.readTableOrNull(database.evolutionTriggers),
               ))
-          .getSingleOrNull();
+          .get();
     }
 
     final evolutions = <PokemonWithEvolutionModel>[];
@@ -163,8 +163,8 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
       database.pokemonSpecies.id,
       database.pokemonEvolutions.evolvedSpeciesId,
     );
-    if (currentEvolution != null) {
-      evolutions.add(currentEvolution);
+    if (currentEvolution.isEmpty) {
+      evolutions.addAll(currentEvolution);
     }
 
     // find forward evolutions
@@ -180,11 +180,11 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
         database.pokemonEvolutions.evolvedSpeciesId,
       );
 
-      if (result == null) {
+      if (result.isEmpty) {
         break;
       }
 
-      evolutions.add(result);
+      evolutions.addAll(result);
       baseSpeciesId = result.species.id;
     }
 
@@ -205,11 +205,11 @@ class PokeApiSqliteLocalSourceImpl implements PokeApiLocalSource {
         database.pokemonEvolutions.evolvedSpeciesId,
       );
 
-      if (result == null) {
+      if (result.isEmpty) {
         break;
       }
 
-      evolutions.add(result);
+      evolutions.addAll(result);
       evolveFromSpeciesId = result.species.evolvesFromSpeciesId;
     }
 
