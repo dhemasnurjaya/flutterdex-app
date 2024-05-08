@@ -4,8 +4,6 @@ import 'package:flutterdex/core/data/local/config.dart';
 import 'package:flutterdex/core/data/local/theme_mode_config.dart';
 import 'package:flutterdex/core/network/network.dart';
 import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_database.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_local_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
@@ -25,7 +23,6 @@ void setup() {
   getIt.registerLazySingleton<Network>(() => NetworkImpl());
 
   // poke api database
-  getIt.registerLazySingleton<PokeApiDatabase>(() => PokeApiDatabase());
   getIt.registerSingletonAsync<Database>(
     () async => await PokeapiDatabase().I,
   );
@@ -45,11 +42,6 @@ void setup() {
   );
 
   // data sources
-  getIt.registerLazySingleton<PokeApiLocalSource>(
-    () => PokeApiSqliteLocalSourceImpl(
-      database: getIt(),
-    ),
-  );
   getIt.registerSingletonAsync<PokeapiLocalSource>(
     () async => PokeapiLocalSourceImpl(
       database: getIt(),
@@ -61,7 +53,6 @@ void setup() {
   getIt.registerLazySingleton<PokeapiRepository>(
     () => PokeapiRepositoryImpl(
       localSource: getIt(),
-      localSourceVanilla: getIt(),
     ),
   );
 

@@ -1,6 +1,5 @@
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_local_source.dart';
 import 'package:flutterdex/domain/entities/vanilla/pokemon_abilities.dart';
 import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
@@ -10,12 +9,10 @@ import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class PokeapiRepositoryImpl implements PokeapiRepository {
-  final PokeApiLocalSource localSource;
-  final PokeapiLocalSource localSourceVanilla;
+  final PokeapiLocalSource localSource;
 
   PokeapiRepositoryImpl({
     required this.localSource,
-    required this.localSourceVanilla,
   });
 
   @override
@@ -24,7 +21,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
     int offset = 0,
   }) async {
     try {
-      final result = await localSourceVanilla.getPokemonList(
+      final result = await localSource.getPokemonList(
         limit: limit,
         offset: offset,
       );
@@ -58,7 +55,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
     required int id,
   }) async {
     try {
-      final result = await localSourceVanilla.getPokemon(id: id);
+      final result = await localSource.getPokemon(id: id);
 
       double heightInKg = result.height / 10;
       double weightInMeter = result.weight / 10;

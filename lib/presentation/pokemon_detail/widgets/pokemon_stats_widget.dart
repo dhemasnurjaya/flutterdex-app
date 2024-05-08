@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterdex/domain/entities/pokemon_stat.dart';
+import 'package:flutterdex/domain/entities/vanilla/pokemon_stat.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
@@ -27,13 +27,13 @@ class PokemonStatsWidget extends StatelessWidget {
             SizedBox(
               width: 36,
               child: Text(
-                stat.baseStat.toString(),
+                stat.value.toString(),
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             Expanded(
               child: LinearProgressIndicator(
-                value: stat.baseStat / 255,
+                value: stat.effortValue / 255,
                 minHeight: 14,
                 color: darken(baseColor, 20),
                 backgroundColor: lighten(baseColor, 70),

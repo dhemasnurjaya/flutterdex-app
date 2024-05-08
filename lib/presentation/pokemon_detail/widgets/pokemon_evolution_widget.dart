@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutterdex/domain/entities/pokemon_evolution.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
 class PokemonEvolutionWidget extends StatelessWidget {
-  final PokemonEvolution pokemonEvolution;
+  // final PokemonEvolution pokemonEvolution;
   final bool highlighted;
   final Color baseColor;
 
   const PokemonEvolutionWidget({
-    required this.pokemonEvolution,
+    // required this.pokemonEvolution,
     required this.highlighted,
     required this.baseColor,
     super.key,
@@ -19,7 +18,7 @@ class PokemonEvolutionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pokemonName = Text(
-      pokemonEvolution.name.toTitleCase(),
+      '...'.toTitleCase(),
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -38,9 +37,9 @@ class PokemonEvolutionWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              PokemonSprite(
-                pokemonEvolution.id,
-                padding: const EdgeInsets.all(8),
+              const PokemonSprite(
+                0,
+                padding: EdgeInsets.all(8),
               ),
               const SizedBox(width: 4),
               Column(
@@ -59,13 +58,13 @@ class PokemonEvolutionWidget extends StatelessWidget {
   }
 
   Widget _buildEvolutionInfo() {
-    if (pokemonEvolution.trigger != null) {
-      if (pokemonEvolution.trigger == EvolutionTrigger.levelUp) {
-        return Text(
-          'Level ${pokemonEvolution.minLevel}',
-        );
-      }
-    }
+    // if (pokemonEvolution.trigger != null) {
+    //   if (pokemonEvolution.trigger == EvolutionTrigger.levelUp) {
+    //     return Text(
+    //       'Level ${pokemonEvolution.minLevel}',
+    //     );
+    //   }
+    // }
 
     return const SizedBox();
   }
