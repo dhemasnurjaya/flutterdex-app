@@ -1,7 +1,7 @@
-import 'package:flutterdex/data/models/vanilla/pokemon_ability_model.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_basic_model.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_detail_model.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_stat_model.dart';
+import 'package:flutterdex/data/models/pokemon_ability_model.dart';
+import 'package:flutterdex/data/models/pokemon_basic_model.dart';
+import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class PokeapiLocalSource {

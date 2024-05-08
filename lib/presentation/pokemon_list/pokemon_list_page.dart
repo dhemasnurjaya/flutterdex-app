@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/widgets/error_retry_widget.dart';
 import 'package:flutterdex/core/router/app_router.dart';
-import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_card.dart';

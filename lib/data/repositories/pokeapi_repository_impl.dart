@@ -1,10 +1,10 @@
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_local_source.dart';
-import 'package:flutterdex/domain/entities/vanilla/pokemon_abilities.dart';
-import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
-import 'package:flutterdex/domain/entities/vanilla/pokemon_detail_info.dart';
-import 'package:flutterdex/domain/entities/vanilla/pokemon_stat.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
+import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 

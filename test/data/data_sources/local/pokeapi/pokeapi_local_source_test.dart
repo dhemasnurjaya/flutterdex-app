@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_local_source.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_ability_model.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_basic_model.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_detail_model.dart';
-import 'package:flutterdex/data/models/vanilla/pokemon_stat_model.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/models/pokemon_ability_model.dart';
+import 'package:flutterdex/data/models/pokemon_basic_model.dart';
+import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 

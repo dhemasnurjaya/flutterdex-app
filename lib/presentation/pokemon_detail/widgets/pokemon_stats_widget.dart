@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterdex/domain/entities/vanilla/pokemon_stat.dart';
+import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
