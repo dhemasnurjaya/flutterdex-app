@@ -6,6 +6,8 @@ import 'package:flutterdex/core/network/network.dart';
 import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_database.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi_vanilla/pokeapi_local_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
@@ -14,6 +16,7 @@ import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
 
 final getIt = GetIt.instance;
 
@@ -23,6 +26,9 @@ void setup() {
 
   // poke api database
   getIt.registerLazySingleton<PokeApiDatabase>(() => PokeApiDatabase());
+  getIt.registerSingletonAsync<Database>(
+    () async => await PokeapiDatabase().I,
+  );
 
   // shared preferences
   getIt.registerSingletonAsync<SharedPreferences>(
@@ -44,11 +50,18 @@ void setup() {
       database: getIt(),
     ),
   );
+  getIt.registerSingletonAsync<PokeapiLocalSource>(
+    () async => PokeapiLocalSourceImpl(
+      database: getIt(),
+    ),
+    dependsOn: [Database],
+  );
 
   // repositories
   getIt.registerLazySingleton<PokeapiRepository>(
     () => PokeapiRepositoryImpl(
       localSource: getIt(),
+      localSourceVanilla: getIt(),
     ),
   );
 

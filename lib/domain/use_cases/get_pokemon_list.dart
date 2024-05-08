@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutterdex/core/domain/use_case.dart';
 import 'package:flutterdex/core/error/failure.dart';
-import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -15,7 +15,7 @@ class GetPokemonList
   Future<Either<Failure, List<PokemonBasicInfo>>> execute(
     GetPokemonListParams params,
   ) async {
-    return repository.getPokemonBasicInfoList(
+    return repository.getPokemonList(
       limit: params.limit,
       offset: params.offset,
     );

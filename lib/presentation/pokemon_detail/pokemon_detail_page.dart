@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_evolution_widget.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
@@ -74,7 +74,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     final pokemonTypes = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: widget.pokemon.types
-          .map<Widget>((type) => PokemonTypeChip(type.name))
+          .map<Widget>((type) => PokemonTypeChip(type))
           .toList(),
     );
     final pokemonNumber = Text(

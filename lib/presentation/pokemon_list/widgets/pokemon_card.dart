@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
@@ -27,9 +27,8 @@ class PokemonCard extends StatelessWidget {
     );
     final pokemonTypes = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: pokemon.types
-          .map<Widget>((type) => PokemonTypeChip(type.name))
-          .toList(),
+      children:
+          pokemon.types.map<Widget>((type) => PokemonTypeChip(type)).toList(),
     );
     final pokemonNumber = Stack(
       alignment: Alignment.center,
@@ -44,7 +43,7 @@ class PokemonCard extends StatelessWidget {
         Text(
           '#${pokemon.id.toString().padLeft(4, '0')}',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: darken(pokemonColors[pokemon.types.first.name]!, 25),
+                color: darken(pokemonColors[pokemon.types.first]!, 25),
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -53,10 +52,10 @@ class PokemonCard extends StatelessWidget {
     final pokemonCard = Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: pokemonColors[pokemon.types.first.name],
+        color: pokemonColors[pokemon.types.first],
         boxShadow: [
           BoxShadow(
-            color: darken(pokemonColors[pokemon.types.first.name]!, 20),
+            color: darken(pokemonColors[pokemon.types.first]!, 20),
             blurRadius: 4,
           )
         ],
