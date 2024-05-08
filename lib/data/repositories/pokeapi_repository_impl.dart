@@ -88,18 +88,29 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
+  Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
+    required int id,
+  }) async {
+    try {
+      final result = await localSource.getPokemonStats(id: id);
+      final entities = result.map((e) => PokemonStat(
+            name: e.name,
+            value: e.value,
+            effortValue: e.effortValue,
+          ));
+      return right(entities.toList());
+    } on Exception catch (e) {
+      return left(
+        UnknownFailure(message: e.toString(), cause: e),
+      );
+    }
+  }
+
+  @override
   Future<Either<Failure, List<PokemonAbility>>> getPokemonAbilities({
     required int id,
   }) async {
     // TODO: implement getPokemonAbilities
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
-    required int id,
-  }) async {
-    // TODO: implement getPokemonStats
     throw UnimplementedError();
   }
 }

@@ -4,7 +4,8 @@ import 'package:flutterdex/core/presentation/bloc/app_bloc_observer.dart';
 import 'package:flutterdex/core/presentation/theme/app_theme.dart';
 import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
 import 'package:flutterdex/core/router/app_router.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 
 import 'injection_container.dart' as ic;
@@ -39,7 +40,10 @@ class FlutterdexApp extends StatelessWidget {
         ),
         BlocProvider<PokemonDetailBloc>(
           create: (context) => ic.getIt(),
-        )
+        ),
+        BlocProvider<PokemonStatsBloc>(
+          create: (context) => ic.getIt(),
+        ),
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeMode>(
         builder: (context, state) {

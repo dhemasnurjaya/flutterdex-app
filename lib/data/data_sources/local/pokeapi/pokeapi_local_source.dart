@@ -189,7 +189,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         ON pstat.pokemon_id = p.id 
       JOIN
         pokemon_v2_stat stat
-        ON pstat.id = stat.id
+        ON pstat.stat_id = stat.id
       JOIN
         pokemon_v2_statname statn
         ON stat.id = statn.stat_id

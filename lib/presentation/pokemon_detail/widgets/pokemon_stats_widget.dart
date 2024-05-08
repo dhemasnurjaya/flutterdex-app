@@ -33,7 +33,7 @@ class PokemonStatsWidget extends StatelessWidget {
             ),
             Expanded(
               child: LinearProgressIndicator(
-                value: stat.effortValue / 255,
+                value: stat.value / 255,
                 minHeight: 14,
                 color: darken(baseColor, 20),
                 backgroundColor: lighten(baseColor, 70),

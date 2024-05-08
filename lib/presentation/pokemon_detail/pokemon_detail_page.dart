@@ -2,7 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_info_widget.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
@@ -96,6 +99,30 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         ],
       ),
     );
+    final foreground = SingleChildScrollView(
+      padding: const EdgeInsets.only(top: 350),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, -8),
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildPokemonDetailInfo(),
+              _buildPokemonStats(),
+            ],
+          ),
+        ),
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -111,153 +138,78 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         backgroundColor: widget.baseColor,
         surfaceTintColor: Colors.transparent,
       ),
-      body: BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
-        listener: (context, state) {
-          if (state is PokemonDetailLoadedState) {
-            // start fade in animation
-            _dataAnimationCtl?.forward();
-          }
-        },
-        builder: (context, state) {
-          return Stack(
-            children: [
-              background,
-              _buildForeground(state),
-            ],
-          );
-        },
+      body: Stack(
+        children: [
+          background,
+          foreground,
+        ],
       ),
     );
   }
 
-  Widget _buildForeground(PokemonDetailState state) {
+  Widget _buildPokemonDetailInfo() {
     Widget body = Container(height: MediaQuery.of(context).size.height / 1.5);
 
-    if (state is PokemonDetailLoadedState) {
-      final pokemonDescription = _buildAboutItem(
-        padding: const EdgeInsets.all(8),
-        title: 'Description',
-        child: Text(
-          state.pokemonDetail.description
-              .replaceAll(RegExp(r'\s+'), ' ')
-              .trim(),
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-      );
-
-      final pokemonInfoGrid = _buildAboutItem(
-        titlePadding: const EdgeInsets.symmetric(horizontal: 8),
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        title: 'Basic Info',
-        child: GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 3,
-          children: [
-            _buildInfoGridItem(
-              'Height',
-              '${state.pokemonDetail.heightInMeter}',
-              'm',
+    return BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
+      listener: (context, state) {
+        if (state is PokemonDetailLoadedState) {
+          // start fade in animation
+          _dataAnimationCtl?.forward();
+        }
+      },
+      builder: (context, state) {
+        if (state is PokemonDetailLoadedState) {
+          final pokemonDescription = _buildAboutItem(
+            padding: const EdgeInsets.all(8),
+            title: 'Description',
+            child: Text(
+              state.pokemonDetail.description
+                  .replaceAll(RegExp(r'\s+'), ' ')
+                  .trim(),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            _buildInfoGridItem(
-              'Weight',
-              '${state.pokemonDetail.weightInKg}',
-              'kg',
-            ),
-            _buildInfoGridItem(
-              'Happiness',
-              state.pokemonDetail.baseHappinessPercentage.toStringAsFixed(1),
-              '%',
-            ),
-            _buildInfoGridItem(
-              'Capture Rate',
-              state.pokemonDetail.capturePercentage.toStringAsFixed(1),
-              '%',
-            ),
-            _buildInfoGridItem(
-              'Male Rate',
-              state.pokemonDetail.malePercentage?.toStringAsFixed(1) ?? '-',
-              '%',
-            ),
-            _buildInfoGridItem(
-              'Female Rate',
-              state.pokemonDetail.femalePercentage?.toStringAsFixed(1) ?? '-',
-              '%',
-            ),
-          ],
-        ),
-      );
+          );
 
-      // final pokemonStats = _buildAboutItem(
-      //   title: 'Base Stats',
-      //   child: PokemonStatsWidget(
-      //     pokemonStats: state.pokemonDetail.stats,
-      //     baseColor: widget.baseColor,
-      //   ),
-      //   padding: const EdgeInsets.all(8),
-      // );
+          final pokemonInfoGrid = _buildAboutItem(
+            titlePadding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            title: 'Basic Info',
+            child: PokemonInfoWidget(
+              pokemonDetailInfo: state.pokemonDetail,
+              baseColor: widget.baseColor,
+            ),
+          );
 
-      // final pokemonAbilities = _buildAboutItem(
-      //   titlePadding: const EdgeInsets.symmetric(horizontal: 8),
-      //   padding: const EdgeInsets.symmetric(vertical: 8),
-      //   title: 'Abilities',
-      //   child: Column(
-      //       children: state.pokemonDetail.abilities
-      //           .map<Widget>((e) => ListTile(
-      //                 contentPadding: const EdgeInsets.all(8),
-      //                 title: Text(e.name.toTitleCase(splitter: '-')),
-      //                 subtitle: Text(e.description),
-      //                 trailing: Text(e.generation.name),
-      //               ))
-      //           .toList()),
-      // );
+          body = Column(
+            children: [
+              pokemonDescription,
+              pokemonInfoGrid,
+            ],
+          );
+        }
 
-      // final pokemonEvolutions = _buildAboutItem(
-      //   title: 'Evolutions',
-      //   padding: const EdgeInsets.all(8),
-      //   child: Column(
-      //     children: state.pokemonDetail.evolutions.map<Widget>((e) {
-      //       return PokemonEvolutionWidget(
-      //         pokemonEvolution: e,
-      //         highlighted: e.id == state.pokemonDetail.pokemon.id,
-      //         baseColor: widget.baseColor,
-      //       );
-      //     }).toList(),
-      //   ),
-      // );
+        return body;
+      },
+    );
+  }
 
-      body = FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            pokemonDescription,
-            pokemonInfoGrid,
-            // pokemonStats,
-            // pokemonAbilities,
-            // pokemonEvolutions,
-          ],
-        ),
-      );
-    }
+  Widget _buildPokemonStats() {
+    return BlocConsumer<PokemonStatsBloc, PokemonStatsState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is PokemonStatsLoadedState) {
+          return _buildAboutItem(
+            title: 'Base Stats',
+            child: PokemonStatsWidget(
+              pokemonStats: state.pokemonStats,
+              baseColor: widget.baseColor,
+            ),
+            padding: const EdgeInsets.all(8),
+          );
+        }
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 350),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(0, -8),
-              ),
-            ]),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: body,
-        ),
-      ),
+        return const SizedBox();
+      },
     );
   }
 
@@ -297,45 +249,6 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     );
   }
 
-  Widget _buildInfoGridItem(String title, String value, String unit) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-          border: Border.all(
-        color: lighten(widget.baseColor, 10),
-      )),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 8,
-            left: 8,
-            right: 8,
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Center(
-            child: Text(
-              value,
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-          ),
-          Positioned(
-            bottom: 8,
-            left: 8,
-            right: 8,
-            child: Text(
-              unit,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -356,6 +269,11 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     // get pokemon detail
     BlocProvider.of<PokemonDetailBloc>(context).add(
       GetPokemonDetailEvent(id: widget.pokemon.id),
+    );
+
+    // get pokemon stats
+    BlocProvider.of<PokemonStatsBloc>(context).add(
+      GetPokemonStatsEvent(id: widget.pokemon.id),
     );
   }
 
