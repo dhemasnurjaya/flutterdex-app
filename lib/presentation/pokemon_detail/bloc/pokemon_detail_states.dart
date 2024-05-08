@@ -19,7 +19,7 @@ class PokemonDetailLoadingState extends PokemonDetailState {
 }
 
 class PokemonDetailLoadedState extends PokemonDetailState {
-  final PokemonDetail pokemonDetail;
+  final PokemonDetailInfo pokemonDetail;
 
   const PokemonDetailLoadedState({required this.pokemonDetail});
 

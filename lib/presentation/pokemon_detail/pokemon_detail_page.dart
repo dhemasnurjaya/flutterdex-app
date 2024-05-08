@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/vanilla/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_evolution_widget.dart';
-import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
@@ -140,7 +138,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         padding: const EdgeInsets.all(8),
         title: 'Description',
         child: Text(
-          state.pokemonDetail.species.description
+          state.pokemonDetail.description
               .replaceAll(RegExp(r'\s+'), ' ')
               .trim(),
           style: Theme.of(context).textTheme.bodyLarge,
@@ -158,79 +156,75 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           children: [
             _buildInfoGridItem(
               'Height',
-              '${state.pokemonDetail.pokemon.height! / 10}',
+              '${state.pokemonDetail.heightInMeter}',
               'm',
             ),
             _buildInfoGridItem(
               'Weight',
-              '${state.pokemonDetail.pokemon.weight! / 10}',
+              '${state.pokemonDetail.weightInKg}',
               'kg',
             ),
             _buildInfoGridItem(
               'Happiness',
-              state.pokemonDetail.species.baseHappinessPercentage
-                  .toStringAsFixed(1),
+              state.pokemonDetail.baseHappinessPercentage.toStringAsFixed(1),
               '%',
             ),
             _buildInfoGridItem(
               'Capture Rate',
-              state.pokemonDetail.species.capturePercentage.toStringAsFixed(1),
+              state.pokemonDetail.capturePercentage.toStringAsFixed(1),
               '%',
             ),
             _buildInfoGridItem(
               'Male Rate',
-              state.pokemonDetail.species.malePercentage?.toStringAsFixed(1) ??
-                  '-',
+              state.pokemonDetail.malePercentage?.toStringAsFixed(1) ?? '-',
               '%',
             ),
             _buildInfoGridItem(
               'Female Rate',
-              state.pokemonDetail.species.femalePercentage
-                      ?.toStringAsFixed(1) ??
-                  '-',
+              state.pokemonDetail.femalePercentage?.toStringAsFixed(1) ?? '-',
               '%',
             ),
           ],
         ),
       );
 
-      final pokemonStats = _buildAboutItem(
-        title: 'Base Stats',
-        child: PokemonStatsWidget(
-          pokemonStats: state.pokemonDetail.stats,
-          baseColor: widget.baseColor,
-        ),
-        padding: const EdgeInsets.all(8),
-      );
+      // final pokemonStats = _buildAboutItem(
+      //   title: 'Base Stats',
+      //   child: PokemonStatsWidget(
+      //     pokemonStats: state.pokemonDetail.stats,
+      //     baseColor: widget.baseColor,
+      //   ),
+      //   padding: const EdgeInsets.all(8),
+      // );
 
-      final pokemonAbilities = _buildAboutItem(
-        titlePadding: const EdgeInsets.symmetric(horizontal: 8),
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        title: 'Abilities',
-        child: Column(
-            children: state.pokemonDetail.abilities
-                .map<Widget>((e) => ListTile(
-                      contentPadding: const EdgeInsets.all(8),
-                      title: Text(e.name.toTitleCase(splitter: '-')),
-                      subtitle: Text(e.description),
-                      trailing: Text(e.generation.name),
-                    ))
-                .toList()),
-      );
+      // final pokemonAbilities = _buildAboutItem(
+      //   titlePadding: const EdgeInsets.symmetric(horizontal: 8),
+      //   padding: const EdgeInsets.symmetric(vertical: 8),
+      //   title: 'Abilities',
+      //   child: Column(
+      //       children: state.pokemonDetail.abilities
+      //           .map<Widget>((e) => ListTile(
+      //                 contentPadding: const EdgeInsets.all(8),
+      //                 title: Text(e.name.toTitleCase(splitter: '-')),
+      //                 subtitle: Text(e.description),
+      //                 trailing: Text(e.generation.name),
+      //               ))
+      //           .toList()),
+      // );
 
-      final pokemonEvolutions = _buildAboutItem(
-        title: 'Evolutions',
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: state.pokemonDetail.evolutions.map<Widget>((e) {
-            return PokemonEvolutionWidget(
-              pokemonEvolution: e,
-              highlighted: e.id == state.pokemonDetail.pokemon.id,
-              baseColor: widget.baseColor,
-            );
-          }).toList(),
-        ),
-      );
+      // final pokemonEvolutions = _buildAboutItem(
+      //   title: 'Evolutions',
+      //   padding: const EdgeInsets.all(8),
+      //   child: Column(
+      //     children: state.pokemonDetail.evolutions.map<Widget>((e) {
+      //       return PokemonEvolutionWidget(
+      //         pokemonEvolution: e,
+      //         highlighted: e.id == state.pokemonDetail.pokemon.id,
+      //         baseColor: widget.baseColor,
+      //       );
+      //     }).toList(),
+      //   ),
+      // );
 
       body = FadeTransition(
         opacity: Tween(begin: 0.0, end: 1.0).animate(_dataAnimationCtl!),
@@ -239,9 +233,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           children: [
             pokemonDescription,
             pokemonInfoGrid,
-            pokemonStats,
-            pokemonAbilities,
-            pokemonEvolutions,
+            // pokemonStats,
+            // pokemonAbilities,
+            // pokemonEvolutions,
           ],
         ),
       );
