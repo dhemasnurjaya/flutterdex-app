@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
-import 'package:flutterdex/utilities/string_extension.dart';
 
 class PokemonCard extends StatelessWidget {
   final PokemonBasicInfo pokemon;
@@ -19,73 +19,75 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pokemonName = Text(
-      pokemon.name.toTitleCase(),
-      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: Colors.white,
+      pokemon.name,
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: Colors.grey[800],
             fontWeight: FontWeight.bold,
           ),
     );
     final pokemonTypes = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children:
           pokemon.types.map<Widget>((type) => PokemonTypeChip(type)).toList(),
     );
-    final pokemonNumber = Stack(
-      alignment: Alignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: Image.asset(
-            'assets/images/pokeball-flat.png',
-            opacity: const AlwaysStoppedAnimation(0.05),
+    final pokemonNumber = Text(
+      pokemon.id.toString().padLeft(4, '0'),
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: darken(pokemonColors[pokemon.types.first]!, 25),
+            fontWeight: FontWeight.bold,
           ),
-        ),
-        Text(
-          '#${pokemon.id.toString().padLeft(4, '0')}',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: darken(pokemonColors[pokemon.types.first]!, 25),
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-      ],
     );
     final pokemonCard = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      clipBehavior: Clip.antiAlias,
+      // margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: pokemonColors[pokemon.types.first],
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: darken(pokemonColors[pokemon.types.first]!, 20),
-            blurRadius: 4,
+            blurRadius: 2,
           )
         ],
       ),
-      height: 100,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Row(
+          Positioned(
+            right: 0,
+            left: 0,
+            top: 0,
+            child: ClipPath(
+              clipper: const CurveClipper(),
+              child: Container(
+                height: 110,
+                decoration: BoxDecoration(
+                  color: pokemonColors[pokemon.types.first],
+                ),
+              ),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(width: 4),
               Hero(
                 tag: pokemon,
                 child: PokemonSprite(
                   pokemon.id,
                   padding: const EdgeInsets.all(8),
+                  height: 100,
                 ),
               ),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  pokemonName,
-                  pokemonTypes,
-                ],
-              ),
+              pokemonName,
+              const SizedBox(height: 8),
+              pokemonTypes,
             ],
           ),
-          pokemonNumber,
+          Positioned(
+            top: 8,
+            right: 8,
+            child: pokemonNumber,
+          ),
         ],
       ),
     );

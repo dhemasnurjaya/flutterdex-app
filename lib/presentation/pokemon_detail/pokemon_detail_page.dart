@@ -86,7 +86,21 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             fontSize: 20,
           ),
     );
-    final background = Container(
+    final appBar = SliverAppBar(
+      title: pokemonName,
+      actions: [pokemonNumber, const SizedBox(width: 16)],
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios_new_outlined,
+          color: darken(widget.baseColor, 40),
+        ),
+        onPressed: () => context.router.maybePop(),
+      ),
+      backgroundColor: widget.baseColor,
+      surfaceTintColor: Colors.transparent,
+      pinned: false,
+    );
+    final header = Container(
       padding: const EdgeInsets.only(top: 8),
       color: widget.baseColor,
       child: Column(
@@ -99,57 +113,40 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         ],
       ),
     );
-    final foreground = SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 350),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(0, -8),
-              ),
-            ]),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildPokemonDetailInfo(),
-              _buildPokemonStats(),
-            ],
-          ),
+    final body = Container(
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, -8),
+            ),
+          ]),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildPokemonDetailInfo(),
+            _buildPokemonStats(),
+          ],
         ),
       ),
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: pokemonName,
-        actions: [pokemonNumber, const SizedBox(width: 16)],
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new_outlined,
-            color: darken(widget.baseColor, 40),
-          ),
-          onPressed: () => context.router.maybePop(),
-        ),
-        backgroundColor: widget.baseColor,
-        surfaceTintColor: Colors.transparent,
-      ),
-      body: Stack(
-        children: [
-          background,
-          foreground,
+      body: CustomScrollView(
+        slivers: [
+          appBar,
+          SliverToBoxAdapter(child: header),
+          SliverToBoxAdapter(child: body),
         ],
       ),
     );
   }
 
   Widget _buildPokemonDetailInfo() {
-    Widget body = Container(height: MediaQuery.of(context).size.height / 1.5);
-
     return BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
       listener: (context, state) {
         if (state is PokemonDetailLoadedState) {
@@ -180,7 +177,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             ),
           );
 
-          body = Column(
+          return Column(
             children: [
               pokemonDescription,
               pokemonInfoGrid,
@@ -188,7 +185,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           );
         }
 
-        return body;
+        return const SizedBox();
       },
     );
   }

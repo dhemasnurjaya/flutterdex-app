@@ -32,7 +32,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
     const query = '''
       SELECT
         ps.id,
-        ps.name,
+        psn.name,
         t.name AS 'type',
         psn.genus
       FROM

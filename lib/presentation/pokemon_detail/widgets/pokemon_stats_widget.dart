@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
-import 'package:flutterdex/utilities/string_extension.dart';
 
 class PokemonStatsWidget extends StatelessWidget {
   final List<PokemonStat> pokemonStats;
@@ -18,7 +17,7 @@ class PokemonStatsWidget extends StatelessWidget {
     final statRows = pokemonStats.map((stat) {
       final statName = SizedBox(
         width: 130,
-        child: Text(stat.name.toTitleCase(splitter: '-')),
+        child: Text(stat.name),
       );
 
       final statValue = Expanded(
