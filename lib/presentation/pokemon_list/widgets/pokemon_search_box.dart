@@ -78,17 +78,19 @@ class PokemonSearchBoxDelegate extends SliverPersistentHeaderDelegate {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(8),
           bottomRight: Radius.circular(8),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black54,
-            blurRadius: isScrolledUnder ? 4 : 0,
-          )
-        ],
+        boxShadow: isScrolledUnder
+            ? [
+                const BoxShadow(
+                  color: Colors.black54,
+                  blurRadius: 4,
+                )
+              ]
+            : null,
       ),
       child: SizedBox.expand(child: child),
     );

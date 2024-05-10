@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
 class PokemonDetailPage extends StatefulWidget {
@@ -33,6 +35,25 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          _buildAppBar(),
+          SliverList.list(
+            children: [
+              _buildPokemonSprite(),
+              _buildPokemonGenus(),
+              _buildPokemonTypes(),
+              _buildPokemonDetailInfo(),
+              _buildPokemonStats(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppBar() {
     final pokemonName = Text(
       widget.pokemon.name.toTitleCase(),
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -40,19 +61,42 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             fontWeight: FontWeight.bold,
           ),
     );
-    final pokemonSprite = Stack(
-      alignment: Alignment.center,
+    final pokemonNumber = Text(
+      '#${widget.pokemon.id.toString().padLeft(4, '0')}',
+      style: GoogleFonts.outfit().copyWith(
+        color: darken(widget.baseColor, 25),
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
+    );
+
+    return SliverAppBar(
+      title: pokemonName,
+      actions: [pokemonNumber, const SizedBox(width: 16)],
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: darken(widget.baseColor, 40),
+        ),
+        onPressed: () => context.router.maybePop(),
+      ),
+      backgroundColor: widget.baseColor,
+      surfaceTintColor: Colors.transparent,
+      floating: true,
+      pinned: false,
+      elevation: 0,
+    );
+  }
+
+  Widget _buildPokemonSprite() {
+    return Stack(
+      alignment: Alignment.topCenter,
       children: [
-        RotationTransition(
-          turns: CurvedAnimation(
-            parent: Tween(begin: 0.0, end: 1.0).animate(_pokeballAnimationCtl!),
-            curve: Curves.easeInOut,
-          ),
-          child: Image.asset(
-            'assets/images/pokeball-flat.png',
-            height: 250,
-            width: 250,
-            opacity: const AlwaysStoppedAnimation(0.1),
+        ClipPath(
+          clipper: const CurveClipper(),
+          child: Container(
+            height: 140,
+            color: widget.baseColor,
           ),
         ),
         SizedBox(
@@ -62,86 +106,30 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
             tag: widget.pokemon,
             child: PokemonSprite(widget.pokemon.id),
           ),
-        )
+        ),
       ],
     );
-    final pokemonGenus = Text(
-      widget.pokemon.genus.toTitleCase(),
+  }
+
+  Widget _buildPokemonGenus() {
+    return Text(
+      widget.pokemon.genus,
+      textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: darken(widget.baseColor, 40),
             fontWeight: FontWeight.bold,
           ),
     );
-    final pokemonTypes = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: widget.pokemon.types
-          .map<Widget>((type) => PokemonTypeChip(type))
-          .toList(),
-    );
-    final pokemonNumber = Text(
-      '#${widget.pokemon.id.toString().padLeft(4, '0')}',
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: darken(widget.baseColor, 25),
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-    );
-    final appBar = SliverAppBar(
-      title: pokemonName,
-      actions: [pokemonNumber, const SizedBox(width: 16)],
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_new_outlined,
-          color: darken(widget.baseColor, 40),
-        ),
-        onPressed: () => context.router.maybePop(),
-      ),
-      backgroundColor: widget.baseColor,
-      surfaceTintColor: Colors.transparent,
-      pinned: false,
-    );
-    final header = Container(
-      padding: const EdgeInsets.only(top: 8),
-      color: widget.baseColor,
-      child: Column(
-        children: [
-          pokemonSprite,
-          const SizedBox(height: 16),
-          pokemonTypes,
-          const SizedBox(height: 4),
-          pokemonGenus,
-        ],
-      ),
-    );
-    final body = Container(
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10,
-              offset: Offset(0, -8),
-            ),
-          ]),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildPokemonDetailInfo(),
-            _buildPokemonStats(),
-          ],
-        ),
-      ),
-    );
+  }
 
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          appBar,
-          SliverToBoxAdapter(child: header),
-          SliverToBoxAdapter(child: body),
-        ],
+  Widget _buildPokemonTypes() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: widget.pokemon.types
+            .map<Widget>((type) => PokemonTypeChip(type))
+            .toList(),
       ),
     );
   }

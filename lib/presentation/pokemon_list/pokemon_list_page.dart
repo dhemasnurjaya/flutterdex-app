@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/widgets/error_retry_widget.dart';
 import 'package:flutterdex/core/router/app_router.dart';
@@ -29,31 +30,63 @@ class _PokemonListPageState extends State<PokemonListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final title = SliverPadding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Pokémon',
-              style: GoogleFonts.outfit().copyWith(
-                fontSize: 32,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Search for Pokémon by using name or National Pokédex number.',
-              style: GoogleFonts.montserrat().copyWith(
-                fontSize: 16,
-              ),
-            ),
-          ],
+    return Scaffold(
+      body: BlocListener<PokemonListBloc, PokemonListState>(
+        listener: (context, state) {
+          setState(() {
+            if (state is PokemonListLoadedState) {
+              _isLastPage = state.pokemons.isEmpty;
+              _pokemons.addAll(state.pokemons);
+            }
+
+            _isError = state is PokemonListErrorState;
+          });
+        },
+        child: SafeArea(
+          child: CustomScrollView(
+            controller: _pokemonScrollCtl,
+            slivers: [
+              _buildAppBar(),
+              _buildSubtitle(),
+              _buildSearchBox(),
+              _buildPokemonList(),
+            ],
+          ),
         ),
       ),
     );
-    const searchBox = SliverPersistentHeader(
+  }
+
+  Widget _buildAppBar() {
+    return SliverAppBar(
+      elevation: 0,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      title: Text(
+        'Pokémon',
+        style: GoogleFonts.outfit().copyWith(
+          fontSize: 32,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSubtitle() {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      sliver: SliverToBoxAdapter(
+        child: Text(
+          'Search for Pokémon by using name or National Pokédex number.',
+          style: GoogleFonts.montserrat().copyWith(
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchBox() {
+    return const SliverPersistentHeader(
       pinned: true,
       delegate: PokemonSearchBoxDelegate(
         minHeight: 72,
@@ -62,7 +95,10 @@ class _PokemonListPageState extends State<PokemonListPage> {
         child: PokemonSearchBox(),
       ),
     );
-    final pokemonList = SliverPadding(
+  }
+
+  Widget _buildPokemonList() {
+    return SliverPadding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       sliver: SliverGrid.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -96,31 +132,6 @@ class _PokemonListPageState extends State<PokemonListPage> {
             },
           );
         },
-      ),
-    );
-
-    return Scaffold(
-      body: BlocListener<PokemonListBloc, PokemonListState>(
-        listener: (context, state) {
-          setState(() {
-            if (state is PokemonListLoadedState) {
-              _isLastPage = state.pokemons.isEmpty;
-              _pokemons.addAll(state.pokemons);
-            }
-
-            _isError = state is PokemonListErrorState;
-          });
-        },
-        child: SafeArea(
-          child: CustomScrollView(
-            controller: _pokemonScrollCtl,
-            slivers: [
-              title,
-              searchBox,
-              pokemonList,
-            ],
-          ),
-        ),
       ),
     );
   }
