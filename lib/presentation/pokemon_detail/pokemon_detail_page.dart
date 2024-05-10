@@ -5,12 +5,10 @@ import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_info_widget.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_about_widget.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
-import 'package:flutterdex/utilities/color_utility.dart';
-import 'package:flutterdex/utilities/string_extension.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
@@ -42,9 +40,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           SliverList.list(
             children: [
               _buildPokemonSprite(),
+              _buildPokemonName(),
               _buildPokemonGenus(),
               _buildPokemonTypes(),
-              _buildPokemonDetailInfo(),
+              _buildPokemonAbout(),
               _buildPokemonStats(),
             ],
           ),
@@ -54,35 +53,28 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
   }
 
   Widget _buildAppBar() {
-    final pokemonName = Text(
-      widget.pokemon.name.toTitleCase(),
-      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: darken(widget.baseColor, 40),
-            fontWeight: FontWeight.bold,
-          ),
-    );
     final pokemonNumber = Text(
       '#${widget.pokemon.id.toString().padLeft(4, '0')}',
       style: GoogleFonts.outfit().copyWith(
-        color: darken(widget.baseColor, 25),
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: 18,
       ),
     );
 
     return SliverAppBar(
-      title: pokemonName,
-      actions: [pokemonNumber, const SizedBox(width: 16)],
+      title: pokemonNumber,
+      centerTitle: true,
       leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: darken(widget.baseColor, 40),
-        ),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () => context.router.maybePop(),
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.favorite_border),
+          onPressed: () => context.router.maybePop(),
+        ),
+      ],
       backgroundColor: widget.baseColor,
       surfaceTintColor: Colors.transparent,
-      floating: true,
       pinned: false,
       elevation: 0,
     );
@@ -101,7 +93,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
         ),
         SizedBox(
           height: 175,
-          width: 175,
+          width: 190,
           child: Hero(
             tag: widget.pokemon,
             child: PokemonSprite(widget.pokemon.id),
@@ -111,12 +103,46 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     );
   }
 
+  Widget _buildPokemonAbout() {
+    return BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
+      listener: (context, state) {
+        if (state is PokemonDetailLoadedState) {
+          // start fade in animation
+          _dataAnimationCtl?.forward();
+        }
+      },
+      builder: (context, state) {
+        if (state is PokemonDetailLoadedState) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: PokemonAboutWidget(
+              pokemonDetailInfo: state.pokemonDetail,
+              baseColor: widget.baseColor,
+            ),
+          );
+        }
+
+        return const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildPokemonName() {
+    return Text(
+      widget.pokemon.name,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
   Widget _buildPokemonGenus() {
     return Text(
       widget.pokemon.genus,
       textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: darken(widget.baseColor, 40),
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: Theme.of(context).disabledColor,
             fontWeight: FontWeight.bold,
           ),
     );
@@ -134,103 +160,22 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     );
   }
 
-  Widget _buildPokemonDetailInfo() {
-    return BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
-      listener: (context, state) {
-        if (state is PokemonDetailLoadedState) {
-          // start fade in animation
-          _dataAnimationCtl?.forward();
-        }
-      },
-      builder: (context, state) {
-        if (state is PokemonDetailLoadedState) {
-          final pokemonDescription = _buildAboutItem(
-            padding: const EdgeInsets.all(8),
-            title: 'Description',
-            child: Text(
-              state.pokemonDetail.description
-                  .replaceAll(RegExp(r'\s+'), ' ')
-                  .trim(),
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          );
-
-          final pokemonInfoGrid = _buildAboutItem(
-            titlePadding: const EdgeInsets.symmetric(horizontal: 8),
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            title: 'Basic Info',
-            child: PokemonInfoWidget(
-              pokemonDetailInfo: state.pokemonDetail,
-              baseColor: widget.baseColor,
-            ),
-          );
-
-          return Column(
-            children: [
-              pokemonDescription,
-              pokemonInfoGrid,
-            ],
-          );
-        }
-
-        return const SizedBox();
-      },
-    );
-  }
-
   Widget _buildPokemonStats() {
     return BlocConsumer<PokemonStatsBloc, PokemonStatsState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is PokemonStatsLoadedState) {
-          return _buildAboutItem(
-            title: 'Base Stats',
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: PokemonStatsWidget(
               pokemonStats: state.pokemonStats,
               baseColor: widget.baseColor,
             ),
-            padding: const EdgeInsets.all(8),
           );
         }
 
         return const SizedBox();
       },
-    );
-  }
-
-  Widget _buildAboutItem({
-    required String title,
-    required Widget child,
-    EdgeInsets padding = EdgeInsets.zero,
-    EdgeInsets titlePadding = EdgeInsets.zero,
-  }) {
-    return Padding(
-      padding: padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: titlePadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: darken(widget.baseColor, 20)),
-                ),
-                Divider(
-                  color: darken(widget.baseColor, 20),
-                  thickness: 0.5,
-                ),
-              ],
-            ),
-          ),
-          child,
-        ],
-      ),
     );
   }
 
