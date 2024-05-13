@@ -9,11 +9,10 @@ import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class PokeapiRepositoryImpl implements PokeapiRepository {
-  final PokeapiLocalSource localSource;
-
   PokeapiRepositoryImpl({
     required this.localSource,
   });
+  final PokeapiLocalSource localSource;
 
   @override
   Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonList({
@@ -57,14 +56,14 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
     try {
       final result = await localSource.getPokemon(id: id);
 
-      double heightInKg = result.height / 10;
-      double weightInMeter = result.weight / 10;
-      bool isGenderless = result.genderRate == -1;
-      double? femalePercentage =
+      final heightInKg = result.height / 10;
+      final weightInMeter = result.weight / 10;
+      final isGenderless = result.genderRate == -1;
+      final femalePercentage =
           isGenderless ? null : (result.genderRate / 8.0) * 100;
-      double? malePercentage = isGenderless ? null : 100 - femalePercentage!;
-      double capturePercentage = (result.captureRate / 255.0) * 100;
-      double baseHappinessPercentage = (result.baseHappiness / 255.0) * 100;
+      final malePercentage = isGenderless ? null : 100 - femalePercentage!;
+      final capturePercentage = (result.captureRate / 255.0) * 100;
+      final baseHappinessPercentage = (result.baseHappiness / 255.0) * 100;
 
       final entity = PokemonDetailInfo(
         id: result.id,
@@ -93,11 +92,13 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }) async {
     try {
       final result = await localSource.getPokemonStats(id: id);
-      final entities = result.map((e) => PokemonStat(
-            name: e.name,
-            value: e.value,
-            effortValue: e.effortValue,
-          ));
+      final entities = result.map(
+        (e) => PokemonStat(
+          name: e.name,
+          value: e.value,
+          effortValue: e.effortValue,
+        ),
+      );
       return right(entities.toList());
     } on Exception catch (e) {
       return left(
@@ -110,7 +111,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   Future<Either<Failure, List<PokemonAbility>>> getPokemonAbilities({
     required int id,
   }) async {
-    // TODO: implement getPokemonAbilities
+    // TODO(dhemas): implement getPokemonAbilities
     throw UnimplementedError();
   }
 }

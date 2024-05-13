@@ -6,9 +6,8 @@ import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class GetPokemon extends UseCase<PokemonDetailInfo, GetPokemonParams> {
-  final PokeapiRepository repository;
-
   GetPokemon({required this.repository});
+  final PokeapiRepository repository;
 
   @override
   Future<Either<Failure, PokemonDetailInfo>> execute(
@@ -19,9 +18,8 @@ class GetPokemon extends UseCase<PokemonDetailInfo, GetPokemonParams> {
 }
 
 class GetPokemonParams extends Equatable {
-  final int id;
-
   const GetPokemonParams({required this.id});
+  final int id;
 
   @override
   List<Object> get props => [id];

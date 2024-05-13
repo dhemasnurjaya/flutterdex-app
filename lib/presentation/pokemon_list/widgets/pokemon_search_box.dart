@@ -48,17 +48,16 @@ class PokemonSearchBox extends StatelessWidget {
 }
 
 class PokemonSearchBoxDelegate extends SliverPersistentHeaderDelegate {
-  final double minHeight;
-  final double maxHeight;
-  final bool pinned;
-  final Widget child;
-
   const PokemonSearchBoxDelegate({
     required this.minHeight,
     required this.maxHeight,
     required this.pinned,
     required this.child,
   });
+  final double minHeight;
+  final double maxHeight;
+  final bool pinned;
+  final Widget child;
 
   @override
   double get minExtent => minHeight;
@@ -72,7 +71,7 @@ class PokemonSearchBoxDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final bool isScrolledUnder =
+    final isScrolledUnder =
         overlapsContent || (pinned && shrinkOffset > maxExtent - minExtent);
 
     return Container(
@@ -88,7 +87,7 @@ class PokemonSearchBoxDelegate extends SliverPersistentHeaderDelegate {
                 const BoxShadow(
                   color: Colors.black54,
                   blurRadius: 4,
-                )
+                ),
               ]
             : null,
       ),

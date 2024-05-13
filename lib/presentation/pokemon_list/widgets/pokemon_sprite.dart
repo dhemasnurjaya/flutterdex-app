@@ -3,16 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutterdex/injection_container.dart';
 
 class PokemonSprite extends StatelessWidget {
-  final int pokemonId;
-  final EdgeInsets padding;
-  final double height;
-
   const PokemonSprite(
     this.pokemonId, {
     this.padding = EdgeInsets.zero,
     this.height = 120.0,
     super.key,
   });
+  final int pokemonId;
+  final EdgeInsets padding;
+  final double height;
 
   @override
   Widget build(BuildContext context) {

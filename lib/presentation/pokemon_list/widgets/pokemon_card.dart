@@ -6,15 +6,20 @@ import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 
+/// Pokemon Card Widget
+/// Used as main list item of Pokemons
 class PokemonCard extends StatelessWidget {
-  final PokemonBasicInfo pokemon;
-  final Function() onTap;
-
   const PokemonCard({
     required this.pokemon,
     required this.onTap,
     super.key,
   });
+
+  /// [PokemonBasicInfo] entity
+  final PokemonBasicInfo pokemon;
+
+  /// On Tap callback when the card is tapped
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +32,7 @@ class PokemonCard extends StatelessWidget {
     );
     final pokemonTypes = Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children:
-          pokemon.types.map<Widget>((type) => PokemonTypeChip(type)).toList(),
+      children: pokemon.types.map<Widget>(PokemonTypeChip.new).toList(),
     );
     final pokemonNumber = Text(
       pokemon.id.toString().padLeft(4, '0'),
@@ -47,7 +51,7 @@ class PokemonCard extends StatelessWidget {
           BoxShadow(
             color: darken(pokemonColors[pokemon.types.first]!, 20),
             blurRadius: 2,
-          )
+          ),
         ],
       ),
       child: Stack(

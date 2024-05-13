@@ -13,14 +13,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
 class PokemonDetailPage extends StatefulWidget {
-  final PokemonBasicInfo pokemon;
-  final Color baseColor;
-
   const PokemonDetailPage({
     required this.pokemon,
     required this.baseColor,
     super.key,
   });
+  final PokemonBasicInfo pokemon;
+  final Color baseColor;
 
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
@@ -75,7 +74,6 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       ],
       backgroundColor: widget.baseColor,
       surfaceTintColor: Colors.transparent,
-      pinned: false,
       elevation: 0,
     );
   }
@@ -153,9 +151,8 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: widget.pokemon.types
-            .map<Widget>((type) => PokemonTypeChip(type))
-            .toList(),
+        children:
+            widget.pokemon.types.map<Widget>(PokemonTypeChip.new).toList(),
       ),
     );
   }

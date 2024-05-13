@@ -7,9 +7,8 @@ import 'package:fpdart/fpdart.dart';
 
 class GetPokemonAbilities
     extends UseCase<List<PokemonAbility>, GetPokemonAbilitiesParams> {
-  final PokeapiRepository repository;
-
   GetPokemonAbilities({required this.repository});
+  final PokeapiRepository repository;
 
   @override
   Future<Either<Failure, List<PokemonAbility>>> execute(
@@ -20,9 +19,8 @@ class GetPokemonAbilities
 }
 
 class GetPokemonAbilitiesParams extends Equatable {
-  final int id;
-
   const GetPokemonAbilitiesParams({required this.id});
+  final int id;
 
   @override
   List<Object> get props => [id];

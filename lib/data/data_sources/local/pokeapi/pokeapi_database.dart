@@ -8,11 +8,11 @@ class PokeapiDatabase {
   Future<Database> get I async => _openConnection();
 
   Future<Database> _openConnection() async {
-    var databasesPath = await getDatabasesPath();
-    var path = join(databasesPath, 'pokeapi.db');
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'pokeapi.db');
 
     // Check if the database exists
-    var exists = await databaseExists(path);
+    final exists = await databaseExists(path);
 
     if (!exists) {
       // Make sure the parent directory exists
@@ -21,11 +21,13 @@ class PokeapiDatabase {
       } catch (_) {}
 
       // Copy from asset
-      ByteData data = await rootBundle.load(url.join(
-        'assets',
-        'pokeapi.sqlite3',
-      ));
-      List<int> bytes = data.buffer.asUint8List(
+      final data = await rootBundle.load(
+        url.join(
+          'assets',
+          'pokeapi.sqlite3',
+        ),
+      );
+      final List<int> bytes = data.buffer.asUint8List(
         data.offsetInBytes,
         data.lengthInBytes,
       );
@@ -35,6 +37,6 @@ class PokeapiDatabase {
     }
 
     // open the database
-    return await openDatabase(path, readOnly: true);
+    return openDatabase(path, readOnly: true);
   }
 }

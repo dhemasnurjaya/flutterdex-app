@@ -18,11 +18,10 @@ abstract class PokeapiLocalSource {
 }
 
 class PokeapiLocalSourceImpl implements PokeapiLocalSource {
-  final Database database;
-
   PokeapiLocalSourceImpl({
     required this.database,
   });
+  final Database database;
 
   @override
   Future<List<PokemonBasicModel>> getPokemonList({
@@ -61,12 +60,14 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
 
     final result = await database.rawQuery(query, [limit, offset]);
     return result
-        .map((row) => PokemonBasicModel(
-              id: row['id'] as int,
-              name: row['name'] as String,
-              type: row['type'] as String,
-              genus: row['genus'] as String,
-            ))
+        .map(
+          (row) => PokemonBasicModel(
+            id: row['id']! as int,
+            name: row['name']! as String,
+            type: row['type']! as String,
+            genus: row['genus']! as String,
+          ),
+        )
         .toList();
   }
 
@@ -101,18 +102,20 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
 
     final result = await database.rawQuery(query, [id]);
     return result
-        .map((row) => PokemonDetailModel(
-              id: row['id'] as int,
-              name: row['name'] as String,
-              height: row['height'] as int,
-              weight: row['weight'] as int,
-              genderRate: row['gender_rate'] as int,
-              captureRate: row['capture_rate'] as int,
-              baseHappiness: row['base_happiness'] as int,
-              isBaby: row['is_baby'] as int == 1,
-              hatchCounter: row['hatch_counter'] as int,
-              description: row['description'] as String,
-            ))
+        .map(
+          (row) => PokemonDetailModel(
+            id: row['id']! as int,
+            name: row['name']! as String,
+            height: row['height']! as int,
+            weight: row['weight']! as int,
+            genderRate: row['gender_rate']! as int,
+            captureRate: row['capture_rate']! as int,
+            baseHappiness: row['base_happiness']! as int,
+            isBaby: row['is_baby']! as int == 1,
+            hatchCounter: row['hatch_counter']! as int,
+            description: row['description']! as String,
+          ),
+        )
         .single;
   }
 
@@ -166,12 +169,14 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
 
     final result = await database.rawQuery(query, [id, id]);
     return result
-        .map((row) => PokemonAbilityModel(
-              isHidden: row['is_hidden'] as int == 1,
-              name: row['name'] as String,
-              description: row['description'] as String,
-              generation: row['generation'] as String,
-            ))
+        .map(
+          (row) => PokemonAbilityModel(
+            isHidden: row['is_hidden']! as int == 1,
+            name: row['name']! as String,
+            description: row['description']! as String,
+            generation: row['generation']! as String,
+          ),
+        )
         .toList();
   }
 
@@ -200,11 +205,13 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
 
     final result = await database.rawQuery(query, [id]);
     return result
-        .map((row) => PokemonStatModel(
-              name: row['name'] as String,
-              value: row['base_stat'] as int,
-              effortValue: row['effort'] as int,
-            ))
+        .map(
+          (row) => PokemonStatModel(
+            name: row['name']! as String,
+            value: row['base_stat']! as int,
+            effortValue: row['effort']! as int,
+          ),
+        )
         .toList();
   }
 }

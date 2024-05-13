@@ -8,22 +8,25 @@ part 'pokemon_detail_events.dart';
 part 'pokemon_detail_states.dart';
 
 class PokemonDetailBloc extends Bloc<PokemonDetailEvent, PokemonDetailState> {
-  final GetPokemon getPokemon;
-
   PokemonDetailBloc({required this.getPokemon})
       : super(const PokemonDetailInitialState()) {
     on<GetPokemonDetailEvent>(_onGetPokemonEvent);
   }
+  final GetPokemon getPokemon;
 
   Future<void> _onGetPokemonEvent(
-      GetPokemonDetailEvent event, Emitter<PokemonDetailState> emit) async {
+    GetPokemonDetailEvent event,
+    Emitter<PokemonDetailState> emit,
+  ) async {
     emit(const PokemonDetailLoadingState());
     final result = await getPokemon.execute(GetPokemonParams(id: event.id));
     result.fold(
-      (failure) => emit(PokemonDetailErrorState(
-        message: failure.message,
-        cause: failure.cause,
-      )),
+      (failure) => emit(
+        PokemonDetailErrorState(
+          message: failure.message,
+          cause: failure.cause,
+        ),
+      ),
       (pokemon) => emit(PokemonDetailLoadedState(pokemonDetail: pokemon)),
     );
   }

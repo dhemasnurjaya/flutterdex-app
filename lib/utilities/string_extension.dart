@@ -1,10 +1,10 @@
 extension StringExt on String {
   String toTitleCase({String splitter = ' '}) {
-    String titleCaseString = '';
+    final sb = StringBuffer();
     final words = split(splitter);
     for (final word in words) {
-      titleCaseString += '${word[0].toUpperCase()}${word.substring(1)} ';
+      sb.write('${word[0].toUpperCase()}${word.substring(1)} ');
     }
-    return titleCaseString.trim();
+    return sb.toString().trim();
   }
 }

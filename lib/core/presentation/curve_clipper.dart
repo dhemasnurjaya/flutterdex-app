@@ -1,19 +1,22 @@
 import 'package:flutter/widgets.dart';
 
 class CurveClipper extends CustomClipper<Path> {
-  final double curveHeight;
-
   const CurveClipper({this.curveHeight = 10});
+  final double curveHeight;
 
   @override
   Path getClip(Size size) {
-    Offset controlPoint = Offset(size.width / 2, size.height + curveHeight);
-    Offset endPoint = Offset(size.width, size.height - curveHeight);
+    final controlPoint = Offset(size.width / 2, size.height + curveHeight);
+    final endPoint = Offset(size.width, size.height - curveHeight);
 
-    Path path = Path()
+    final path = Path()
       ..lineTo(0, size.height - curveHeight)
       ..quadraticBezierTo(
-          controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy)
+        controlPoint.dx,
+        controlPoint.dy,
+        endPoint.dx,
+        endPoint.dy,
+      )
       ..lineTo(size.width, 0)
       ..close();
 

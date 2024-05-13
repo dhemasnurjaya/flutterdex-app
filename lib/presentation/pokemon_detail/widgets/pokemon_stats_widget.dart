@@ -3,14 +3,13 @@ import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 
 class PokemonStatsWidget extends StatelessWidget {
-  final List<PokemonStat> pokemonStats;
-  final Color baseColor;
-
   const PokemonStatsWidget({
     required this.pokemonStats,
     required this.baseColor,
     super.key,
   });
+  final List<PokemonStat> pokemonStats;
+  final Color baseColor;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class PokemonStatsWidget extends StatelessWidget {
   }
 
   String _getShortStatName(String name) {
-    name = name.toLowerCase();
+    final lowerName = name.toLowerCase();
     final shortNames = {
       'hp': 'HP',
       'attack': 'ATK',
@@ -93,6 +92,6 @@ class PokemonStatsWidget extends StatelessWidget {
       'special defense': 'SDEF',
       'speed': 'SPD',
     };
-    return shortNames[name] ?? name;
+    return shortNames[lowerName] ?? name;
   }
 }

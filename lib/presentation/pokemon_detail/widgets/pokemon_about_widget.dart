@@ -3,14 +3,14 @@ import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 
 class PokemonAboutWidget extends StatelessWidget {
-  final PokemonDetailInfo pokemonDetailInfo;
-  final Color baseColor;
-
   const PokemonAboutWidget({
     required this.pokemonDetailInfo,
     required this.baseColor,
     super.key,
   });
+
+  final PokemonDetailInfo pokemonDetailInfo;
+  final Color baseColor;
 
   @override
   Widget build(BuildContext context) {

@@ -4,16 +4,15 @@ import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 
 class PokemonEvolutionWidget extends StatelessWidget {
-  // final PokemonEvolution pokemonEvolution;
-  final bool highlighted;
-  final Color baseColor;
-
   const PokemonEvolutionWidget({
     // required this.pokemonEvolution,
     required this.highlighted,
     required this.baseColor,
     super.key,
   });
+  // final PokemonEvolution pokemonEvolution;
+  final bool highlighted;
+  final Color baseColor;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class PokemonEvolutionWidget extends StatelessWidget {
       height: 100,
       decoration: BoxDecoration(
         border: Border.all(
-          color: highlighted ? lighten(baseColor, 10) : Colors.transparent,
+          color: highlighted ? lighten(baseColor) : Colors.transparent,
         ),
       ),
       child: Row(

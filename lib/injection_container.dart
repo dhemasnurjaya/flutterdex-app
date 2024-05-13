@@ -23,11 +23,11 @@ final getIt = GetIt.instance;
 
 void setup() {
   // network
-  getIt.registerLazySingleton<Network>(() => NetworkImpl());
+  getIt.registerLazySingleton<Network>(NetworkImpl.new);
 
   // poke api database
   getIt.registerSingletonAsync<Database>(
-    () async => await PokeapiDatabase().I,
+    () async => PokeapiDatabase().I,
   );
 
   // shared preferences

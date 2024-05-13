@@ -19,22 +19,20 @@ class PokemonStatsLoadingState extends PokemonStatsState {
 }
 
 class PokemonStatsLoadedState extends PokemonStatsState {
-  final List<PokemonStat> pokemonStats;
-
   const PokemonStatsLoadedState({required this.pokemonStats});
+  final List<PokemonStat> pokemonStats;
 
   @override
   List<Object> get props => [pokemonStats];
 }
 
 class PokemonStatsErrorState extends PokemonStatsState implements ErrorState {
+  const PokemonStatsErrorState({required this.message, this.cause});
   @override
   final String message;
 
   @override
   final Exception? cause;
-
-  const PokemonStatsErrorState({required this.message, this.cause});
 
   @override
   List<Object> get props => [message];

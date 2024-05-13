@@ -1,16 +1,4 @@
 class PokemonDetailInfo {
-  final int id;
-  final String name;
-  final double heightInMeter;
-  final double weightInKg;
-  final double? malePercentage;
-  final double? femalePercentage;
-  final double capturePercentage;
-  final double baseHappinessPercentage;
-  final bool isBaby;
-  final int hatchCounter;
-  final String description;
-
   PokemonDetailInfo({
     required this.id,
     required this.name,
@@ -24,4 +12,15 @@ class PokemonDetailInfo {
     required this.hatchCounter,
     required this.description,
   });
+  final int id;
+  final String name;
+  final double heightInMeter;
+  final double weightInKg;
+  final double? malePercentage;
+  final double? femalePercentage;
+  final double capturePercentage;
+  final double baseHappinessPercentage;
+  final bool isBaby;
+  final int hatchCounter;
+  final String description;
 }

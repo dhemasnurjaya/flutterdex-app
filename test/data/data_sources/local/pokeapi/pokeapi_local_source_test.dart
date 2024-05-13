@@ -12,16 +12,18 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 Future<Database> _openConnection(File dbFile) async {
   // Check if the database exists
-  var exists = await dbFile.exists();
+  final exists = dbFile.existsSync();
   final dbPath = dbFile.absolute.path;
 
   if (!exists) {
     // Copy from asset
-    ByteData data = await rootBundle.load(url.join(
-      'assets',
-      'pokeapi.sqlite3',
-    ));
-    List<int> bytes = data.buffer.asUint8List(
+    final data = await rootBundle.load(
+      url.join(
+        'assets',
+        'pokeapi.sqlite3',
+      ),
+    );
+    final List<int> bytes = data.buffer.asUint8List(
       data.offsetInBytes,
       data.lengthInBytes,
     );
@@ -32,11 +34,10 @@ Future<Database> _openConnection(File dbFile) async {
 
   // open the database
   sqfliteFfiInit();
-  return await databaseFactoryFfi.openDatabase(
+  return databaseFactoryFfi.openDatabase(
     dbPath,
     options: OpenDatabaseOptions(
       readOnly: true,
-      singleInstance: true,
     ),
   );
 }
@@ -58,7 +59,6 @@ void main() {
   test('getPokemonList', () async {
     // arrange
     const tLimit = 3;
-    const tOffset = 0;
     const tExpectedPokemonNameList = [
       'bulbasaur',
       'bulbasaur',
@@ -71,7 +71,6 @@ void main() {
     // act
     final result = await dataSource.getPokemonList(
       limit: tLimit,
-      offset: tOffset,
     );
 
     // assert

@@ -1,15 +1,4 @@
 class PokemonDetailModel {
-  final int id;
-  final String name;
-  final int height;
-  final int weight;
-  final int genderRate;
-  final int captureRate;
-  final int baseHappiness;
-  final bool isBaby;
-  final int hatchCounter;
-  final String description;
-
   PokemonDetailModel({
     required this.id,
     required this.name,
@@ -22,4 +11,14 @@ class PokemonDetailModel {
     required this.hatchCounter,
     required this.description,
   });
+  final int id;
+  final String name;
+  final int height;
+  final int weight;
+  final int genderRate;
+  final int captureRate;
+  final int baseHappiness;
+  final bool isBaby;
+  final int hatchCounter;
+  final String description;
 }

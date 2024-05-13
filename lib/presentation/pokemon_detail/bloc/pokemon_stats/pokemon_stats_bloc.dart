@@ -8,24 +8,29 @@ part 'pokemon_stats_events.dart';
 part 'pokemon_stats_states.dart';
 
 class PokemonStatsBloc extends Bloc<PokemonStatsEvent, PokemonStatsState> {
-  final GetPokemonStats getPokemonStats;
-
   PokemonStatsBloc({required this.getPokemonStats})
       : super(const PokemonStatsInitialState()) {
     on<GetPokemonStatsEvent>(_onGetPokemonStatsEvent);
   }
+  final GetPokemonStats getPokemonStats;
 
   Future<void> _onGetPokemonStatsEvent(
-      GetPokemonStatsEvent event, Emitter<PokemonStatsState> emit) async {
+    GetPokemonStatsEvent event,
+    Emitter<PokemonStatsState> emit,
+  ) async {
     emit(const PokemonStatsLoadingState());
-    final result = await getPokemonStats.execute(GetPokemonStatsParams(
-      id: event.id,
-    ));
+    final result = await getPokemonStats.execute(
+      GetPokemonStatsParams(
+        id: event.id,
+      ),
+    );
     result.fold(
-      (failure) => emit(PokemonStatsErrorState(
-        message: failure.message,
-        cause: failure.cause,
-      )),
+      (failure) => emit(
+        PokemonStatsErrorState(
+          message: failure.message,
+          cause: failure.cause,
+        ),
+      ),
       (pokemonStats) =>
           emit(PokemonStatsLoadedState(pokemonStats: pokemonStats)),
     );
