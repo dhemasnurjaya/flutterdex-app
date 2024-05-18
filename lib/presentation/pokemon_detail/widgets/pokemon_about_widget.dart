@@ -74,12 +74,14 @@ class _PokemonAboutWidgetState extends State<PokemonAboutWidget> {
             const SizedBox(width: 4),
             Expanded(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Theme.of(context).disabledColor,
+                          height: 1,
                         ),
                   ),
                   const SizedBox(height: 4),
