@@ -90,10 +90,10 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         psft.flavor_text AS description,
         pgrd.description AS growth_rate
       FROM
-        pokemon_v2_pokemon p
-      JOIN
         pokemon_v2_pokemonspecies ps
-        ON p.pokemon_species_id = ps.id
+      JOIN
+        pokemon_v2_pokemon p
+        ON ps.id = p.pokemon_species_id
       JOIN
         pokemon_v2_pokemonspeciesflavortext psft
         ON ps.id = psft.pokemon_species_id
