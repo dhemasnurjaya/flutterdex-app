@@ -4,6 +4,7 @@ import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.
 import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
+import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
@@ -127,6 +128,62 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         ),
       );
       return right(entities.toList());
+    } on Exception catch (e) {
+      return left(
+        UnknownFailure(message: e.toString(), cause: e),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({
+    required int id,
+  }) async {
+    try {
+      final result = await localSource.getPokemonEvolutions(id: id);
+      final modelList = result.toList();
+
+      int? evolvedFromSpeciesId;
+
+      final evolutionChains = <PokemonEvolutions>[];
+      while (true) {
+        final evolutions = <PokemonEvolution>[];
+
+        for (var i = 0; i < modelList.length; i++) {
+          final e = evolvedFromSpeciesId == null
+              ? modelList[i]
+              : modelList
+                  .where((r) => r.id == evolvedFromSpeciesId)
+                  .firstOrNull;
+
+          if (e == null) {
+            break;
+          }
+
+          final pokemon = PokemonEvolution.fromModel(e);
+
+          evolvedFromSpeciesId = pokemon.evolvesFromSpeciesId;
+          evolutions.add(pokemon);
+
+          if (e.evolvesFromSpeciesId != null) {
+            modelList.remove(e);
+          }
+        }
+
+        // HACK: add remaining evolutions
+        if (modelList.length == 1) {
+          evolutions.add(PokemonEvolution.fromModel(modelList.first));
+        }
+
+        evolutionChains.add(PokemonEvolutions(evolutionChains: evolutions));
+        evolvedFromSpeciesId = null;
+
+        if (modelList.length == 1) {
+          break;
+        }
+      }
+
+      return right(evolutionChains);
     } on Exception catch (e) {
       return left(
         UnknownFailure(message: e.toString(), cause: e),

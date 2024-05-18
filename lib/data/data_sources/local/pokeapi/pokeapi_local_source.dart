@@ -1,5 +1,6 @@
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';
+import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
@@ -19,6 +20,8 @@ abstract class PokeapiLocalSource {
   Future<List<PokemonAbilityModel>> getPokemonAbilities({required int id});
 
   Future<List<PokemonEggGroupModel>> getPokemonEggGroups({required int id});
+
+  Future<List<PokemonEvolutionModel>> getPokemonEvolutions({required int id});
 }
 
 class PokeapiLocalSourceImpl implements PokeapiLocalSource {
@@ -262,6 +265,80 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         .map(
           (row) => PokemonEggGroupModel(
             name: row['name']! as String,
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Future<List<PokemonEvolutionModel>> getPokemonEvolutions({
+    required int id,
+  }) async {
+    const query = '''
+      SELECT
+        ps.id,
+        ps.is_baby,
+        psn.name,
+        ps.evolves_from_species_id,
+        et.name AS evolution_trigger,
+        pe.min_level,
+        pe.time_of_day,
+        pe.min_happiness,
+        pe.min_affection,
+        pe.min_beauty,
+        pe.relative_physical_stats,
+        pe.needs_overworld_rain,
+        pe.turn_upside_down,
+        pe.gender_id,
+        pe.known_move_id
+      FROM
+        pokemon_v2_pokemonspecies ps
+      JOIN
+        pokemon_v2_pokemonspeciesname psn
+        ON ps.id = psn.pokemon_species_id
+      LEFT JOIN
+        pokemon_v2_pokemonevolution pe
+        ON ps.id = pe.evolved_species_id
+      LEFT JOIN
+        pokemon_v2_evolutiontrigger et
+        ON pe.evolution_trigger_id = et.id
+      WHERE
+        evolution_chain_id = 
+        (
+          SELECT 
+            ec.id
+          FROM 
+            pokemon_v2_pokemonspecies sp
+          JOIN
+            pokemon_v2_evolutionchain ec
+          ON
+            sp.evolution_chain_id = ec.id
+          WHERE
+            sp.id = ?
+        ) AND
+        psn.language_id = 9
+      ORDER BY 
+        ps.is_baby ASC,
+        psn.id DESC;
+    ''';
+
+    final result = await database.rawQuery(query, [id]);
+    return result
+        .map(
+          (row) => PokemonEvolutionModel(
+            id: row['id']! as int,
+            name: row['name']! as String,
+            isBaby: row['is_baby']! as int == 1,
+            evolutionTrigger: row['evolution_trigger'] as String?,
+            evolvesFromSpeciesId: row['evolves_from_species_id'] as int?,
+            minLevel: row['min_level'] as int?,
+            timeOfDay: row['time_of_day'] as String?,
+            minHappiness: row['min_happiness'] as int?,
+            minAffection: row['min_affection'] as int?,
+            minBeauty: row['min_beauty'] as int?,
+            relativePhysicalStats: row['relative_physical_stats'] as int?,
+            needsOverworldRain: (row['needs_overworld_rain'] as int?) == 1,
+            turnUpsideDown: (row['turn_upside_down'] as int?) == 1,
           ),
         )
         .toList();
