@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_abilities_widget.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_about_widget.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
@@ -91,7 +92,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           baseColor: widget.baseColor,
         );
       case 2:
-        return Container();
+        return PokemonAbilitiesWidget(
+          pokemonId: widget.pokemon.id,
+          baseColor: widget.baseColor,
+        );
       case 3:
         return Container();
       case 4:

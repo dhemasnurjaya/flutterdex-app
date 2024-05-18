@@ -12,6 +12,7 @@ import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_list.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_stats.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
@@ -105,6 +106,11 @@ void setup() {
   getIt.registerFactory<PokemonStatsBloc>(
     () => PokemonStatsBloc(
       getPokemonStats: getIt(),
+    ),
+  );
+  getIt.registerFactory<PokemonAbilitiesBloc>(
+    () => PokemonAbilitiesBloc(
+      getPokemonAbilities: getIt(),
     ),
   );
 
