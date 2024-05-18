@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 abstract class PokeapiLocalSource {
   Future<List<PokemonModel>> getPokemonList({
+    String searchQuery = '',
     int limit = 20,
     int offset = 0,
   });
@@ -28,6 +29,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
 
   @override
   Future<List<PokemonModel>> getPokemonList({
+    String searchQuery = '',
     int limit = 20,
     int offset = 0,
   }) async {
@@ -44,6 +46,9 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
             name
           FROM 
             pokemon_v2_pokemonspecies
+          WHERE
+            name LIKE ? OR
+            id = ?
           ORDER BY id ASC 
           LIMIT ?
           OFFSET ?
@@ -61,7 +66,12 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         psn.language_id = 9;
     ''';
 
-    final result = await database.rawQuery(query, [limit, offset]);
+    final result = await database.rawQuery(query, [
+      '%$searchQuery%',
+      searchQuery,
+      limit,
+      offset,
+    ]);
     return result
         .map(
           (row) => PokemonModel(

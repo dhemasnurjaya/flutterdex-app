@@ -1,9 +1,32 @@
+import 'dart:async';
 import 'dart:math' show max;
 
 import 'package:flutter/material.dart';
 
-class PokemonSearchBox extends StatelessWidget {
-  const PokemonSearchBox({super.key});
+class PokemonSearchBox extends StatefulWidget {
+  const PokemonSearchBox({
+    required this.onSearch,
+    super.key,
+  });
+
+  final void Function(String) onSearch;
+
+  @override
+  State<PokemonSearchBox> createState() => _PokemonSearchBoxState();
+}
+
+class _PokemonSearchBoxState extends State<PokemonSearchBox> {
+  final _searchController = TextEditingController();
+  Timer? _debounce;
+  String _lastSearch = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    // listen to search changes
+    _searchController.addListener(_onSearchChanged);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +36,7 @@ class PokemonSearchBox extends StatelessWidget {
       children: [
         Expanded(
           child: TextField(
+            controller: _searchController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(8),
               filled: true,
@@ -44,6 +68,27 @@ class PokemonSearchBox extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      final searchText = _searchController.text;
+      if (_lastSearch == searchText) {
+        return;
+      }
+
+      widget.onSearch(searchText);
+      _lastSearch = searchText;
+    });
   }
 }
 

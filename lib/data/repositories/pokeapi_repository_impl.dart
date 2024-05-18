@@ -16,11 +16,13 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
   @override
   Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonList({
+    required String searchQuery,
     int limit = 20,
     int offset = 0,
   }) async {
     try {
       final result = await localSource.getPokemonList(
+        searchQuery: searchQuery,
         limit: limit,
         offset: offset,
       );

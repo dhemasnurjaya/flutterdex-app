@@ -26,6 +26,31 @@ class _PokemonListPageState extends State<PokemonListPage> {
   int _offset = 0;
   bool _isLastPage = false;
   bool _isError = false;
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    // load initial pokemons
+    _getPokemons();
+
+    // register scroll listener for lazy loading
+    _pokemonScrollCtl.addListener(() {
+      if (_pokemonScrollCtl.position.pixels ==
+          _pokemonScrollCtl.position.maxScrollExtent) {
+        // prevent load more on error
+        if (!_isError) {
+          _offset += _limit;
+        }
+
+        // load more pokemons
+        if (!_isLastPage) {
+          _getPokemons();
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +110,15 @@ class _PokemonListPageState extends State<PokemonListPage> {
   }
 
   Widget _buildSearchBox() {
-    return const SliverPersistentHeader(
+    return SliverPersistentHeader(
       pinned: true,
       delegate: PokemonSearchBoxDelegate(
         minHeight: 72,
         maxHeight: 72,
         pinned: true,
-        child: PokemonSearchBox(),
+        child: PokemonSearchBox(
+          onSearch: _onSearch,
+        ),
       ),
     );
   }
@@ -106,16 +133,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
           mainAxisSpacing: 16,
           childAspectRatio: 4 / 5,
         ),
-        itemCount: _pokemons.length + 1, // +1 for progress indicator
+        itemCount: _pokemons.length + 1, // +1 for error indicator
         itemBuilder: (context, index) {
           if (index == _pokemons.length) {
             if (_isError) {
               return ErrorRetryWidget(onTapRetry: _getPokemons);
             } else {
-              if (_isLastPage) {
-                return const SizedBox();
-              }
-              return const Center(child: CircularProgressIndicator());
+              return const SizedBox();
             }
           }
 
@@ -135,27 +159,12 @@ class _PokemonListPageState extends State<PokemonListPage> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    // load initial pokemons
-    _getPokemons();
-
-    // register scroll listener for lazy loading
-    _pokemonScrollCtl.addListener(() {
-      if (_pokemonScrollCtl.position.pixels ==
-          _pokemonScrollCtl.position.maxScrollExtent) {
-        // prevent load more on error
-        if (!_isError) {
-          _offset += _limit;
-        }
-
-        // load more pokemons
-        if (!_isLastPage) {
-          _getPokemons();
-        }
-      }
+  void _onSearch(String query) {
+    setState(() {
+      _searchQuery = query;
+      _offset = 0;
+      _pokemons.clear();
+      _getPokemons();
     });
   }
 
@@ -164,6 +173,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
           GetPokemonListEvent(
             offset: _offset,
             limit: _limit,
+            searchQuery: _searchQuery,
           ),
         );
   }

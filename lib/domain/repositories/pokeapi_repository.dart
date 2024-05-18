@@ -7,6 +7,7 @@ import 'package:fpdart/fpdart.dart';
 
 abstract class PokeapiRepository {
   Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonList({
+    required String searchQuery,
     int limit = 20,
     int offset = 0,
   });

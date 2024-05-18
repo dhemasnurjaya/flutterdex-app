@@ -60,12 +60,9 @@ void main() {
     // arrange
     const tLimit = 3;
     const tExpectedPokemonNameList = [
-      'bulbasaur',
-      'bulbasaur',
-      'ivysaur',
-      'ivysaur',
-      'venusaur',
-      'venusaur',
+      'Bulbasaur',
+      'Ivysaur',
+      'Venusaur',
     ];
 
     // act
@@ -76,12 +73,36 @@ void main() {
     // assert
     expect(result, isA<List<PokemonModel>>());
     expect(
-      result.map((e) => e.name),
+      result.map((e) => e.name).toSet(),
       tExpectedPokemonNameList,
     );
   });
 
-  test('getPokemon', () async {
+  test('getPokemonListWithQuery', () async {
+    // arrange
+    const tSearchQuery = 'bul';
+    const tExpectedPokemonNames = [
+      'Bulbasaur',
+      'Snubbull',
+      'Granbull',
+      'Tapu Bulu',
+      'Tadbulb',
+    ];
+
+    // act
+    final result = await dataSource.getPokemonList(
+      searchQuery: tSearchQuery,
+    );
+
+    // assert
+    expect(result, isA<List<PokemonModel>>());
+    expect(
+      result.map((e) => e.name).toSet(),
+      tExpectedPokemonNames,
+    );
+  });
+
+  test('getPokemonSpecies', () async {
     // arrange
     const tId = 1;
     const tExpectedPokemonName = 'bulbasaur';
