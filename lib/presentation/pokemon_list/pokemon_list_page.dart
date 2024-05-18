@@ -70,6 +70,11 @@ class _PokemonListPageState extends State<PokemonListPage> {
           child: CustomScrollView(
             controller: _pokemonScrollCtl,
             slivers: [
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 24,
+                ),
+              ),
               _buildAppBar(),
               _buildSubtitle(),
               _buildSearchBox(),
@@ -110,14 +115,18 @@ class _PokemonListPageState extends State<PokemonListPage> {
   }
 
   Widget _buildSearchBox() {
+    const padding = EdgeInsets.symmetric(vertical: 12);
     return SliverPersistentHeader(
       pinned: true,
       delegate: PokemonSearchBoxDelegate(
-        minHeight: 72,
-        maxHeight: 72,
+        minHeight: 50 + padding.vertical,
+        maxHeight: 50 + padding.vertical,
         pinned: true,
-        child: PokemonSearchBox(
-          onSearch: _onSearch,
+        child: Padding(
+          padding: padding,
+          child: PokemonSearchBox(
+            onSearch: _onSearch,
+          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' show max;
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PokemonSearchBox extends StatefulWidget {
   const PokemonSearchBox({
@@ -33,12 +34,15 @@ class _PokemonSearchBoxState extends State<PokemonSearchBox> {
     const outerRadius = 16.0;
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(8),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 16,
+              ),
               filled: true,
               fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               border: const OutlineInputBorder(
@@ -51,19 +55,21 @@ class _PokemonSearchBoxState extends State<PokemonSearchBox> {
           ),
         ),
         const SizedBox(width: 8),
-        InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(outerRadius),
-          child: Ink(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(outerRadius),
             ),
-            child: Icon(
-              Icons.settings,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
+            backgroundColor:
+                Theme.of(context).colorScheme.surfaceContainerHighest,
+            padding: EdgeInsets.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            shadowColor: Colors.transparent,
+          ),
+          child: FaIcon(
+            FontAwesomeIcons.sliders,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ],
