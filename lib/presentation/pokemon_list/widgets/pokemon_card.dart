@@ -26,7 +26,7 @@ class PokemonCard extends StatelessWidget {
     final pokemonName = Text(
       pokemon.name,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
           ),
     );
@@ -46,7 +46,7 @@ class PokemonCard extends StatelessWidget {
       // margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: darken(pokemonColors[pokemon.types.first]!, 20),

@@ -1,124 +1,203 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
+import 'package:flutterdex/utilities/string_extension.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class PokemonAboutWidget extends StatelessWidget {
+class PokemonAboutWidget extends StatefulWidget {
   const PokemonAboutWidget({
-    required this.pokemonDetailInfo,
+    required this.pokemonId,
     required this.baseColor,
     super.key,
   });
 
-  final PokemonDetailInfo pokemonDetailInfo;
+  final int pokemonId;
   final Color baseColor;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'About',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: darken(baseColor),
-              ),
-        ),
-        const SizedBox(height: 8),
-        _buildInfoRow(context),
-        _buildDescription(context),
-      ],
+  State<PokemonAboutWidget> createState() => _PokemonAboutWidgetState();
+}
+
+class _PokemonAboutWidgetState extends State<PokemonAboutWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    // get pokemon detail
+    BlocProvider.of<PokemonDetailBloc>(context).add(
+      GetPokemonDetailEvent(id: widget.pokemonId),
     );
   }
 
-  Widget _buildInfoRow(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+      builder: (context, state) {
+        if (state is PokemonDetailLoadedState) {
+          return Column(
+            children: [
+              _buildDescription(context, state.pokemonDetail),
+              _buildInfoRow(context, state.pokemonDetail),
+            ],
+          );
+        }
+
+        return const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildInfoRow(
+    BuildContext context,
+    PokemonDetailInfo pokemonDetailInfo,
+  ) {
     Widget aboutItem({
       required String title,
-      required String value,
+      required String? value,
       required String unit,
-    }) {
-      return SizedBox(
-        width: 120,
-        height: 80,
-        child: Stack(
-          children: [
-            Positioned(
-              top: 8,
-              left: 8,
-              right: 8,
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Theme.of(context).disabledColor,
-                    ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Center(
-              child: Text(
-                value,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-            Positioned(
-              bottom: 8,
-              left: 8,
-              right: 8,
-              child: Text(
-                unit,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    final divider = Container(
-      width: 0.5,
-      height: 50,
-      color: darken(baseColor, 20),
-    );
-
-    return Column(
-      children: [
+      required IconData icon,
+    }) =>
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            aboutItem(
-              title: 'Height',
-              value: pokemonDetailInfo.heightInMeter.toString(),
-              unit: 'm',
+            SizedBox(
+              height: 30,
+              width: 30,
+              child: Center(
+                child: FaIcon(
+                  icon,
+                  color: lighten(widget.baseColor),
+                ),
+              ),
             ),
-            divider,
-            aboutItem(
-              title: 'Weight',
-              value: pokemonDetailInfo.weightInKg.toString(),
-              unit: 'kg',
-            ),
-            divider,
-            aboutItem(
-              title: 'Capture Rate',
-              value: pokemonDetailInfo.capturePercentage.toStringAsFixed(1),
-              unit: '%',
+            const SizedBox(width: 4),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: Theme.of(context).disabledColor,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${value ?? '-'}$unit',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                        ),
+                  ),
+                ],
+              ),
             ),
           ],
+        );
+
+    return GridView.count(
+      crossAxisCount: 2,
+      childAspectRatio: 3 / 1,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      crossAxisSpacing: 4,
+      mainAxisSpacing: 4,
+      children: [
+        aboutItem(
+          title: 'Height',
+          value: pokemonDetailInfo.heightInMeter.toString(),
+          unit: ' m',
+          icon: FontAwesomeIcons.rulerVertical,
+        ),
+        aboutItem(
+          title: 'Weight',
+          value: pokemonDetailInfo.weightInKg.toString(),
+          unit: ' kg',
+          icon: FontAwesomeIcons.weightScale,
+        ),
+        aboutItem(
+          title: 'Male Rate',
+          value: pokemonDetailInfo.malePercentage?.toStringAsFixed(1),
+          unit: '%',
+          icon: FontAwesomeIcons.mars,
+        ),
+        aboutItem(
+          title: 'Female Rate',
+          value: pokemonDetailInfo.femalePercentage?.toStringAsFixed(1),
+          unit: '%',
+          icon: FontAwesomeIcons.venus,
+        ),
+        aboutItem(
+          title: 'Capture Rate',
+          value: pokemonDetailInfo.capturePercentage.toStringAsFixed(1),
+          unit: '%',
+          icon: FontAwesomeIcons.bullseye,
+        ),
+        aboutItem(
+          title: 'Base Happiness',
+          value: pokemonDetailInfo.baseHappinessPercentage.toStringAsFixed(1),
+          unit: '%',
+          icon: FontAwesomeIcons.faceSmileBeam,
+        ),
+        aboutItem(
+          title: 'Egg Groups',
+          value: pokemonDetailInfo.eggGroups.join(', '),
+          unit: '',
+          icon: FontAwesomeIcons.egg,
+        ),
+        aboutItem(
+          title: 'Hatch Counter',
+          value: '~${pokemonDetailInfo.hatchCounter * 255}',
+          unit: ' steps',
+          icon: FontAwesomeIcons.shoePrints,
+        ),
+        aboutItem(
+          title: 'Growth Rate',
+          value: pokemonDetailInfo.growthRate.toTitleCase(),
+          unit: '',
+          icon: FontAwesomeIcons.seedling,
         ),
       ],
     );
   }
 
-  Widget _buildDescription(BuildContext context) {
+  Widget _buildDescription(
+    BuildContext context,
+    PokemonDetailInfo pokemonDetailInfo,
+  ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Text(
         pokemonDetailInfo.description.replaceAll(RegExp(r'\s+'), ' ').trim(),
         textAlign: TextAlign.justify,
       ),
     );
   }
+}
+
+class _BottomRightClipper extends CustomClipper<Path> {
+  const _BottomRightClipper({required this.radius});
+
+  final double radius;
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height);
+    path.lineTo(size.width - radius, size.height);
+    path.quadraticBezierTo(
+      size.width,
+      size.height,
+      size.width,
+      size.height - radius,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

@@ -1,20 +1,23 @@
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
-import 'package:flutterdex/data/models/pokemon_basic_model.dart';
-import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';
+import 'package:flutterdex/data/models/pokemon_model.dart';
+import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class PokeapiLocalSource {
-  Future<List<PokemonBasicModel>> getPokemonList({
+  Future<List<PokemonModel>> getPokemonList({
     int limit = 20,
     int offset = 0,
   });
 
-  Future<PokemonDetailModel> getPokemon({required int id});
+  Future<PokemonSpeciesModel> getPokemonSpecies({required int id});
 
   Future<List<PokemonStatModel>> getPokemonStats({required int id});
 
   Future<List<PokemonAbilityModel>> getPokemonAbilities({required int id});
+
+  Future<List<PokemonEggGroupModel>> getPokemonEggGroups({required int id});
 }
 
 class PokeapiLocalSourceImpl implements PokeapiLocalSource {
@@ -24,7 +27,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
   final Database database;
 
   @override
-  Future<List<PokemonBasicModel>> getPokemonList({
+  Future<List<PokemonModel>> getPokemonList({
     int limit = 20,
     int offset = 0,
   }) async {
@@ -61,7 +64,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
     final result = await database.rawQuery(query, [limit, offset]);
     return result
         .map(
-          (row) => PokemonBasicModel(
+          (row) => PokemonModel(
             id: row['id']! as int,
             name: row['name']! as String,
             type: row['type']! as String,
@@ -72,7 +75,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
   }
 
   @override
-  Future<PokemonDetailModel> getPokemon({required int id}) async {
+  Future<PokemonSpeciesModel> getPokemonSpecies({required int id}) async {
     const query = '''
       SELECT
         p.id,
@@ -84,7 +87,8 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         ps.base_happiness,
         ps.is_baby,
         ps.hatch_counter,
-        psft.flavor_text AS 'description'
+        psft.flavor_text AS description,
+        pgrd.description AS growth_rate
       FROM
         pokemon_v2_pokemon p
       JOIN
@@ -93,9 +97,16 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       JOIN
         pokemon_v2_pokemonspeciesflavortext psft
         ON ps.id = psft.pokemon_species_id
+      JOIN
+        pokemon_v2_growthrate pgr
+        ON ps.growth_rate_id = pgr.id
+      JOIN
+        pokemon_v2_growthratedescription pgrd
+        ON pgr.id - pgrd.growth_rate_id
       WHERE
         p.id = ? AND
-        psft.language_id = 9
+        psft.language_id = 9 AND
+        pgrd.language_id = 9
       ORDER BY psft.version_id DESC
       LIMIT 1;
   ''';
@@ -103,7 +114,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
     final result = await database.rawQuery(query, [id]);
     return result
         .map(
-          (row) => PokemonDetailModel(
+          (row) => PokemonSpeciesModel(
             id: row['id']! as int,
             name: row['name']! as String,
             height: row['height']! as int,
@@ -114,6 +125,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
             isBaby: row['is_baby']! as int == 1,
             hatchCounter: row['hatch_counter']! as int,
             description: row['description']! as String,
+            growthRate: row['growth_rate']! as String,
           ),
         )
         .single;
@@ -210,6 +222,35 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
             name: row['name']! as String,
             value: row['base_stat']! as int,
             effortValue: row['effort']! as int,
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Future<List<PokemonEggGroupModel>> getPokemonEggGroups(
+      {required int id}) async {
+    const query = '''
+      SELECT
+        egn.name
+      FROM
+        pokemon_v2_pokemonegggroup peg
+      JOIN
+        pokemon_v2_egggroup eg
+        ON peg.egg_group_id = eg.id
+      JOIN
+        pokemon_v2_egggroupname egn
+        ON eg.id = egn.egg_group_id
+      WHERE
+        peg.pokemon_species_id = ? AND
+        egn.language_id = 9;
+    ''';
+
+    final result = await database.rawQuery(query, [id]);
+    return result
+        .map(
+          (row) => PokemonEggGroupModel(
+            name: row['name']! as String,
           ),
         )
         .toList();

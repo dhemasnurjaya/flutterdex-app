@@ -11,7 +11,10 @@ class PokemonDetailInfo {
     required this.isBaby,
     required this.hatchCounter,
     required this.description,
+    required this.growthRate,
+    required this.eggGroups,
   });
+
   final int id;
   final String name;
   final double heightInMeter;
@@ -23,4 +26,6 @@ class PokemonDetailInfo {
   final bool isBaby;
   final int hatchCounter;
   final String description;
+  final String growthRate;
+  final List<String> eggGroups;
 }

@@ -16,7 +16,7 @@ class PokemonSearchBox extends StatelessWidget {
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(8),
               filled: true,
-              fillColor: Theme.of(context).colorScheme.surfaceVariant,
+              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.all(Radius.circular(outerRadius)),
@@ -33,7 +33,7 @@ class PokemonSearchBox extends StatelessWidget {
           child: Ink(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(outerRadius),
             ),
             child: Icon(

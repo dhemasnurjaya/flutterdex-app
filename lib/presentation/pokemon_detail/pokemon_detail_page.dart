@@ -1,14 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_about_widget.dart';
 import 'package:flutterdex/presentation/pokemon_detail/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
+import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
@@ -26,9 +24,20 @@ class PokemonDetailPage extends StatefulWidget {
 }
 
 class _PokemonDetailPageState extends State<PokemonDetailPage>
-    with TickerProviderStateMixin {
-  AnimationController? _pokeballAnimationCtl;
-  AnimationController? _dataAnimationCtl;
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+
+  final _tabTitles = ['About', 'Stats', 'Abilities', 'Evolution', 'Moves'];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(
+      length: _tabTitles.length,
+      vsync: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +51,26 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
               _buildPokemonName(),
               _buildPokemonGenus(),
               _buildPokemonTypes(),
-              _buildPokemonAbout(),
-              _buildPokemonStats(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.startOffset,
+                  dividerHeight: 0,
+                  indicatorColor: darken(widget.baseColor),
+                  labelColor: darken(widget.baseColor),
+                  labelStyle: GoogleFonts.outfit().copyWith(
+                    fontSize: 16,
+                  ),
+                  tabs: _tabTitles.map(Text.new).toList(),
+                  onTap: (value) => setState(() {}),
+                ),
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: _getTabPage(_tabController?.index ?? 0),
+              ),
             ],
           ),
         ],
@@ -51,11 +78,35 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     );
   }
 
+  Widget _getTabPage(int index) {
+    switch (index) {
+      case 0:
+        return PokemonAboutWidget(
+          pokemonId: widget.pokemon.id,
+          baseColor: widget.baseColor,
+        );
+      case 1:
+        return PokemonStatsWidget(
+          pokemonId: widget.pokemon.id,
+          baseColor: widget.baseColor,
+        );
+      case 2:
+        return Container();
+      case 3:
+        return Container();
+      case 4:
+        return Container();
+      default:
+        return Container();
+    }
+  }
+
   Widget _buildAppBar() {
     final pokemonNumber = Text(
       '#${widget.pokemon.id.toString().padLeft(4, '0')}',
       style: GoogleFonts.outfit().copyWith(
         fontSize: 18,
+        color: Colors.black,
       ),
     );
 
@@ -63,12 +114,18 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
       title: pokemonNumber,
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+        ),
         onPressed: () => context.router.maybePop(),
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.favorite_border),
+          icon: const Icon(
+            Icons.favorite_border,
+            color: Colors.black,
+          ),
           onPressed: () => context.router.maybePop(),
         ),
       ],
@@ -98,30 +155,6 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildPokemonAbout() {
-    return BlocConsumer<PokemonDetailBloc, PokemonDetailState>(
-      listener: (context, state) {
-        if (state is PokemonDetailLoadedState) {
-          // start fade in animation
-          _dataAnimationCtl?.forward();
-        }
-      },
-      builder: (context, state) {
-        if (state is PokemonDetailLoadedState) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: PokemonAboutWidget(
-              pokemonDetailInfo: state.pokemonDetail,
-              baseColor: widget.baseColor,
-            ),
-          );
-        }
-
-        return const SizedBox();
-      },
     );
   }
 
@@ -157,57 +190,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
     );
   }
 
-  Widget _buildPokemonStats() {
-    return BlocConsumer<PokemonStatsBloc, PokemonStatsState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state is PokemonStatsLoadedState) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: PokemonStatsWidget(
-              pokemonStats: state.pokemonStats,
-              baseColor: widget.baseColor,
-            ),
-          );
-        }
-
-        return const SizedBox();
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _pokeballAnimationCtl = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 5),
-    );
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _pokeballAnimationCtl?.repeat();
-    });
-
-    _dataAnimationCtl = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-
-    // get pokemon detail
-    BlocProvider.of<PokemonDetailBloc>(context).add(
-      GetPokemonDetailEvent(id: widget.pokemon.id),
-    );
-
-    // get pokemon stats
-    BlocProvider.of<PokemonStatsBloc>(context).add(
-      GetPokemonStatsEvent(id: widget.pokemon.id),
-    );
-  }
-
   @override
   void dispose() {
-    _pokeballAnimationCtl?.dispose();
-    _dataAnimationCtl?.dispose();
+    _tabController?.dispose();
     super.dispose();
   }
 }

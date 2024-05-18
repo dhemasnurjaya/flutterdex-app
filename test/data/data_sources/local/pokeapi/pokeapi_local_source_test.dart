@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
-import 'package:flutterdex/data/models/pokemon_basic_model.dart';
-import 'package:flutterdex/data/models/pokemon_detail_model.dart';
+import 'package:flutterdex/data/models/pokemon_model.dart';
+import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -74,7 +74,7 @@ void main() {
     );
 
     // assert
-    expect(result, isA<List<PokemonBasicModel>>());
+    expect(result, isA<List<PokemonModel>>());
     expect(
       result.map((e) => e.name),
       tExpectedPokemonNameList,
@@ -87,10 +87,10 @@ void main() {
     const tExpectedPokemonName = 'bulbasaur';
 
     // act
-    final result = await dataSource.getPokemon(id: tId);
+    final result = await dataSource.getPokemonSpecies(id: tId);
 
     // assert
-    expect(result, isA<PokemonDetailModel>());
+    expect(result, isA<PokemonSpeciesModel>());
     expect(result.name, tExpectedPokemonName);
   });
 

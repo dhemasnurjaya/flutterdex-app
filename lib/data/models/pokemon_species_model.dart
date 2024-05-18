@@ -1,5 +1,5 @@
-class PokemonDetailModel {
-  PokemonDetailModel({
+class PokemonSpeciesModel {
+  PokemonSpeciesModel({
     required this.id,
     required this.name,
     required this.height,
@@ -10,7 +10,9 @@ class PokemonDetailModel {
     required this.isBaby,
     required this.hatchCounter,
     required this.description,
+    required this.growthRate,
   });
+
   final int id;
   final String name;
   final int height;
@@ -21,4 +23,5 @@ class PokemonDetailModel {
   final bool isBaby;
   final int hatchCounter;
   final String description;
+  final String growthRate;
 }
