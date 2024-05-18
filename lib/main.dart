@@ -46,7 +46,7 @@ class FlutterdexApp extends StatelessWidget {
         ),
         BlocProvider<PokemonAbilitiesBloc>(
           create: (context) => ic.getIt(),
-        )
+        ),
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeMode>(
         builder: (context, state) {

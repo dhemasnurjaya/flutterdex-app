@@ -228,8 +228,9 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
   }
 
   @override
-  Future<List<PokemonEggGroupModel>> getPokemonEggGroups(
-      {required int id}) async {
+  Future<List<PokemonEggGroupModel>> getPokemonEggGroups({
+    required int id,
+  }) async {
     const query = '''
       SELECT
         egn.name
