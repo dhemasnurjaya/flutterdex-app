@@ -27,7 +27,11 @@ class PokemonStatsLoadedState extends PokemonStatsState {
 }
 
 class PokemonStatsErrorState extends PokemonStatsState implements ErrorState {
-  const PokemonStatsErrorState({required this.message, this.cause});
+  const PokemonStatsErrorState({
+    required this.message,
+    this.cause,
+  });
+
   @override
   final String message;
 

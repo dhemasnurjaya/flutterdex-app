@@ -175,7 +175,11 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
           evolutions.add(PokemonEvolution.fromModel(modelList.first));
         }
 
-        evolutionChains.add(PokemonEvolutions(evolutionChains: evolutions));
+        evolutionChains.add(
+          PokemonEvolutions(
+            evolutionChains: evolutions.reversed.toList(),
+          ),
+        );
         evolvedFromSpeciesId = null;
 
         if (modelList.length == 1) {

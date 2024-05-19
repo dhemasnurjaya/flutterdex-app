@@ -10,10 +10,12 @@ import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemon_evolutions.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_list.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_stats.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -81,6 +83,11 @@ void setup() {
       repository: getIt(),
     ),
   );
+  getIt.registerLazySingleton<GetPokemonEvolutions>(
+    () => GetPokemonEvolutions(
+      repository: getIt(),
+    ),
+  );
 
   // blocs
   getIt.registerSingletonAsync<ThemeModeCubit>(
@@ -111,6 +118,11 @@ void setup() {
   getIt.registerFactory<PokemonAbilitiesBloc>(
     () => PokemonAbilitiesBloc(
       getPokemonAbilities: getIt(),
+    ),
+  );
+  getIt.registerFactory<PokemonEvolutionsBloc>(
+    () => PokemonEvolutionsBloc(
+      getPokemonEvolutions: getIt(),
     ),
   );
 
