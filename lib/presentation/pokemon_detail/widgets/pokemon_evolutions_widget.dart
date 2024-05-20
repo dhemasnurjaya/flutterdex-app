@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PokemonEvolutionsWidget extends StatefulWidget {
   const PokemonEvolutionsWidget({
@@ -52,11 +53,9 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
     BuildContext context,
     List<PokemonEvolutions> evolutions,
   ) {
-    final evolutionChainWidgets = evolutions
-        .map(
-          (evolution) => _buildEvolutionsChainList(context, evolution),
-        )
-        .toList();
+    final evolutionChainWidgets = evolutions.map(
+      (evolution) => _buildEvolutionsChainList(context, evolution),
+    );
 
     final divider = Row(
       children: [
@@ -80,17 +79,20 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
       ],
     );
 
-    final chainCount = evolutionChainWidgets.length;
-    for (var i = 0; i < chainCount; i++) {
-      if (i != 0) {
-        evolutionChainWidgets.insert(i, divider);
+    // Create a list of widgets with dividers
+    final childrenWithDividers = <Widget>[];
+    for (var i = 0; i < evolutionChainWidgets.length; i++) {
+      childrenWithDividers.add(evolutionChainWidgets.elementAt(i));
+      if (i < evolutionChainWidgets.length - 1) {
+        // Add a divider between elements but not after the last one
+        childrenWithDividers.add(divider);
       }
     }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
-        children: evolutionChainWidgets,
+        children: childrenWithDividers,
       ),
     );
   }
@@ -99,12 +101,14 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
     BuildContext context,
     PokemonEvolutions evolution,
   ) {
-    final pokemonChainWidgets = evolution.evolutionChains.map(
-      (e) => _buildEvolutionItem(context, e),
-    );
+    final pokemonChainWidgets = evolution.evolutionChains
+        .map(
+          (e) => _buildEvolutionItem(context, e),
+        )
+        .toList();
 
     return Column(
-      children: pokemonChainWidgets.toList(),
+      children: pokemonChainWidgets,
     );
   }
 
@@ -134,8 +138,53 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
           pokemonNumber,
         ],
       ),
-      subtitle: Text(''),
+      subtitle: _buildEvolutionTriggers(context, pokemonEvolution),
       leading: pokemonImage,
+      onLongPress: () {
+        launchUrl(
+          Uri.https(
+            'www.google.com',
+            '/search',
+            {
+              'q': 'how to evolve ${pokemonEvolution.name}',
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildEvolutionTriggers(
+    BuildContext context,
+    PokemonEvolution pokemonEvolution,
+  ) {
+    final triggers = <String>[];
+
+    switch (pokemonEvolution.evolutionTrigger) {
+      case 'level-up':
+        triggers.add('Level ${pokemonEvolution.minLevel}');
+      case 'trade':
+        triggers.add('Trade');
+      case 'use-item':
+        triggers.add('Using {itemName}');
+      case 'shed':
+      case 'spin':
+      case 'tower-of-darkness':
+      case 'tower-of-waters':
+      case 'three-critical-hits':
+      case 'take-damage':
+      case 'agile-style-move':
+      case 'strong-style-move':
+      case 'recoil-damage':
+      case 'other':
+        triggers.add('Special trigger, long press for more info');
+    }
+
+    return Text(
+      triggers.join(', '),
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: Theme.of(context).disabledColor,
+          ),
     );
   }
 }
