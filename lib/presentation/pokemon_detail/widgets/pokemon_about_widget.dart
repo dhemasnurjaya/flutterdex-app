@@ -86,7 +86,7 @@ class _PokemonAboutWidgetState extends State<PokemonAboutWidget> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${value ?? '-'}$unit',
+                    value != null ? value + unit : '-',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           height: 1,
@@ -138,9 +138,9 @@ class _PokemonAboutWidgetState extends State<PokemonAboutWidget> {
           icon: FontAwesomeIcons.bullseye,
         ),
         aboutItem(
-          title: 'Base Happiness',
-          value: pokemonDetailInfo.baseHappinessPercentage.toStringAsFixed(1),
-          unit: '%',
+          title: 'Base Friendship',
+          value: pokemonDetailInfo.baseFriendship?.toString(),
+          unit: '',
           icon: FontAwesomeIcons.faceSmileBeam,
         ),
         aboutItem(
@@ -151,7 +151,9 @@ class _PokemonAboutWidgetState extends State<PokemonAboutWidget> {
         ),
         aboutItem(
           title: 'Hatch Counter',
-          value: '~${pokemonDetailInfo.hatchCounter * 255}',
+          value: pokemonDetailInfo.hatchCounter != null
+              ? '~${pokemonDetailInfo.hatchCounter! * 255}'
+              : null,
           unit: ' steps',
           icon: FontAwesomeIcons.shoePrints,
         ),

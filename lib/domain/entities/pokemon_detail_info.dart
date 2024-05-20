@@ -7,7 +7,7 @@ class PokemonDetailInfo {
     required this.malePercentage,
     required this.femalePercentage,
     required this.capturePercentage,
-    required this.baseHappinessPercentage,
+    required this.baseFriendship,
     required this.isBaby,
     required this.hatchCounter,
     required this.description,
@@ -22,9 +22,9 @@ class PokemonDetailInfo {
   final double? malePercentage;
   final double? femalePercentage;
   final double capturePercentage;
-  final double baseHappinessPercentage;
+  final int? baseFriendship;
   final bool isBaby;
-  final int hatchCounter;
+  final int? hatchCounter;
   final String description;
   final String growthRate;
   final List<String> eggGroups;

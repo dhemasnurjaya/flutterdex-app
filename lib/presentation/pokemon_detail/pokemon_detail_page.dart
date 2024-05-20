@@ -155,7 +155,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           ),
         ),
         SizedBox(
-          height: 175,
+          height: 190,
           width: 190,
           child: Hero(
             tag: widget.pokemon,

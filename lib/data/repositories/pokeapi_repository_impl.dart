@@ -67,7 +67,6 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
           isGenderless ? null : (pokemon.genderRate / 8.0) * 100;
       final malePercentage = isGenderless ? null : 100 - femalePercentage!;
       final capturePercentage = (pokemon.captureRate / 255.0) * 100;
-      final baseHappinessPercentage = (pokemon.baseHappiness / 255.0) * 100;
 
       final entity = PokemonDetailInfo(
         id: pokemon.id,
@@ -77,7 +76,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         malePercentage: malePercentage,
         femalePercentage: femalePercentage,
         capturePercentage: capturePercentage,
-        baseHappinessPercentage: baseHappinessPercentage,
+        baseFriendship: pokemon.baseHappiness,
         isBaby: pokemon.isBaby,
         hatchCounter: pokemon.hatchCounter,
         description: pokemon.description,

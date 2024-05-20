@@ -19,9 +19,9 @@ class PokemonSpeciesModel {
   final int weight;
   final int genderRate;
   final int captureRate;
-  final int baseHappiness;
+  final int? baseHappiness;
   final bool isBaby;
-  final int hatchCounter;
+  final int? hatchCounter;
   final String description;
   final String growthRate;
 }

@@ -7,10 +7,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class PokemonSearchBox extends StatefulWidget {
   const PokemonSearchBox({
     required this.onSearch,
+    this.focusNode,
     super.key,
   });
 
   final void Function(String) onSearch;
+  final FocusNode? focusNode;
 
   @override
   State<PokemonSearchBox> createState() => _PokemonSearchBoxState();
@@ -54,6 +56,7 @@ class _PokemonSearchBoxState extends State<PokemonSearchBox> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
+                    focusNode: widget.focusNode,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name or Dex number',

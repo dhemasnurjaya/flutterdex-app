@@ -52,12 +52,46 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
     BuildContext context,
     List<PokemonEvolutions> evolutions,
   ) {
-    final evolutionChainWidgets = evolutions.map(
-      (evolution) => _buildEvolutionsChainList(context, evolution),
+    final evolutionChainWidgets = evolutions
+        .map(
+          (evolution) => _buildEvolutionsChainList(context, evolution),
+        )
+        .toList();
+
+    final divider = Row(
+      children: [
+        const Expanded(
+          child: Divider(
+            indent: 16,
+            endIndent: 16,
+          ),
+        ),
+        Image.asset(
+          'assets/images/pokeball-flat.png',
+          height: 24,
+          opacity: const AlwaysStoppedAnimation(0.2),
+        ),
+        const Expanded(
+          child: Divider(
+            indent: 16,
+            endIndent: 16,
+          ),
+        ),
+      ],
     );
 
-    return Column(
-      children: evolutionChainWidgets.toList(),
+    final chainCount = evolutionChainWidgets.length;
+    for (var i = 0; i < chainCount; i++) {
+      if (i != 0) {
+        evolutionChainWidgets.insert(i, divider);
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: evolutionChainWidgets,
+      ),
     );
   }
 
