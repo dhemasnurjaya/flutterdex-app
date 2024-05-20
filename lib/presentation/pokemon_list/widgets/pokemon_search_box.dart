@@ -37,24 +37,41 @@ class _PokemonSearchBoxState extends State<PokemonSearchBox> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
-          child: TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 16,
-              ),
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-              border: const OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(Radius.circular(outerRadius)),
-              ),
-              prefixIcon: const Icon(Icons.search),
-              hintText: 'Name or Dex number',
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(outerRadius),
+            ),
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 16,
+                    right: 8,
+                  ),
+                  child: Icon(FontAwesomeIcons.magnifyingGlass),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Name or Dex number',
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: _searchController.text.isNotEmpty,
+                  child: IconButton(
+                    onPressed: _searchController.clear,
+                    icon: const Icon(FontAwesomeIcons.xmark),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 4),
         ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
