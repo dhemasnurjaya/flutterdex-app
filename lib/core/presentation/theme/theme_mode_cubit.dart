@@ -1,6 +1,6 @@
-import 'package:flutterdex/core/data/local/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterdex/core/data/local/config.dart';
 
 /// Theme mode cubit for theme mode management
 class ThemeModeCubit extends Cubit<ThemeMode> {

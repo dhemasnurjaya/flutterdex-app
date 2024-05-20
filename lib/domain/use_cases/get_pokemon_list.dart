@@ -7,27 +7,32 @@ import 'package:fpdart/fpdart.dart';
 
 class GetPokemonList
     extends UseCase<List<PokemonBasicInfo>, GetPokemonListParams> {
-  final PokeapiRepository repository;
-
   GetPokemonList({required this.repository});
+  final PokeapiRepository repository;
 
   @override
   Future<Either<Failure, List<PokemonBasicInfo>>> execute(
     GetPokemonListParams params,
   ) async {
-    return repository.getPokemonBasicInfoList(
+    return repository.getPokemonList(
       limit: params.limit,
       offset: params.offset,
+      searchQuery: params.searchQuery,
     );
   }
 }
 
 class GetPokemonListParams extends Equatable {
+  const GetPokemonListParams({
+    required this.limit,
+    required this.offset,
+    required this.searchQuery,
+  });
+
+  final String searchQuery;
   final int limit;
   final int offset;
 
-  const GetPokemonListParams({required this.limit, required this.offset});
-
   @override
-  List<Object> get props => [limit, offset];
+  List<Object> get props => [searchQuery, limit, offset];
 }

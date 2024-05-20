@@ -1,5 +1,5 @@
-import 'package:flutterdex/core/data/local/config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterdex/core/data/local/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Theme mode shared preferences key
