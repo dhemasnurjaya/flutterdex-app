@@ -1,6 +1,7 @@
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
@@ -166,68 +167,20 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
     required int id,
   }) async {
     try {
-      final result = await localSource.getPokemonEvolutions(id: id);
-      final modelList = result.toList();
-
-      int? evolvedFromSpeciesId;
-
+      final result = (await localSource.getPokemonEvolutions(id: id)).toList();
       final evolutionChains = <PokemonEvolutions>[];
       while (true) {
-        final evolutions = <PokemonEvolution>[];
-
-        for (var i = 0; i < modelList.length; i++) {
-          final e = evolvedFromSpeciesId == null
-              ? modelList[i]
-              : modelList
-                  .where((r) => r.id == evolvedFromSpeciesId)
-                  .firstOrNull;
-
-          if (e == null) {
-            break;
-          }
-
-          // TODO: simplify
-          final pokemon = (await getPokemon(id: e.id)).getOrElse((_) => null);
-          if (pokemon != null) {
-            final pokemonEvolution = PokemonEvolution.compose(
-              pokemon,
-              e,
-            );
-
-            evolvedFromSpeciesId = pokemonEvolution.evolvesFromSpeciesId;
-            evolutions.add(pokemonEvolution);
-          }
-
-          if (e.evolvesFromSpeciesId != null) {
-            modelList.remove(e);
-          }
-        }
-
-        // HACK: add remaining evolutions
-        if (modelList.length == 1) {
-          final pokemon = (await getPokemon(id: modelList.first.id)).getOrElse(
-            (_) => null,
-          );
-          if (pokemon != null) {
-            evolutions.add(
-              PokemonEvolution.compose(
-                pokemon,
-                modelList.first,
-              ),
-            );
-          }
-        }
-
-        evolutionChains.add(
-          PokemonEvolutions(
-            evolutionChains: evolutions.reversed.toList(),
-          ),
-        );
-        evolvedFromSpeciesId = null;
-
-        if (modelList.length == 1) {
+        if (result.length == 1) {
           break;
         }
+
+        final evolutions = await _findEvolutions(result, result.first);
+        result.removeWhere(
+          (r) => evolutions.evolutionChains.any(
+            (e) => e.pokemon.id == r.id && r.evolvesFromSpeciesId != null,
+          ),
+        );
+        evolutionChains.add(evolutions);
       }
 
       return right(evolutionChains);
@@ -236,5 +189,39 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         UnknownFailure(message: e.toString(), cause: e),
       );
     }
+  }
+
+  Future<PokemonEvolutions> _findEvolutions(
+    List<PokemonEvolutionModel> pokemons,
+    PokemonEvolutionModel lastEvolution,
+  ) async {
+    final evolutions = <PokemonEvolution>[];
+    final pokemonBasicInfo =
+        (await getPokemon(id: lastEvolution.id)).getOrElse((_) => null);
+    evolutions.add(PokemonEvolution.compose(pokemonBasicInfo!, lastEvolution));
+
+    // find previous evolution from a pokemon recursively
+    Future<PokemonEvolutionModel> findPreviousEvolution(
+      PokemonEvolutionModel pokemon,
+    ) async {
+      if (pokemon.evolvesFromSpeciesId == null) {
+        return pokemon;
+      }
+
+      final previousEvolution =
+          pokemons.where((p) => p.id == pokemon.evolvesFromSpeciesId).first;
+      final pokemonBasicInfo =
+          (await getPokemon(id: previousEvolution.id)).getOrElse((_) => null);
+      evolutions.add(
+        PokemonEvolution.compose(
+          pokemonBasicInfo!,
+          previousEvolution,
+        ),
+      );
+      return findPreviousEvolution(previousEvolution);
+    }
+
+    await findPreviousEvolution(lastEvolution);
+    return PokemonEvolutions(evolutionChains: evolutions.reversed.toList());
   }
 }
