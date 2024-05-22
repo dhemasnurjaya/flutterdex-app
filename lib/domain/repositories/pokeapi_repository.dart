@@ -13,7 +13,12 @@ abstract class PokeapiRepository {
     int offset = 0,
   });
 
-  Future<Either<Failure, PokemonDetailInfo>> getPokemon({required int id});
+  Future<Either<Failure, PokemonBasicInfo?>> getPokemon({
+    required int id,
+  });
+
+  Future<Either<Failure, PokemonDetailInfo>> getPokemonSpecies(
+      {required int id});
 
   Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
     required int id,

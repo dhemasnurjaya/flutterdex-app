@@ -33,7 +33,9 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
       for (final e in result) {
         // add type to existing pokemon entity
         if (mergedEntities.containsKey(e.id)) {
-          mergedEntities[e.id]!.types.add(e.type);
+          mergedEntities[e.id] = mergedEntities[e.id]!.copyWith(
+            types: [...mergedEntities[e.id]!.types, e.type],
+          );
           continue;
         }
 
@@ -53,7 +55,32 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, PokemonDetailInfo>> getPokemon({
+  Future<Either<Failure, PokemonBasicInfo?>> getPokemon({
+    required int id,
+  }) async {
+    try {
+      final result = await localSource.getPokemon(id: id);
+      if (result.isEmpty) {
+        return right(null);
+      }
+
+      final pokemonBasicInfo = PokemonBasicInfo(
+        id: result.first.id,
+        name: result.first.name,
+        genus: result.first.genus,
+        types: result.map((e) => e.type).toList(),
+      );
+
+      return right(pokemonBasicInfo);
+    } on Exception catch (e) {
+      return left(
+        UnknownFailure(message: e.toString(), cause: e),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, PokemonDetailInfo>> getPokemonSpecies({
     required int id,
   }) async {
     try {
@@ -159,10 +186,17 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
             break;
           }
 
-          final pokemon = PokemonEvolution.fromModel(e);
+          // TODO: simplify
+          final pokemon = (await getPokemon(id: e.id)).getOrElse((_) => null);
+          if (pokemon != null) {
+            final pokemonEvolution = PokemonEvolution.compose(
+              pokemon,
+              e,
+            );
 
-          evolvedFromSpeciesId = pokemon.evolvesFromSpeciesId;
-          evolutions.add(pokemon);
+            evolvedFromSpeciesId = pokemonEvolution.evolvesFromSpeciesId;
+            evolutions.add(pokemonEvolution);
+          }
 
           if (e.evolvesFromSpeciesId != null) {
             modelList.remove(e);
@@ -171,7 +205,17 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
         // HACK: add remaining evolutions
         if (modelList.length == 1) {
-          evolutions.add(PokemonEvolution.fromModel(modelList.first));
+          final pokemon = (await getPokemon(id: modelList.first.id)).getOrElse(
+            (_) => null,
+          );
+          if (pokemon != null) {
+            evolutions.add(
+              PokemonEvolution.compose(
+                pokemon,
+                modelList.first,
+              ),
+            );
+          }
         }
 
         evolutionChains.add(

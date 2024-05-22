@@ -23,9 +23,9 @@ Map<String, dynamic> _$$PokemonEvolutionsImplToJson(
 _$PokemonEvolutionImpl _$$PokemonEvolutionImplFromJson(
         Map<String, dynamic> json) =>
     _$PokemonEvolutionImpl(
-      id: (json['id'] as num).toInt(),
+      pokemon:
+          PokemonBasicInfo.fromJson(json['pokemon'] as Map<String, dynamic>),
       isBaby: json['isBaby'] as bool,
-      name: json['name'] as String,
       evolvesFromSpeciesId: (json['evolvesFromSpeciesId'] as num?)?.toInt(),
       evolutionTrigger: json['evolutionTrigger'] as String?,
       minLevel: (json['minLevel'] as num?)?.toInt(),
@@ -41,9 +41,8 @@ _$PokemonEvolutionImpl _$$PokemonEvolutionImplFromJson(
 Map<String, dynamic> _$$PokemonEvolutionImplToJson(
         _$PokemonEvolutionImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'pokemon': instance.pokemon,
       'isBaby': instance.isBaby,
-      'name': instance.name,
       'evolvesFromSpeciesId': instance.evolvesFromSpeciesId,
       'evolutionTrigger': instance.evolutionTrigger,
       'minLevel': instance.minLevel,

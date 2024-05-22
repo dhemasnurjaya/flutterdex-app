@@ -1,31 +1,26 @@
-class PokemonDetailInfo {
-  PokemonDetailInfo({
-    required this.id,
-    required this.name,
-    required this.heightInMeter,
-    required this.weightInKg,
-    required this.malePercentage,
-    required this.femalePercentage,
-    required this.capturePercentage,
-    required this.baseFriendship,
-    required this.isBaby,
-    required this.hatchCounter,
-    required this.description,
-    required this.growthRate,
-    required this.eggGroups,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final int id;
-  final String name;
-  final double heightInMeter;
-  final double weightInKg;
-  final double? malePercentage;
-  final double? femalePercentage;
-  final double capturePercentage;
-  final int? baseFriendship;
-  final bool isBaby;
-  final int? hatchCounter;
-  final String description;
-  final String growthRate;
-  final List<String> eggGroups;
+part 'pokemon_detail_info.freezed.dart';
+part 'pokemon_detail_info.g.dart';
+
+@freezed
+class PokemonDetailInfo with _$PokemonDetailInfo {
+  factory PokemonDetailInfo({
+    required int id,
+    required String name,
+    required double heightInMeter,
+    required double weightInKg,
+    required double? malePercentage,
+    required double? femalePercentage,
+    required double capturePercentage,
+    required int? baseFriendship,
+    required bool isBaby,
+    required int? hatchCounter,
+    required String description,
+    required String growthRate,
+    required List<String> eggGroups,
+  }) = _PokemonDetailInfo;
+
+  factory PokemonDetailInfo.fromJson(Map<String, dynamic> json) =>
+      _$PokemonDetailInfoFromJson(json);
 }

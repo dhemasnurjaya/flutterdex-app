@@ -119,11 +119,19 @@ void main() {
 
     // assert
     expect(
-      result.getOrElse((_) => []).first.evolutionChains.map((e) => e.name),
+      result
+          .getOrElse((_) => [])
+          .first
+          .evolutionChains
+          .map((e) => e.pokemon.name),
       tFirstEvolutionChainNames,
     );
     expect(
-      result.getOrElse((_) => []).last.evolutionChains.map((e) => e.name),
+      result
+          .getOrElse((_) => [])
+          .last
+          .evolutionChains
+          .map((e) => e.pokemon.name),
       tSecondEvolutionChainNames,
     );
     verify(localSource.getPokemonEvolutions(id: tId));

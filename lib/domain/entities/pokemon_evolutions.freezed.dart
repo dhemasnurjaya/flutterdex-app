@@ -169,9 +169,8 @@ PokemonEvolution _$PokemonEvolutionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PokemonEvolution {
-  int get id => throw _privateConstructorUsedError;
+  PokemonBasicInfo get pokemon => throw _privateConstructorUsedError;
   bool get isBaby => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
   int? get evolvesFromSpeciesId => throw _privateConstructorUsedError;
   String? get evolutionTrigger => throw _privateConstructorUsedError;
   int? get minLevel => throw _privateConstructorUsedError;
@@ -196,9 +195,8 @@ abstract class $PokemonEvolutionCopyWith<$Res> {
       _$PokemonEvolutionCopyWithImpl<$Res, PokemonEvolution>;
   @useResult
   $Res call(
-      {int id,
+      {PokemonBasicInfo pokemon,
       bool isBaby,
-      String name,
       int? evolvesFromSpeciesId,
       String? evolutionTrigger,
       int? minLevel,
@@ -209,6 +207,8 @@ abstract class $PokemonEvolutionCopyWith<$Res> {
       int? relativePhysicalStats,
       bool? needsOverworldRain,
       bool? turnUpsideDown});
+
+  $PokemonBasicInfoCopyWith<$Res> get pokemon;
 }
 
 /// @nodoc
@@ -224,9 +224,8 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? pokemon = null,
     Object? isBaby = null,
-    Object? name = null,
     Object? evolvesFromSpeciesId = freezed,
     Object? evolutionTrigger = freezed,
     Object? minLevel = freezed,
@@ -239,18 +238,14 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
     Object? turnUpsideDown = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+      pokemon: null == pokemon
+          ? _value.pokemon
+          : pokemon // ignore: cast_nullable_to_non_nullable
+              as PokemonBasicInfo,
       isBaby: null == isBaby
           ? _value.isBaby
           : isBaby // ignore: cast_nullable_to_non_nullable
               as bool,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       evolvesFromSpeciesId: freezed == evolvesFromSpeciesId
           ? _value.evolvesFromSpeciesId
           : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
@@ -293,6 +288,14 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
               as bool?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PokemonBasicInfoCopyWith<$Res> get pokemon {
+    return $PokemonBasicInfoCopyWith<$Res>(_value.pokemon, (value) {
+      return _then(_value.copyWith(pokemon: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -304,9 +307,8 @@ abstract class _$$PokemonEvolutionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {PokemonBasicInfo pokemon,
       bool isBaby,
-      String name,
       int? evolvesFromSpeciesId,
       String? evolutionTrigger,
       int? minLevel,
@@ -317,6 +319,9 @@ abstract class _$$PokemonEvolutionImplCopyWith<$Res>
       int? relativePhysicalStats,
       bool? needsOverworldRain,
       bool? turnUpsideDown});
+
+  @override
+  $PokemonBasicInfoCopyWith<$Res> get pokemon;
 }
 
 /// @nodoc
@@ -330,9 +335,8 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? pokemon = null,
     Object? isBaby = null,
-    Object? name = null,
     Object? evolvesFromSpeciesId = freezed,
     Object? evolutionTrigger = freezed,
     Object? minLevel = freezed,
@@ -345,18 +349,14 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
     Object? turnUpsideDown = freezed,
   }) {
     return _then(_$PokemonEvolutionImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+      pokemon: null == pokemon
+          ? _value.pokemon
+          : pokemon // ignore: cast_nullable_to_non_nullable
+              as PokemonBasicInfo,
       isBaby: null == isBaby
           ? _value.isBaby
           : isBaby // ignore: cast_nullable_to_non_nullable
               as bool,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       evolvesFromSpeciesId: freezed == evolvesFromSpeciesId
           ? _value.evolvesFromSpeciesId
           : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
@@ -405,9 +405,8 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PokemonEvolutionImpl implements _PokemonEvolution {
   _$PokemonEvolutionImpl(
-      {required this.id,
+      {required this.pokemon,
       required this.isBaby,
-      required this.name,
       required this.evolvesFromSpeciesId,
       required this.evolutionTrigger,
       required this.minLevel,
@@ -423,11 +422,9 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
       _$$PokemonEvolutionImplFromJson(json);
 
   @override
-  final int id;
+  final PokemonBasicInfo pokemon;
   @override
   final bool isBaby;
-  @override
-  final String name;
   @override
   final int? evolvesFromSpeciesId;
   @override
@@ -451,7 +448,7 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
 
   @override
   String toString() {
-    return 'PokemonEvolution(id: $id, isBaby: $isBaby, name: $name, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTrigger: $evolutionTrigger, minLevel: $minLevel, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
+    return 'PokemonEvolution(pokemon: $pokemon, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTrigger: $evolutionTrigger, minLevel: $minLevel, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
   }
 
   @override
@@ -459,9 +456,8 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PokemonEvolutionImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.pokemon, pokemon) || other.pokemon == pokemon) &&
             (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
-            (identical(other.name, name) || other.name == name) &&
             (identical(other.evolvesFromSpeciesId, evolvesFromSpeciesId) ||
                 other.evolvesFromSpeciesId == evolvesFromSpeciesId) &&
             (identical(other.evolutionTrigger, evolutionTrigger) ||
@@ -488,9 +484,8 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
+      pokemon,
       isBaby,
-      name,
       evolvesFromSpeciesId,
       evolutionTrigger,
       minLevel,
@@ -519,9 +514,8 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
 
 abstract class _PokemonEvolution implements PokemonEvolution {
   factory _PokemonEvolution(
-      {required final int id,
+      {required final PokemonBasicInfo pokemon,
       required final bool isBaby,
-      required final String name,
       required final int? evolvesFromSpeciesId,
       required final String? evolutionTrigger,
       required final int? minLevel,
@@ -537,11 +531,9 @@ abstract class _PokemonEvolution implements PokemonEvolution {
       _$PokemonEvolutionImpl.fromJson;
 
   @override
-  int get id;
+  PokemonBasicInfo get pokemon;
   @override
   bool get isBaby;
-  @override
-  String get name;
   @override
   int? get evolvesFromSpeciesId;
   @override

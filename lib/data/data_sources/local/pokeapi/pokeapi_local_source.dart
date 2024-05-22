@@ -13,6 +13,10 @@ abstract class PokeapiLocalSource {
     int offset = 0,
   });
 
+  Future<List<PokemonModel>> getPokemon({
+    required int id,
+  });
+
   Future<PokemonSpeciesModel> getPokemonSpecies({required int id});
 
   Future<List<PokemonStatModel>> getPokemonStats({required int id});
@@ -75,6 +79,52 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       limit,
       offset,
     ]);
+    return result
+        .map(
+          (row) => PokemonModel(
+            id: row['id']! as int,
+            name: row['name']! as String,
+            type: row['type']! as String,
+            genus: row['genus']! as String,
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Future<List<PokemonModel>> getPokemon({
+    required int id,
+  }) async {
+    const query = '''
+      SELECT
+        ps.id,
+        psn.name,
+        t.name AS 'type',
+        psn.genus
+      FROM
+        (
+          SELECT
+            id,
+            name
+          FROM 
+            pokemon_v2_pokemonspecies
+          WHERE
+            id = ?
+        ) ps
+      JOIN 
+        pokemon_v2_pokemontype pt
+        ON ps.id = pt.pokemon_id
+      JOIN
+        pokemon_v2_type t
+        ON pt.type_id = t.id
+      JOIN
+        pokemon_v2_pokemonspeciesname psn
+        ON ps.id = psn.pokemon_species_id
+      WHERE
+        psn.language_id = 9;
+    ''';
+
+    final result = await database.rawQuery(query, [id]);
     return result
         .map(
           (row) => PokemonModel(

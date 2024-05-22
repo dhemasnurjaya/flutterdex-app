@@ -1,4 +1,5 @@
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
+import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon_evolutions.freezed.dart';
@@ -17,9 +18,8 @@ class PokemonEvolutions with _$PokemonEvolutions {
 @freezed
 class PokemonEvolution with _$PokemonEvolution {
   factory PokemonEvolution({
-    required int id,
+    required PokemonBasicInfo pokemon,
     required bool isBaby,
-    required String name,
     required int? evolvesFromSpeciesId,
     required String? evolutionTrigger,
     required int? minLevel,
@@ -32,11 +32,13 @@ class PokemonEvolution with _$PokemonEvolution {
     required bool? turnUpsideDown,
   }) = _PokemonEvolution;
 
-  factory PokemonEvolution.fromModel(PokemonEvolutionModel model) =>
+  factory PokemonEvolution.compose(
+    PokemonBasicInfo pokemon,
+    PokemonEvolutionModel model,
+  ) =>
       PokemonEvolution(
-        id: model.id,
+        pokemon: pokemon,
         isBaby: model.isBaby,
-        name: model.name,
         evolvesFromSpeciesId: model.evolvesFromSpeciesId,
         evolutionTrigger: model.evolutionTrigger,
         minLevel: model.minLevel,

@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterdex/core/router/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
+import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -117,36 +120,39 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
     PokemonEvolution pokemonEvolution,
   ) {
     final pokemonName = Text(
-      pokemonEvolution.name,
+      pokemonEvolution.pokemon.name,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
           ),
     );
     final pokemonNumber = Text(
-      '#${pokemonEvolution.id.toString().padLeft(4, '0')}',
+      '#${pokemonEvolution.pokemon.id.toString().padLeft(4, '0')}',
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Theme.of(context).disabledColor,
           ),
     );
-    final pokemonImage = PokemonSprite(pokemonEvolution.id);
+    final pokemonImage = PokemonSprite(pokemonEvolution.pokemon.id);
 
     return ListTile(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          pokemonName,
-          pokemonNumber,
-        ],
-      ),
-      subtitle: _buildEvolutionTriggers(context, pokemonEvolution),
       leading: pokemonImage,
+      trailing: pokemonNumber,
+      title: pokemonName,
+      subtitle: _buildEvolutionTriggers(context, pokemonEvolution),
+      onTap: () {
+        context.router.push(
+          PokemonDetailRoute(
+            pokemon: pokemonEvolution.pokemon,
+            baseColor: pokemonColors[pokemonEvolution.pokemon.types.first]!,
+          ),
+        );
+      },
       onLongPress: () {
         launchUrl(
           Uri.https(
             'www.google.com',
             '/search',
             {
-              'q': 'how to evolve ${pokemonEvolution.name}',
+              'q': 'how to evolve ${pokemonEvolution.pokemon.name}',
             },
           ),
         );
