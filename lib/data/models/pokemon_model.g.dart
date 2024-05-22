@@ -10,7 +10,7 @@ _$PokemonModelImpl _$$PokemonModelImplFromJson(Map<String, dynamic> json) =>
     _$PokemonModelImpl(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      type: json['type'] as String,
+      types: json['types'] as String,
       genus: json['genus'] as String,
     );
 
@@ -18,6 +18,6 @@ Map<String, dynamic> _$$PokemonModelImplToJson(_$PokemonModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'type': instance.type,
+      'types': instance.types,
       'genus': instance.genus,
     };

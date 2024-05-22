@@ -22,7 +22,7 @@ PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) {
 mixin _$PokemonModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  String get types => throw _privateConstructorUsedError;
   String get genus => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $PokemonModelCopyWith<$Res> {
           PokemonModel value, $Res Function(PokemonModel) then) =
       _$PokemonModelCopyWithImpl<$Res, PokemonModel>;
   @useResult
-  $Res call({int id, String name, String type, String genus});
+  $Res call({int id, String name, String types, String genus});
 }
 
 /// @nodoc
@@ -55,7 +55,7 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? type = null,
+    Object? types = null,
     Object? genus = null,
   }) {
     return _then(_value.copyWith(
@@ -67,9 +67,9 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      types: null == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
               as String,
       genus: null == genus
           ? _value.genus
@@ -87,7 +87,7 @@ abstract class _$$PokemonModelImplCopyWith<$Res>
       __$$PokemonModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String type, String genus});
+  $Res call({int id, String name, String types, String genus});
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? type = null,
+    Object? types = null,
     Object? genus = null,
   }) {
     return _then(_$PokemonModelImpl(
@@ -115,9 +115,9 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      types: null == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
               as String,
       genus: null == genus
           ? _value.genus
@@ -133,7 +133,7 @@ class _$PokemonModelImpl implements _PokemonModel {
   _$PokemonModelImpl(
       {required this.id,
       required this.name,
-      required this.type,
+      required this.types,
       required this.genus});
 
   factory _$PokemonModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -144,13 +144,13 @@ class _$PokemonModelImpl implements _PokemonModel {
   @override
   final String name;
   @override
-  final String type;
+  final String types;
   @override
   final String genus;
 
   @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, type: $type, genus: $genus)';
+    return 'PokemonModel(id: $id, name: $name, types: $types, genus: $genus)';
   }
 
   @override
@@ -160,13 +160,13 @@ class _$PokemonModelImpl implements _PokemonModel {
             other is _$PokemonModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.type, type) || other.type == type) &&
+            (identical(other.types, types) || other.types == types) &&
             (identical(other.genus, genus) || other.genus == genus));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, type, genus);
+  int get hashCode => Object.hash(runtimeType, id, name, types, genus);
 
   @JsonKey(ignore: true)
   @override
@@ -186,7 +186,7 @@ abstract class _PokemonModel implements PokemonModel {
   factory _PokemonModel(
       {required final int id,
       required final String name,
-      required final String type,
+      required final String types,
       required final String genus}) = _$PokemonModelImpl;
 
   factory _PokemonModel.fromJson(Map<String, dynamic> json) =
@@ -197,7 +197,7 @@ abstract class _PokemonModel implements PokemonModel {
   @override
   String get name;
   @override
-  String get type;
+  String get types;
   @override
   String get genus;
   @override

@@ -44,22 +44,10 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       SELECT
         ps.id,
         psn.name,
-        t.name AS 'type',
+        GROUP_CONCAT(t.name) AS types,
         psn.genus
       FROM
-        (
-          SELECT
-            id,
-            name
-          FROM 
-            pokemon_v2_pokemonspecies
-          WHERE
-            name LIKE ? OR
-            id = ?
-          ORDER BY id ASC 
-          LIMIT ?
-          OFFSET ?
-        ) ps
+        pokemon_v2_pokemonspecies ps
       JOIN 
         pokemon_v2_pokemontype pt
         ON ps.id = pt.pokemon_id
@@ -70,12 +58,18 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         pokemon_v2_pokemonspeciesname psn
         ON ps.id = psn.pokemon_species_id
       WHERE
-        psn.language_id = 9;
+        ps.id = ? OR
+        psn.name LIKE ? AND
+        psn.language_id = 9
+      GROUP BY 
+        ps.id
+      LIMIT ?
+      OFFSET ?;
     ''';
 
     final result = await database.rawQuery(query, [
-      '%$searchQuery%',
       searchQuery,
+      '%$searchQuery%',
       limit,
       offset,
     ]);
@@ -84,7 +78,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
           (row) => PokemonModel(
             id: row['id']! as int,
             name: row['name']! as String,
-            type: row['type']! as String,
+            types: row['types']! as String,
             genus: row['genus']! as String,
           ),
         )
@@ -130,7 +124,7 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
           (row) => PokemonModel(
             id: row['id']! as int,
             name: row['name']! as String,
-            type: row['type']! as String,
+            types: row['type']! as String,
             genus: row['genus']! as String,
           ),
         )

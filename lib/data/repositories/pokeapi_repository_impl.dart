@@ -28,28 +28,16 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         limit: limit,
         offset: offset,
       );
-      final mergedEntities = <int, PokemonBasicInfo>{};
-
-      // map pokemon model to entity
-      for (final e in result) {
-        // add type to existing pokemon entity
-        if (mergedEntities.containsKey(e.id)) {
-          mergedEntities[e.id] = mergedEntities[e.id]!.copyWith(
-            types: [...mergedEntities[e.id]!.types, e.type],
-          );
-          continue;
-        }
-
-        // create new pokemon entity
-        mergedEntities[e.id] = PokemonBasicInfo(
+      final pokemons = result.map(
+        (e) => PokemonBasicInfo(
           id: e.id,
           name: e.name,
           genus: e.genus,
-          types: [e.type],
-        );
-      }
+          types: e.types.split(','),
+        ),
+      );
 
-      return right(mergedEntities.values.toList());
+      return right(pokemons.toList());
     } on Exception catch (e) {
       return left(UnknownFailure(message: e.toString(), cause: e));
     }
@@ -69,7 +57,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         id: result.first.id,
         name: result.first.name,
         genus: result.first.genus,
-        types: result.map((e) => e.type).toList(),
+        types: result.first.types.split(','),
       );
 
       return right(pokemonBasicInfo);

@@ -9,7 +9,7 @@ class PokemonModel with _$PokemonModel {
   factory PokemonModel({
     required int id,
     required String name,
-    required String type,
+    required String types,
     required String genus,
   }) = _PokemonModel;
 
