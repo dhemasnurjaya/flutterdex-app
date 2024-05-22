@@ -8,6 +8,8 @@ class PokemonEvolutionModel with _$PokemonEvolutionModel {
   const factory PokemonEvolutionModel({
     required int id,
     required String name,
+    required String types,
+    required String genus,
     required bool isBaby,
     required int? evolvesFromSpeciesId,
     required String? evolutionTrigger,

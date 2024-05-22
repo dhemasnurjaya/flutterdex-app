@@ -11,6 +11,8 @@ _$PokemonEvolutionModelImpl _$$PokemonEvolutionModelImplFromJson(
     _$PokemonEvolutionModelImpl(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
+      types: json['types'] as String,
+      genus: json['genus'] as String,
       isBaby: json['isBaby'] as bool,
       evolvesFromSpeciesId: (json['evolvesFromSpeciesId'] as num?)?.toInt(),
       evolutionTrigger: json['evolutionTrigger'] as String?,
@@ -29,6 +31,8 @@ Map<String, dynamic> _$$PokemonEvolutionModelImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'types': instance.types,
+      'genus': instance.genus,
       'isBaby': instance.isBaby,
       'evolvesFromSpeciesId': instance.evolvesFromSpeciesId,
       'evolutionTrigger': instance.evolutionTrigger,

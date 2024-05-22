@@ -36,8 +36,13 @@ class PokemonEvolutionsBloc
           cause: failure.cause,
         ),
       ),
-      (evolutions) =>
-          emit(PokemonEvolutionsLoadedState(evolutions: evolutions)),
+      (evolutions) {
+        if (evolutions.isNotEmpty) {
+          emit(PokemonEvolutionsLoadedState(evolutions: evolutions));
+        } else {
+          emit(const PokemonEvolutionsEmptyState());
+        }
+      },
     );
   }
 }

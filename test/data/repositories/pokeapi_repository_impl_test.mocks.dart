@@ -3,15 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart'
-    as _i3;
+    as _i4;
 import 'package:flutterdex/data/models/pokemon_ability_model.dart' as _i7;
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart' as _i8;
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart' as _i9;
-import 'package:flutterdex/data/models/pokemon_model.dart' as _i5;
-import 'package:flutterdex/data/models/pokemon_species_model.dart' as _i2;
+import 'package:flutterdex/data/models/pokemon_model.dart' as _i2;
+import 'package:flutterdex/data/models/pokemon_species_model.dart' as _i3;
 import 'package:flutterdex/data/models/pokemon_stat_model.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -28,9 +28,19 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakePokemonSpeciesModel_0 extends _i1.SmartFake
-    implements _i2.PokemonSpeciesModel {
-  _FakePokemonSpeciesModel_0(
+class _FakePokemonModel_0 extends _i1.SmartFake implements _i2.PokemonModel {
+  _FakePokemonModel_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePokemonSpeciesModel_1 extends _i1.SmartFake
+    implements _i3.PokemonSpeciesModel {
+  _FakePokemonSpeciesModel_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -43,13 +53,13 @@ class _FakePokemonSpeciesModel_0 extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokeapiLocalSource extends _i1.Mock
-    implements _i3.PokeapiLocalSource {
+    implements _i4.PokeapiLocalSource {
   MockPokeapiLocalSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<List<_i5.PokemonModel>> getPokemonList({
+  _i5.Future<List<_i2.PokemonModel>> getPokemonList({
     String? searchQuery = r'',
     int? limit = 20,
     int? offset = 0,
@@ -65,31 +75,37 @@ class MockPokeapiLocalSource extends _i1.Mock
           },
         ),
         returnValue:
-            _i4.Future<List<_i5.PokemonModel>>.value(<_i5.PokemonModel>[]),
-      ) as _i4.Future<List<_i5.PokemonModel>>);
+            _i5.Future<List<_i2.PokemonModel>>.value(<_i2.PokemonModel>[]),
+      ) as _i5.Future<List<_i2.PokemonModel>>);
 
   @override
-  _i4.Future<List<_i5.PokemonModel>> getPokemon({required int? id}) =>
+  _i5.Future<_i2.PokemonModel> getPokemon({required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPokemon,
           [],
           {#id: id},
         ),
-        returnValue:
-            _i4.Future<List<_i5.PokemonModel>>.value(<_i5.PokemonModel>[]),
-      ) as _i4.Future<List<_i5.PokemonModel>>);
+        returnValue: _i5.Future<_i2.PokemonModel>.value(_FakePokemonModel_0(
+          this,
+          Invocation.method(
+            #getPokemon,
+            [],
+            {#id: id},
+          ),
+        )),
+      ) as _i5.Future<_i2.PokemonModel>);
 
   @override
-  _i4.Future<_i2.PokemonSpeciesModel> getPokemonSpecies({required int? id}) =>
+  _i5.Future<_i3.PokemonSpeciesModel> getPokemonSpecies({required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPokemonSpecies,
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<_i2.PokemonSpeciesModel>.value(
-            _FakePokemonSpeciesModel_0(
+        returnValue: _i5.Future<_i3.PokemonSpeciesModel>.value(
+            _FakePokemonSpeciesModel_1(
           this,
           Invocation.method(
             #getPokemonSpecies,
@@ -97,22 +113,22 @@ class MockPokeapiLocalSource extends _i1.Mock
             {#id: id},
           ),
         )),
-      ) as _i4.Future<_i2.PokemonSpeciesModel>);
+      ) as _i5.Future<_i3.PokemonSpeciesModel>);
 
   @override
-  _i4.Future<List<_i6.PokemonStatModel>> getPokemonStats({required int? id}) =>
+  _i5.Future<List<_i6.PokemonStatModel>> getPokemonStats({required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPokemonStats,
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<List<_i6.PokemonStatModel>>.value(
+        returnValue: _i5.Future<List<_i6.PokemonStatModel>>.value(
             <_i6.PokemonStatModel>[]),
-      ) as _i4.Future<List<_i6.PokemonStatModel>>);
+      ) as _i5.Future<List<_i6.PokemonStatModel>>);
 
   @override
-  _i4.Future<List<_i7.PokemonAbilityModel>> getPokemonAbilities(
+  _i5.Future<List<_i7.PokemonAbilityModel>> getPokemonAbilities(
           {required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -120,12 +136,12 @@ class MockPokeapiLocalSource extends _i1.Mock
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<List<_i7.PokemonAbilityModel>>.value(
+        returnValue: _i5.Future<List<_i7.PokemonAbilityModel>>.value(
             <_i7.PokemonAbilityModel>[]),
-      ) as _i4.Future<List<_i7.PokemonAbilityModel>>);
+      ) as _i5.Future<List<_i7.PokemonAbilityModel>>);
 
   @override
-  _i4.Future<List<_i8.PokemonEggGroupModel>> getPokemonEggGroups(
+  _i5.Future<List<_i8.PokemonEggGroupModel>> getPokemonEggGroups(
           {required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -133,12 +149,12 @@ class MockPokeapiLocalSource extends _i1.Mock
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<List<_i8.PokemonEggGroupModel>>.value(
+        returnValue: _i5.Future<List<_i8.PokemonEggGroupModel>>.value(
             <_i8.PokemonEggGroupModel>[]),
-      ) as _i4.Future<List<_i8.PokemonEggGroupModel>>);
+      ) as _i5.Future<List<_i8.PokemonEggGroupModel>>);
 
   @override
-  _i4.Future<List<_i9.PokemonEvolutionModel>> getPokemonEvolutions(
+  _i5.Future<List<_i9.PokemonEvolutionModel>> getPokemonEvolutions(
           {required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -146,7 +162,7 @@ class MockPokeapiLocalSource extends _i1.Mock
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<List<_i9.PokemonEvolutionModel>>.value(
+        returnValue: _i5.Future<List<_i9.PokemonEvolutionModel>>.value(
             <_i9.PokemonEvolutionModel>[]),
-      ) as _i4.Future<List<_i9.PokemonEvolutionModel>>);
+      ) as _i5.Future<List<_i9.PokemonEvolutionModel>>);
 }

@@ -32,12 +32,14 @@ class PokemonEvolution with _$PokemonEvolution {
     required bool? turnUpsideDown,
   }) = _PokemonEvolution;
 
-  factory PokemonEvolution.compose(
-    PokemonBasicInfo pokemon,
-    PokemonEvolutionModel model,
-  ) =>
+  factory PokemonEvolution.fromModel(PokemonEvolutionModel model) =>
       PokemonEvolution(
-        pokemon: pokemon,
+        pokemon: PokemonBasicInfo(
+          id: model.id,
+          name: model.name,
+          genus: model.genus,
+          types: model.types.split(','),
+        ),
         isBaby: model.isBaby,
         evolvesFromSpeciesId: model.evolvesFromSpeciesId,
         evolutionTrigger: model.evolutionTrigger,

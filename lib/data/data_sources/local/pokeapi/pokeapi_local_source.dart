@@ -13,7 +13,7 @@ abstract class PokeapiLocalSource {
     int offset = 0,
   });
 
-  Future<List<PokemonModel>> getPokemon({
+  Future<PokemonModel> getPokemon({
     required int id,
   });
 
@@ -58,8 +58,10 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         pokemon_v2_pokemonspeciesname psn
         ON ps.id = psn.pokemon_species_id
       WHERE
-        ps.id = ? OR
-        psn.name LIKE ? AND
+        (
+          ps.id = ? OR
+          psn.name LIKE ?
+        ) AND
         psn.language_id = 9
       GROUP BY 
         ps.id
@@ -67,44 +69,35 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       OFFSET ?;
     ''';
 
-    final result = await database.rawQuery(query, [
+    final queryResult = await database.rawQuery(query, [
       searchQuery,
       '%$searchQuery%',
       limit,
       offset,
     ]);
-    return result
-        .map(
-          (row) => PokemonModel(
-            id: row['id']! as int,
-            name: row['name']! as String,
-            types: row['types']! as String,
-            genus: row['genus']! as String,
-          ),
-        )
-        .toList();
+    final result = queryResult.map(
+      (row) => PokemonModel(
+        id: row['id']! as int,
+        name: row['name']! as String,
+        types: row['types']! as String,
+        genus: row['genus']! as String,
+      ),
+    );
+    return result.toList();
   }
 
   @override
-  Future<List<PokemonModel>> getPokemon({
+  Future<PokemonModel> getPokemon({
     required int id,
   }) async {
     const query = '''
       SELECT
         ps.id,
         psn.name,
-        t.name AS 'type',
+        GROUP_CONCAT(t.name) AS types,
         psn.genus
       FROM
-        (
-          SELECT
-            id,
-            name
-          FROM 
-            pokemon_v2_pokemonspecies
-          WHERE
-            id = ?
-        ) ps
+        pokemon_v2_pokemonspecies ps
       JOIN 
         pokemon_v2_pokemontype pt
         ON ps.id = pt.pokemon_id
@@ -115,20 +108,23 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         pokemon_v2_pokemonspeciesname psn
         ON ps.id = psn.pokemon_species_id
       WHERE
-        psn.language_id = 9;
+        ps.id = ? AND
+        psn.language_id = 9
+      GROUP BY
+        ps.id
+      LIMIT 1;
     ''';
 
-    final result = await database.rawQuery(query, [id]);
-    return result
-        .map(
-          (row) => PokemonModel(
-            id: row['id']! as int,
-            name: row['name']! as String,
-            types: row['type']! as String,
-            genus: row['genus']! as String,
-          ),
-        )
-        .toList();
+    final queryResult = await database.rawQuery(query, [id]);
+    final result = queryResult.map(
+      (row) => PokemonModel(
+        id: row['id']! as int,
+        name: row['name']! as String,
+        types: row['type']! as String,
+        genus: row['genus']! as String,
+      ),
+    );
+    return result.single;
   }
 
   @override
@@ -168,24 +164,24 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       LIMIT 1;
   ''';
 
-    final result = await database.rawQuery(query, [id]);
-    return result
-        .map(
-          (row) => PokemonSpeciesModel(
-            id: row['id']! as int,
-            name: row['name']! as String,
-            height: row['height']! as int,
-            weight: row['weight']! as int,
-            genderRate: row['gender_rate']! as int,
-            captureRate: row['capture_rate']! as int,
-            baseHappiness: row['base_happiness'] as int?,
-            isBaby: row['is_baby']! as int == 1,
-            hatchCounter: row['hatch_counter'] as int?,
-            description: row['description']! as String,
-            growthRate: row['growth_rate']! as String,
-          ),
-        )
-        .single;
+    final queryResult = await database.rawQuery(query, [id]);
+    final result = queryResult.map(
+      (row) => PokemonSpeciesModel(
+        id: row['id']! as int,
+        name: row['name']! as String,
+        height: row['height']! as int,
+        weight: row['weight']! as int,
+        genderRate: row['gender_rate']! as int,
+        captureRate: row['capture_rate']! as int,
+        baseHappiness: row['base_happiness'] as int?,
+        isBaby: row['is_baby']! as int == 1,
+        hatchCounter: row['hatch_counter'] as int?,
+        description: row['description']! as String,
+        growthRate: row['growth_rate']! as String,
+      ),
+    );
+
+    return result.single;
   }
 
   @override
@@ -236,17 +232,16 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         );
     ''';
 
-    final result = await database.rawQuery(query, [id, id]);
-    return result
-        .map(
-          (row) => PokemonAbilityModel(
-            isHidden: row['is_hidden']! as int == 1,
-            name: row['name']! as String,
-            description: row['description']! as String,
-            generation: row['generation']! as String,
-          ),
-        )
-        .toList();
+    final queryResult = await database.rawQuery(query, [id, id]);
+    final result = queryResult.map(
+      (row) => PokemonAbilityModel(
+        isHidden: row['is_hidden']! as int == 1,
+        name: row['name']! as String,
+        description: row['description']! as String,
+        generation: row['generation']! as String,
+      ),
+    );
+    return result.toList();
   }
 
   @override
@@ -272,16 +267,15 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         statn.language_id = 9;
     ''';
 
-    final result = await database.rawQuery(query, [id]);
-    return result
-        .map(
-          (row) => PokemonStatModel(
-            name: row['name']! as String,
-            value: row['base_stat']! as int,
-            effortValue: row['effort']! as int,
-          ),
-        )
-        .toList();
+    final queryResult = await database.rawQuery(query, [id]);
+    final result = queryResult.map(
+      (row) => PokemonStatModel(
+        name: row['name']! as String,
+        value: row['base_stat']! as int,
+        effortValue: row['effort']! as int,
+      ),
+    );
+    return result.toList();
   }
 
   @override
@@ -304,14 +298,13 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         egn.language_id = 9;
     ''';
 
-    final result = await database.rawQuery(query, [id]);
-    return result
-        .map(
-          (row) => PokemonEggGroupModel(
-            name: row['name']! as String,
-          ),
-        )
-        .toList();
+    final queryResult = await database.rawQuery(query, [id]);
+    final result = queryResult.map(
+      (row) => PokemonEggGroupModel(
+        name: row['name']! as String,
+      ),
+    );
+    return result.toList();
   }
 
   @override
@@ -321,8 +314,10 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
     const query = '''
       SELECT
         ps.id,
-        ps.is_baby,
         psn.name,
+        GROUP_CONCAT(t.name) AS types,
+        psn.genus,
+        ps.is_baby,
         ps.evolves_from_species_id,
         et.name AS evolution_trigger,
         pe.min_level,
@@ -340,6 +335,12 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       JOIN
         pokemon_v2_pokemonspeciesname psn
         ON ps.id = psn.pokemon_species_id
+      JOIN 
+        pokemon_v2_pokemontype pt
+        ON ps.id = pt.pokemon_id
+      JOIN
+        pokemon_v2_type t
+        ON pt.type_id = t.id
       LEFT JOIN
         pokemon_v2_pokemonevolution pe
         ON ps.id = pe.evolved_species_id
@@ -361,30 +362,33 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
             sp.id = ?
         ) AND
         psn.language_id = 9
+      GROUP BY 
+        ps.id
       ORDER BY 
         ps.is_baby ASC,
         psn.id DESC;
     ''';
 
-    final result = await database.rawQuery(query, [id]);
-    return result
-        .map(
-          (row) => PokemonEvolutionModel(
-            id: row['id']! as int,
-            name: row['name']! as String,
-            isBaby: row['is_baby']! as int == 1,
-            evolutionTrigger: row['evolution_trigger'] as String?,
-            evolvesFromSpeciesId: row['evolves_from_species_id'] as int?,
-            minLevel: row['min_level'] as int?,
-            timeOfDay: row['time_of_day'] as String?,
-            minHappiness: row['min_happiness'] as int?,
-            minAffection: row['min_affection'] as int?,
-            minBeauty: row['min_beauty'] as int?,
-            relativePhysicalStats: row['relative_physical_stats'] as int?,
-            needsOverworldRain: (row['needs_overworld_rain'] as int?) == 1,
-            turnUpsideDown: (row['turn_upside_down'] as int?) == 1,
-          ),
-        )
-        .toList();
+    final queryResult = await database.rawQuery(query, [id]);
+    final result = queryResult.map(
+      (row) => PokemonEvolutionModel(
+        id: row['id']! as int,
+        name: row['name']! as String,
+        types: row['types']! as String,
+        genus: row['genus']! as String,
+        isBaby: row['is_baby']! as int == 1,
+        evolutionTrigger: row['evolution_trigger'] as String?,
+        evolvesFromSpeciesId: row['evolves_from_species_id'] as int?,
+        minLevel: row['min_level'] as int?,
+        timeOfDay: row['time_of_day'] as String?,
+        minHappiness: row['min_happiness'] as int?,
+        minAffection: row['min_affection'] as int?,
+        minBeauty: row['min_beauty'] as int?,
+        relativePhysicalStats: row['relative_physical_stats'] as int?,
+        needsOverworldRain: (row['needs_overworld_rain'] as int?) == 1,
+        turnUpsideDown: (row['turn_upside_down'] as int?) == 1,
+      ),
+    );
+    return result.toList();
   }
 }

@@ -27,6 +27,8 @@ void main() {
       PokemonEvolutionModel(
         id: 269,
         name: 'Dustox',
+        genus: '',
+        types: '',
         isBaby: false,
         evolvesFromSpeciesId: 268,
         evolutionTrigger: 'level-up',
@@ -42,6 +44,8 @@ void main() {
       PokemonEvolutionModel(
         id: 268,
         name: 'Cascoon',
+        genus: '',
+        types: '',
         isBaby: false,
         evolvesFromSpeciesId: 265,
         evolutionTrigger: 'level-up',
@@ -57,6 +61,8 @@ void main() {
       PokemonEvolutionModel(
         id: 267,
         name: 'Beautifly',
+        genus: '',
+        types: '',
         isBaby: false,
         evolvesFromSpeciesId: 266,
         evolutionTrigger: 'level-up',
@@ -72,6 +78,8 @@ void main() {
       PokemonEvolutionModel(
         id: 266,
         name: 'Silcoon',
+        genus: '',
+        types: '',
         isBaby: false,
         evolvesFromSpeciesId: 265,
         evolutionTrigger: 'level-up',
@@ -87,6 +95,8 @@ void main() {
       PokemonEvolutionModel(
         id: 265,
         name: 'Wurmple',
+        genus: '',
+        types: '',
         isBaby: false,
         evolvesFromSpeciesId: null,
         evolutionTrigger: null,
@@ -101,14 +111,14 @@ void main() {
       ),
     ];
     final tFirstEvolutionChainNames = [
-      'Dustox',
-      'Cascoon',
       'Wurmple',
+      'Cascoon',
+      'Dustox',
     ];
     final tSecondEvolutionChainNames = [
-      'Beautifly',
-      'Silcoon',
       'Wurmple',
+      'Silcoon',
+      'Beautifly',
     ];
 
     when(localSource.getPokemonEvolutions(id: tId))

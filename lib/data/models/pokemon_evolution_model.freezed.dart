@@ -23,6 +23,8 @@ PokemonEvolutionModel _$PokemonEvolutionModelFromJson(
 mixin _$PokemonEvolutionModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get types => throw _privateConstructorUsedError;
+  String get genus => throw _privateConstructorUsedError;
   bool get isBaby => throw _privateConstructorUsedError;
   int? get evolvesFromSpeciesId => throw _privateConstructorUsedError;
   String? get evolutionTrigger => throw _privateConstructorUsedError;
@@ -50,6 +52,8 @@ abstract class $PokemonEvolutionModelCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
+      String types,
+      String genus,
       bool isBaby,
       int? evolvesFromSpeciesId,
       String? evolutionTrigger,
@@ -79,6 +83,8 @@ class _$PokemonEvolutionModelCopyWithImpl<$Res,
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? types = null,
+    Object? genus = null,
     Object? isBaby = null,
     Object? evolvesFromSpeciesId = freezed,
     Object? evolutionTrigger = freezed,
@@ -99,6 +105,14 @@ class _$PokemonEvolutionModelCopyWithImpl<$Res,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      types: null == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as String,
+      genus: null == genus
+          ? _value.genus
+          : genus // ignore: cast_nullable_to_non_nullable
               as String,
       isBaby: null == isBaby
           ? _value.isBaby
@@ -160,6 +174,8 @@ abstract class _$$PokemonEvolutionModelImplCopyWith<$Res>
   $Res call(
       {int id,
       String name,
+      String types,
+      String genus,
       bool isBaby,
       int? evolvesFromSpeciesId,
       String? evolutionTrigger,
@@ -187,6 +203,8 @@ class __$$PokemonEvolutionModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? types = null,
+    Object? genus = null,
     Object? isBaby = null,
     Object? evolvesFromSpeciesId = freezed,
     Object? evolutionTrigger = freezed,
@@ -207,6 +225,14 @@ class __$$PokemonEvolutionModelImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      types: null == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as String,
+      genus: null == genus
+          ? _value.genus
+          : genus // ignore: cast_nullable_to_non_nullable
               as String,
       isBaby: null == isBaby
           ? _value.isBaby
@@ -262,6 +288,8 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
   const _$PokemonEvolutionModelImpl(
       {required this.id,
       required this.name,
+      required this.types,
+      required this.genus,
       required this.isBaby,
       required this.evolvesFromSpeciesId,
       required this.evolutionTrigger,
@@ -281,6 +309,10 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
   final int id;
   @override
   final String name;
+  @override
+  final String types;
+  @override
+  final String genus;
   @override
   final bool isBaby;
   @override
@@ -306,7 +338,7 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
 
   @override
   String toString() {
-    return 'PokemonEvolutionModel(id: $id, name: $name, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTrigger: $evolutionTrigger, minLevel: $minLevel, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
+    return 'PokemonEvolutionModel(id: $id, name: $name, types: $types, genus: $genus, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTrigger: $evolutionTrigger, minLevel: $minLevel, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
   }
 
   @override
@@ -316,6 +348,8 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
             other is _$PokemonEvolutionModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.types, types) || other.types == types) &&
+            (identical(other.genus, genus) || other.genus == genus) &&
             (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
             (identical(other.evolvesFromSpeciesId, evolvesFromSpeciesId) ||
                 other.evolvesFromSpeciesId == evolvesFromSpeciesId) &&
@@ -345,6 +379,8 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
       runtimeType,
       id,
       name,
+      types,
+      genus,
       isBaby,
       evolvesFromSpeciesId,
       evolutionTrigger,
@@ -376,6 +412,8 @@ abstract class _PokemonEvolutionModel implements PokemonEvolutionModel {
   const factory _PokemonEvolutionModel(
       {required final int id,
       required final String name,
+      required final String types,
+      required final String genus,
       required final bool isBaby,
       required final int? evolvesFromSpeciesId,
       required final String? evolutionTrigger,
@@ -395,6 +433,10 @@ abstract class _PokemonEvolutionModel implements PokemonEvolutionModel {
   int get id;
   @override
   String get name;
+  @override
+  String get types;
+  @override
+  String get genus;
   @override
   bool get isBaby;
   @override

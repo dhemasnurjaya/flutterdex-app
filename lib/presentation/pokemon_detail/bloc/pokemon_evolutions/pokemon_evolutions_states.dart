@@ -29,6 +29,13 @@ class PokemonEvolutionsLoadedState extends PokemonEvolutionsState {
   List<Object> get props => [evolutions];
 }
 
+class PokemonEvolutionsEmptyState extends PokemonEvolutionsState {
+  const PokemonEvolutionsEmptyState();
+
+  @override
+  List<Object> get props => [];
+}
+
 class PokemonEvolutionsErrorState extends PokemonEvolutionsState
     implements ErrorState {
   const PokemonEvolutionsErrorState({

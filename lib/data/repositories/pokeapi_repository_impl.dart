@@ -44,22 +44,17 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, PokemonBasicInfo?>> getPokemon({
+  Future<Either<Failure, PokemonBasicInfo>> getPokemon({
     required int id,
   }) async {
     try {
       final result = await localSource.getPokemon(id: id);
-      if (result.isEmpty) {
-        return right(null);
-      }
-
       final pokemonBasicInfo = PokemonBasicInfo(
-        id: result.first.id,
-        name: result.first.name,
-        genus: result.first.genus,
-        types: result.first.types.split(','),
+        id: result.id,
+        name: result.name,
+        genus: result.genus,
+        types: result.types.split(','),
       );
-
       return right(pokemonBasicInfo);
     } on Exception catch (e) {
       return left(
@@ -84,7 +79,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
       final malePercentage = isGenderless ? null : 100 - femalePercentage!;
       final capturePercentage = (pokemon.captureRate / 255.0) * 100;
 
-      final entity = PokemonDetailInfo(
+      final pokemonDetailInfo = PokemonDetailInfo(
         id: pokemon.id,
         name: pokemon.name,
         heightInMeter: heightInKg,
@@ -99,7 +94,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         growthRate: pokemon.growthRate,
         eggGroups: eggGroups.map((e) => e.name).toList(),
       );
-      return right(entity);
+      return right(pokemonDetailInfo);
     } on Exception catch (e) {
       return left(
         UnknownFailure(message: e.toString(), cause: e),
@@ -113,14 +108,14 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }) async {
     try {
       final result = await localSource.getPokemonStats(id: id);
-      final entities = result.map(
+      final pokemonStatsList = result.map(
         (e) => PokemonStat(
           name: e.name,
           value: e.value,
           effortValue: e.effortValue,
         ),
       );
-      return right(entities.toList());
+      return right(pokemonStatsList.toList());
     } on Exception catch (e) {
       return left(
         UnknownFailure(message: e.toString(), cause: e),
@@ -134,7 +129,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }) async {
     try {
       final result = await localSource.getPokemonAbilities(id: id);
-      final entities = result.map(
+      final pokemonAbilities = result.map(
         (e) => PokemonAbility(
           isHidden: e.isHidden,
           name: e.name,
@@ -142,7 +137,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
           generation: e.generation,
         ),
       );
-      return right(entities.toList());
+      return right(pokemonAbilities.toList());
     } on Exception catch (e) {
       return left(
         UnknownFailure(message: e.toString(), cause: e),
@@ -184,9 +179,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
     PokemonEvolutionModel lastEvolution,
   ) async {
     final evolutions = <PokemonEvolution>[];
-    final pokemonBasicInfo =
-        (await getPokemon(id: lastEvolution.id)).getOrElse((_) => null);
-    evolutions.add(PokemonEvolution.compose(pokemonBasicInfo!, lastEvolution));
+    evolutions.add(PokemonEvolution.fromModel(lastEvolution));
 
     // find previous evolution from a pokemon recursively
     Future<PokemonEvolutionModel> findPreviousEvolution(
@@ -198,13 +191,8 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
       final previousEvolution =
           pokemons.where((p) => p.id == pokemon.evolvesFromSpeciesId).first;
-      final pokemonBasicInfo =
-          (await getPokemon(id: previousEvolution.id)).getOrElse((_) => null);
       evolutions.add(
-        PokemonEvolution.compose(
-          pokemonBasicInfo!,
-          previousEvolution,
-        ),
+        PokemonEvolution.fromModel(previousEvolution),
       );
       return findPreviousEvolution(previousEvolution);
     }

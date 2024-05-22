@@ -47,6 +47,13 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
           );
         }
 
+        if (state is PokemonEvolutionsEmptyState) {
+          return const Padding(
+            padding: EdgeInsets.all(16),
+            child: Text('This Pokémon has no evolutions.'),
+          );
+        }
+
         return const SizedBox();
       },
     );
@@ -138,14 +145,17 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
       trailing: pokemonNumber,
       title: pokemonName,
       subtitle: _buildEvolutionTriggers(context, pokemonEvolution),
-      onTap: () {
-        context.router.push(
-          PokemonDetailRoute(
-            pokemon: pokemonEvolution.pokemon,
-            baseColor: pokemonColors[pokemonEvolution.pokemon.types.first]!,
-          ),
-        );
-      },
+      onTap: widget.pokemonId == pokemonEvolution.pokemon.id
+          ? null
+          : () {
+              context.router.push(
+                PokemonDetailRoute(
+                  pokemon: pokemonEvolution.pokemon,
+                  baseColor:
+                      pokemonColors[pokemonEvolution.pokemon.types.first]!,
+                ),
+              );
+            },
       onLongPress: () {
         launchUrl(
           Uri.https(
