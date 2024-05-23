@@ -6,6 +6,7 @@ import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PokemonEvolutionsWidget extends StatefulWidget {
@@ -77,8 +78,8 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
         ),
         Image.asset(
           'assets/images/pokeball-flat.png',
-          height: 24,
-          opacity: const AlwaysStoppedAnimation(0.2),
+          color: Theme.of(context).dividerColor,
+          height: 20,
         ),
         const Expanded(
           child: Divider(
@@ -102,7 +103,29 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
-        children: childrenWithDividers,
+        children: [
+          ...childrenWithDividers,
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(
+                  FontAwesomeIcons.circleQuestion,
+                  size: 20,
+                  color: Theme.of(context).disabledColor,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Long press to search for detailed evolution info',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).disabledColor,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -174,32 +197,49 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
     BuildContext context,
     PokemonEvolution pokemonEvolution,
   ) {
-    final triggers = <String>[];
+    final triggers = pokemonEvolution.evolutionTriggers.map((t) => '[$t]');
+    final requirements = <String>[];
 
-    switch (pokemonEvolution.evolutionTrigger) {
-      case 'level-up':
-        triggers.add('Level ${pokemonEvolution.minLevel}');
-      case 'trade':
-        triggers.add('Trade');
-      case 'use-item':
-        triggers.add('Using {itemName}');
-      case 'shed':
-      case 'spin':
-      case 'tower-of-darkness':
-      case 'tower-of-waters':
-      case 'three-critical-hits':
-      case 'take-damage':
-      case 'agile-style-move':
-      case 'strong-style-move':
-      case 'recoil-damage':
-      case 'other':
-        triggers.add('Special trigger, long press for more info');
+    if (pokemonEvolution.heldItem != null) {
+      requirements.add("holding '${pokemonEvolution.heldItem}'");
+    }
+
+    if (pokemonEvolution.evolutionItem != null) {
+      requirements.add("using '${pokemonEvolution.evolutionItem}'");
+    }
+
+    if (pokemonEvolution.minAffection != null) {
+      requirements.add('min. affection ${pokemonEvolution.minAffection}');
+    }
+
+    if (pokemonEvolution.minBeauty != null) {
+      requirements.add('min. beauty ${pokemonEvolution.minBeauty}');
+    }
+
+    if (pokemonEvolution.minHappiness != null) {
+      requirements.add('min. happiness ${pokemonEvolution.minHappiness}');
+    }
+
+    if (pokemonEvolution.minLevel != null) {
+      requirements.add('min. level ${pokemonEvolution.minLevel}');
+    }
+
+    if (pokemonEvolution.needsOverworldRain ?? false) {
+      requirements.add('needs overworld rain');
+    }
+
+    if (pokemonEvolution.timeOfDay?.isNotEmpty ?? false) {
+      requirements.add('at ${pokemonEvolution.timeOfDay}');
+    }
+
+    if (pokemonEvolution.turnUpsideDown ?? false) {
+      requirements.add('turns upside down');
     }
 
     return Text(
-      triggers.join(', '),
+      '${triggers.join()} ${requirements.join(', ')}',
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).disabledColor,
+            color: Theme.of(context).hintColor,
           ),
     );
   }

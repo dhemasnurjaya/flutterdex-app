@@ -315,11 +315,11 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
       SELECT
         ps.id,
         psn.name,
-        GROUP_CONCAT(t.name) AS types,
+        GROUP_CONCAT(DISTINCT t.name) AS types,
         psn.genus,
         ps.is_baby,
         ps.evolves_from_species_id,
-        et.name AS evolution_trigger,
+        GROUP_CONCAT(DISTINCT etj.name) AS evolution_triggers,
         pe.min_level,
         pe.time_of_day,
         pe.min_happiness,
@@ -329,7 +329,9 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         pe.needs_overworld_rain,
         pe.turn_upside_down,
         pe.gender_id,
-        pe.known_move_id
+        pe.known_move_id,
+        pi_held.name as held_item_name,
+        pi_evolution.name AS evolution_item_name
       FROM
         pokemon_v2_pokemonspecies ps
       JOIN
@@ -345,8 +347,47 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         pokemon_v2_pokemonevolution pe
         ON ps.id = pe.evolved_species_id
       LEFT JOIN
-        pokemon_v2_evolutiontrigger et
-        ON pe.evolution_trigger_id = et.id
+        (
+          SELECT
+            et.id,
+            etn.name 
+          FROM
+            pokemon_v2_evolutiontrigger et
+          JOIN
+            pokemon_v2_evolutiontriggername etn
+            ON et.id = etn.evolution_trigger_id
+          WHERE
+            etn.language_id  = 9
+        ) etj
+        ON pe.evolution_trigger_id = etj.id
+      LEFT JOIN
+        (
+          SELECT
+            pi.id,
+            pin.name
+          FROM
+            pokemon_v2_item pi
+          JOIN
+            pokemon_v2_itemname pin
+            ON pi.id = pin.item_id
+          WHERE
+            pin.language_id = 9
+        ) pi_held
+        ON pe.held_item_id = pi_held.id
+      LEFT JOIN
+        (
+          SELECT
+            pi.id,
+            pin.name
+          FROM
+            pokemon_v2_item pi
+          JOIN
+            pokemon_v2_itemname pin
+            ON pi.id = pin.item_id
+          WHERE
+            pin.language_id = 9
+        ) pi_evolution
+        ON pe.evolution_item_id = pi_evolution.id
       WHERE
         evolution_chain_id = 
         (
@@ -377,9 +418,11 @@ class PokeapiLocalSourceImpl implements PokeapiLocalSource {
         types: row['types']! as String,
         genus: row['genus']! as String,
         isBaby: row['is_baby']! as int == 1,
-        evolutionTrigger: row['evolution_trigger'] as String?,
+        evolutionTriggers: row['evolution_triggers'] as String?,
         evolvesFromSpeciesId: row['evolves_from_species_id'] as int?,
         minLevel: row['min_level'] as int?,
+        heldItem: row['held_item_name'] as String?,
+        evolutionItem: row['evolution_item_name'] as String?,
         timeOfDay: row['time_of_day'] as String?,
         minHappiness: row['min_happiness'] as int?,
         minAffection: row['min_affection'] as int?,

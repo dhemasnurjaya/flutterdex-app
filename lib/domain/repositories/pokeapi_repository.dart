@@ -17,8 +17,9 @@ abstract class PokeapiRepository {
     required int id,
   });
 
-  Future<Either<Failure, PokemonDetailInfo>> getPokemonSpecies(
-      {required int id});
+  Future<Either<Failure, PokemonDetailInfo>> getPokemonSpecies({
+    required int id,
+  });
 
   Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
     required int id,

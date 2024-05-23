@@ -158,11 +158,19 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         }
 
         final evolutions = await _findEvolutions(result, result.first);
-        result.removeWhere(
-          (r) => evolutions.evolutionChains.any(
-            (e) => e.pokemon.id == r.id && r.evolvesFromSpeciesId != null,
-          ),
-        );
+
+        // remove used evolutions
+        for (final evolution in evolutions.evolutionChains) {
+          final stillHasEvolution = result
+                  .where((r) => r.evolvesFromSpeciesId == evolution.pokemon.id)
+                  .length >
+              1;
+          final isBaseSpecies = evolution.evolvesFromSpeciesId == null;
+          if (!stillHasEvolution && !isBaseSpecies) {
+            result.removeWhere((r) => r.id == evolution.pokemon.id);
+          }
+        }
+
         evolutionChains.add(evolutions);
       }
 

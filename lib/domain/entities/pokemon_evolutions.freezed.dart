@@ -172,8 +172,10 @@ mixin _$PokemonEvolution {
   PokemonBasicInfo get pokemon => throw _privateConstructorUsedError;
   bool get isBaby => throw _privateConstructorUsedError;
   int? get evolvesFromSpeciesId => throw _privateConstructorUsedError;
-  String? get evolutionTrigger => throw _privateConstructorUsedError;
+  List<String> get evolutionTriggers => throw _privateConstructorUsedError;
   int? get minLevel => throw _privateConstructorUsedError;
+  String? get heldItem => throw _privateConstructorUsedError;
+  String? get evolutionItem => throw _privateConstructorUsedError;
   String? get timeOfDay => throw _privateConstructorUsedError;
   int? get minHappiness => throw _privateConstructorUsedError;
   int? get minAffection => throw _privateConstructorUsedError;
@@ -198,8 +200,10 @@ abstract class $PokemonEvolutionCopyWith<$Res> {
       {PokemonBasicInfo pokemon,
       bool isBaby,
       int? evolvesFromSpeciesId,
-      String? evolutionTrigger,
+      List<String> evolutionTriggers,
       int? minLevel,
+      String? heldItem,
+      String? evolutionItem,
       String? timeOfDay,
       int? minHappiness,
       int? minAffection,
@@ -227,8 +231,10 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
     Object? pokemon = null,
     Object? isBaby = null,
     Object? evolvesFromSpeciesId = freezed,
-    Object? evolutionTrigger = freezed,
+    Object? evolutionTriggers = null,
     Object? minLevel = freezed,
+    Object? heldItem = freezed,
+    Object? evolutionItem = freezed,
     Object? timeOfDay = freezed,
     Object? minHappiness = freezed,
     Object? minAffection = freezed,
@@ -250,14 +256,22 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
           ? _value.evolvesFromSpeciesId
           : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
               as int?,
-      evolutionTrigger: freezed == evolutionTrigger
-          ? _value.evolutionTrigger
-          : evolutionTrigger // ignore: cast_nullable_to_non_nullable
-              as String?,
+      evolutionTriggers: null == evolutionTriggers
+          ? _value.evolutionTriggers
+          : evolutionTriggers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       minLevel: freezed == minLevel
           ? _value.minLevel
           : minLevel // ignore: cast_nullable_to_non_nullable
               as int?,
+      heldItem: freezed == heldItem
+          ? _value.heldItem
+          : heldItem // ignore: cast_nullable_to_non_nullable
+              as String?,
+      evolutionItem: freezed == evolutionItem
+          ? _value.evolutionItem
+          : evolutionItem // ignore: cast_nullable_to_non_nullable
+              as String?,
       timeOfDay: freezed == timeOfDay
           ? _value.timeOfDay
           : timeOfDay // ignore: cast_nullable_to_non_nullable
@@ -310,8 +324,10 @@ abstract class _$$PokemonEvolutionImplCopyWith<$Res>
       {PokemonBasicInfo pokemon,
       bool isBaby,
       int? evolvesFromSpeciesId,
-      String? evolutionTrigger,
+      List<String> evolutionTriggers,
       int? minLevel,
+      String? heldItem,
+      String? evolutionItem,
       String? timeOfDay,
       int? minHappiness,
       int? minAffection,
@@ -338,8 +354,10 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
     Object? pokemon = null,
     Object? isBaby = null,
     Object? evolvesFromSpeciesId = freezed,
-    Object? evolutionTrigger = freezed,
+    Object? evolutionTriggers = null,
     Object? minLevel = freezed,
+    Object? heldItem = freezed,
+    Object? evolutionItem = freezed,
     Object? timeOfDay = freezed,
     Object? minHappiness = freezed,
     Object? minAffection = freezed,
@@ -361,14 +379,22 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
           ? _value.evolvesFromSpeciesId
           : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
               as int?,
-      evolutionTrigger: freezed == evolutionTrigger
-          ? _value.evolutionTrigger
-          : evolutionTrigger // ignore: cast_nullable_to_non_nullable
-              as String?,
+      evolutionTriggers: null == evolutionTriggers
+          ? _value._evolutionTriggers
+          : evolutionTriggers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       minLevel: freezed == minLevel
           ? _value.minLevel
           : minLevel // ignore: cast_nullable_to_non_nullable
               as int?,
+      heldItem: freezed == heldItem
+          ? _value.heldItem
+          : heldItem // ignore: cast_nullable_to_non_nullable
+              as String?,
+      evolutionItem: freezed == evolutionItem
+          ? _value.evolutionItem
+          : evolutionItem // ignore: cast_nullable_to_non_nullable
+              as String?,
       timeOfDay: freezed == timeOfDay
           ? _value.timeOfDay
           : timeOfDay // ignore: cast_nullable_to_non_nullable
@@ -408,15 +434,18 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
       {required this.pokemon,
       required this.isBaby,
       required this.evolvesFromSpeciesId,
-      required this.evolutionTrigger,
+      required final List<String> evolutionTriggers,
       required this.minLevel,
+      required this.heldItem,
+      required this.evolutionItem,
       required this.timeOfDay,
       required this.minHappiness,
       required this.minAffection,
       required this.minBeauty,
       required this.relativePhysicalStats,
       required this.needsOverworldRain,
-      required this.turnUpsideDown});
+      required this.turnUpsideDown})
+      : _evolutionTriggers = evolutionTriggers;
 
   factory _$PokemonEvolutionImpl.fromJson(Map<String, dynamic> json) =>
       _$$PokemonEvolutionImplFromJson(json);
@@ -427,10 +456,21 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
   final bool isBaby;
   @override
   final int? evolvesFromSpeciesId;
+  final List<String> _evolutionTriggers;
   @override
-  final String? evolutionTrigger;
+  List<String> get evolutionTriggers {
+    if (_evolutionTriggers is EqualUnmodifiableListView)
+      return _evolutionTriggers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_evolutionTriggers);
+  }
+
   @override
   final int? minLevel;
+  @override
+  final String? heldItem;
+  @override
+  final String? evolutionItem;
   @override
   final String? timeOfDay;
   @override
@@ -448,7 +488,7 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
 
   @override
   String toString() {
-    return 'PokemonEvolution(pokemon: $pokemon, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTrigger: $evolutionTrigger, minLevel: $minLevel, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
+    return 'PokemonEvolution(pokemon: $pokemon, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTriggers: $evolutionTriggers, minLevel: $minLevel, heldItem: $heldItem, evolutionItem: $evolutionItem, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
   }
 
   @override
@@ -460,10 +500,14 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
             (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
             (identical(other.evolvesFromSpeciesId, evolvesFromSpeciesId) ||
                 other.evolvesFromSpeciesId == evolvesFromSpeciesId) &&
-            (identical(other.evolutionTrigger, evolutionTrigger) ||
-                other.evolutionTrigger == evolutionTrigger) &&
+            const DeepCollectionEquality()
+                .equals(other._evolutionTriggers, _evolutionTriggers) &&
             (identical(other.minLevel, minLevel) ||
                 other.minLevel == minLevel) &&
+            (identical(other.heldItem, heldItem) ||
+                other.heldItem == heldItem) &&
+            (identical(other.evolutionItem, evolutionItem) ||
+                other.evolutionItem == evolutionItem) &&
             (identical(other.timeOfDay, timeOfDay) ||
                 other.timeOfDay == timeOfDay) &&
             (identical(other.minHappiness, minHappiness) ||
@@ -487,8 +531,10 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
       pokemon,
       isBaby,
       evolvesFromSpeciesId,
-      evolutionTrigger,
+      const DeepCollectionEquality().hash(_evolutionTriggers),
       minLevel,
+      heldItem,
+      evolutionItem,
       timeOfDay,
       minHappiness,
       minAffection,
@@ -517,8 +563,10 @@ abstract class _PokemonEvolution implements PokemonEvolution {
       {required final PokemonBasicInfo pokemon,
       required final bool isBaby,
       required final int? evolvesFromSpeciesId,
-      required final String? evolutionTrigger,
+      required final List<String> evolutionTriggers,
       required final int? minLevel,
+      required final String? heldItem,
+      required final String? evolutionItem,
       required final String? timeOfDay,
       required final int? minHappiness,
       required final int? minAffection,
@@ -537,9 +585,13 @@ abstract class _PokemonEvolution implements PokemonEvolution {
   @override
   int? get evolvesFromSpeciesId;
   @override
-  String? get evolutionTrigger;
+  List<String> get evolutionTriggers;
   @override
   int? get minLevel;
+  @override
+  String? get heldItem;
+  @override
+  String? get evolutionItem;
   @override
   String? get timeOfDay;
   @override
