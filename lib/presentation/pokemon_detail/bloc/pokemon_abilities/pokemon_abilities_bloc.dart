@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/bloc/error_state.dart';
-import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
 
 part 'pokemon_abilities_events.dart';
@@ -22,9 +22,9 @@ class PokemonAbilitiesBloc
     Emitter<PokemonAbilitiesState> emit,
   ) async {
     emit(const PokemonAbilitiesLoadingState());
-    final result = await getPokemonAbilities.execute(
+    final result = await getPokemonAbilities.call(
       GetPokemonAbilitiesParams(
-        id: event.pokemonId,
+        pokemonId: event.pokemonId,
       ),
     );
     result.fold(

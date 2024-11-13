@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/core/presentation/bloc/error_state.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
-import 'package:flutterdex/domain/use_cases/get_pokemon_list.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemons.dart';
 
 part 'pokemon_list_events.dart';
 part 'pokemon_list_states.dart';
@@ -14,7 +14,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     on<GetPokemonListEvent>(_onGetPokemonList);
   }
 
-  final GetPokemonList getPokemonList;
+  final GetPokemons getPokemonList;
 
   Future<void> _onGetPokemonList(
     GetPokemonListEvent event,
@@ -22,8 +22,8 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   ) async {
     emit(const PokemonListLoadingState());
 
-    final result = await getPokemonList.execute(
-      GetPokemonListParams(
+    final result = await getPokemonList.call(
+      GetPokemonsParams(
         offset: event.offset,
         limit: event.limit,
         searchQuery: event.searchQuery,

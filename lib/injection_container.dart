@@ -8,11 +8,11 @@ import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
-import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemon_details.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_evolutions.dart';
-import 'package:flutterdex/domain/use_cases/get_pokemon_list.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_stats.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemons.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
@@ -63,13 +63,13 @@ void setup() {
   );
 
   // use cases
-  getIt.registerLazySingleton<GetPokemonList>(
-    () => GetPokemonList(
+  getIt.registerLazySingleton<GetPokemons>(
+    () => GetPokemons(
       repository: getIt(),
     ),
   );
-  getIt.registerLazySingleton<GetPokemon>(
-    () => GetPokemon(
+  getIt.registerLazySingleton<GetPokemonDetails>(
+    () => GetPokemonDetails(
       repository: getIt(),
     ),
   );

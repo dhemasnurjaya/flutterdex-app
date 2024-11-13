@@ -23,7 +23,7 @@ class PokemonEvolutionsBloc
   ) async {
     emit(const PokemonEvolutionsLoadingState());
 
-    final result = await getPokemonEvolutions.execute(
+    final result = await getPokemonEvolutions.call(
       GetPokemonEvolutionsParams(
         pokemonId: event.pokemonId,
       ),

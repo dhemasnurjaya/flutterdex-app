@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutterdex/core/domain/use_case.dart';
 import 'package:flutterdex/core/error/failure.dart';
-import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -11,17 +11,18 @@ class GetPokemonAbilities
   final PokeapiRepository repository;
 
   @override
-  Future<Either<Failure, List<PokemonAbility>>> execute(
+  Future<Either<Failure, List<PokemonAbility>>> call(
     GetPokemonAbilitiesParams params,
   ) async {
-    return repository.getPokemonAbilities(id: params.id);
+    return repository.getPokemonAbilities(pokemonId: params.pokemonId);
   }
 }
 
 class GetPokemonAbilitiesParams extends Equatable {
-  const GetPokemonAbilitiesParams({required this.id});
-  final int id;
+  const GetPokemonAbilitiesParams({required this.pokemonId});
+
+  final int pokemonId;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [pokemonId];
 }

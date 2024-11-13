@@ -5,5 +5,5 @@ import 'package:fpdart/fpdart.dart';
 /// [Params] are the parameters that are required to call the use case.
 abstract class UseCase<Type, Params> {
   /// Execute the use case
-  Future<Either<Failure, Type>> execute(Params params);
+  Future<Either<Failure, Type>> call(Params params);
 }

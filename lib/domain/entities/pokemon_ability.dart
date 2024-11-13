@@ -1,7 +1,7 @@
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'pokemon_abilities.freezed.dart';
+part 'pokemon_ability.freezed.dart';
 
 @freezed
 class PokemonAbility with _$PokemonAbility {

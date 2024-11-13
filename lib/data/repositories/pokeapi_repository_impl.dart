@@ -2,7 +2,7 @@ import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
-import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
@@ -38,11 +38,11 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
   @override
   Future<Either<Failure, PokemonDetailInfo>> getPokemonDetails({
-    required int id,
+    required int pokemonId,
   }) async {
     try {
-      final species = await localSource.getPokemonSpecies(id: id);
-      final eggGroups = await localSource.getPokemonEggGroups(id: id);
+      final species = await localSource.getPokemonSpecies(id: pokemonId);
+      final eggGroups = await localSource.getPokemonEggGroups(id: pokemonId);
       final pokemonDetailInfo = PokemonDetailInfo.fromModels(
         species,
         eggGroups,
@@ -57,10 +57,10 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
   @override
   Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
-    required int id,
+    required int pokemonId,
   }) async {
     try {
-      final result = await localSource.getPokemonStats(id: id);
+      final result = await localSource.getPokemonStats(id: pokemonId);
       final pokemonStats = result.map(PokemonStat.fromModel).toList();
       return right(pokemonStats);
     } on Exception catch (e) {
@@ -72,10 +72,10 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
   @override
   Future<Either<Failure, List<PokemonAbility>>> getPokemonAbilities({
-    required int id,
+    required int pokemonId,
   }) async {
     try {
-      final result = await localSource.getPokemonAbilities(id: id);
+      final result = await localSource.getPokemonAbilities(id: pokemonId);
       final pokemonAbilities = result.map(PokemonAbility.fromModel);
       return right(pokemonAbilities.toList());
     } on Exception catch (e) {

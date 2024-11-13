@@ -8,7 +8,7 @@ import 'package:flutterdex/data/models/pokemon_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
-import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
@@ -125,7 +125,7 @@ void main() {
           .thenAnswer((_) async => tEggGroups);
 
       // act
-      final result = await repository.getPokemonDetails(id: tId);
+      final result = await repository.getPokemonDetails(pokemonId: tId);
 
       // assert
       final tExpected = PokemonDetailInfo(
@@ -158,7 +158,7 @@ void main() {
       when(() => localSource.getPokemonSpecies(id: tId)).thenThrow(Exception());
 
       // act
-      final result = await repository.getPokemonDetails(id: tId);
+      final result = await repository.getPokemonDetails(pokemonId: tId);
 
       // assert
       result.fold(
@@ -211,7 +211,7 @@ void main() {
           .thenAnswer((_) async => tResult);
 
       // act
-      final result = await repository.getPokemonStats(id: tId);
+      final result = await repository.getPokemonStats(pokemonId: tId);
 
       // assert
       final tExpected = tResult.map(PokemonStat.fromModel).toList();
@@ -229,7 +229,7 @@ void main() {
       when(() => localSource.getPokemonStats(id: tId)).thenThrow(Exception());
 
       // act
-      final result = await repository.getPokemonStats(id: tId);
+      final result = await repository.getPokemonStats(pokemonId: tId);
 
       // assert
       result.fold(
@@ -264,7 +264,7 @@ void main() {
           .thenAnswer((_) async => tResult);
 
       // act
-      final result = await repository.getPokemonAbilities(id: tId);
+      final result = await repository.getPokemonAbilities(pokemonId: tId);
 
       // assert
       final tExpected = tResult.map(PokemonAbility.fromModel).toList();
@@ -283,7 +283,7 @@ void main() {
           .thenThrow(Exception());
 
       // act
-      final result = await repository.getPokemonAbilities(id: tId);
+      final result = await repository.getPokemonAbilities(pokemonId: tId);
 
       // assert
       result.fold(

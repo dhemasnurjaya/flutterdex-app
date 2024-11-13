@@ -1,5 +1,5 @@
 import 'package:flutterdex/core/error/failure.dart';
-import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
@@ -14,15 +14,15 @@ abstract class PokeapiRepository {
   });
 
   Future<Either<Failure, PokemonDetailInfo>> getPokemonDetails({
-    required int id,
+    required int pokemonId,
   });
 
   Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
-    required int id,
+    required int pokemonId,
   });
 
   Future<Either<Failure, List<PokemonAbility>>> getPokemonAbilities({
-    required int id,
+    required int pokemonId,
   });
 
   Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({

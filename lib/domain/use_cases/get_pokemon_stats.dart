@@ -11,17 +11,18 @@ class GetPokemonStats
   final PokeapiRepository repository;
 
   @override
-  Future<Either<Failure, List<PokemonStat>>> execute(
+  Future<Either<Failure, List<PokemonStat>>> call(
     GetPokemonStatsParams params,
   ) async {
-    return repository.getPokemonStats(id: params.id);
+    return repository.getPokemonStats(pokemonId: params.pokemonId);
   }
 }
 
 class GetPokemonStatsParams extends Equatable {
-  const GetPokemonStatsParams({required this.id});
-  final int id;
+  const GetPokemonStatsParams({required this.pokemonId});
+
+  final int pokemonId;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [pokemonId];
 }
