@@ -9,38 +9,6 @@
 
 part of 'app_router.dart';
 
-abstract class _$AppRouter extends RootStackRouter {
-  // ignore: unused_element
-  _$AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, PageFactory> pagesMap = {
-    AppSettingsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AppSettingsPage(),
-      );
-    },
-    PokemonDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<PokemonDetailRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PokemonDetailPage(
-          pokemon: args.pokemon,
-          baseColor: args.baseColor,
-          key: args.key,
-        ),
-      );
-    },
-    PokemonListRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PokemonListPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [AppSettingsPage]
 class AppSettingsRoute extends PageRouteInfo<void> {
@@ -52,7 +20,12 @@ class AppSettingsRoute extends PageRouteInfo<void> {
 
   static const String name = 'AppSettingsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AppSettingsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -75,8 +48,17 @@ class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
 
   static const String name = 'PokemonDetailRoute';
 
-  static const PageInfo<PokemonDetailRouteArgs> page =
-      PageInfo<PokemonDetailRouteArgs>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PokemonDetailRouteArgs>();
+      return PokemonDetailPage(
+        pokemon: args.pokemon,
+        baseColor: args.baseColor,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class PokemonDetailRouteArgs {
@@ -109,5 +91,10 @@ class PokemonListRoute extends PageRouteInfo<void> {
 
   static const String name = 'PokemonListRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PokemonListPage();
+    },
+  );
 }

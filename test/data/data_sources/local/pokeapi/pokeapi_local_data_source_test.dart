@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
@@ -48,12 +48,12 @@ void main() {
 
   final dbFile = File('pokeapi_test.db');
   late Database database;
-  late PokeapiLocalSource dataSource;
+  late PokeapiLocalDataSource dataSource;
 
   setUp(() {
     return Future(() async {
       database = await _openConnection(dbFile);
-      dataSource = PokeapiLocalSourceImpl(database: database);
+      dataSource = PokeapiLocalDataSourceImpl(database: database);
     });
   });
 

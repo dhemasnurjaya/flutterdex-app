@@ -1,7 +1,7 @@
+import 'package:flutterdex/data/models/pokemon_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon_basic_info.freezed.dart';
-part 'pokemon_basic_info.g.dart';
 
 @freezed
 class PokemonBasicInfo with _$PokemonBasicInfo {
@@ -12,6 +12,12 @@ class PokemonBasicInfo with _$PokemonBasicInfo {
     required List<String> types,
   }) = _PokemonBasicInfo;
 
-  factory PokemonBasicInfo.fromJson(Map<String, dynamic> json) =>
-      _$PokemonBasicInfoFromJson(json);
+  factory PokemonBasicInfo.fromModel(PokemonModel model) {
+    return PokemonBasicInfo(
+      id: model.id,
+      name: model.name,
+      genus: model.genus,
+      types: model.types.split(','),
+    );
+  }
 }

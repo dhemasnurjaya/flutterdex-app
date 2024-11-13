@@ -14,7 +14,7 @@ class GetPokemonList
   Future<Either<Failure, List<PokemonBasicInfo>>> execute(
     GetPokemonListParams params,
   ) async {
-    return repository.getPokemonList(
+    return repository.getPokemons(
       limit: params.limit,
       offset: params.offset,
       searchQuery: params.searchQuery,

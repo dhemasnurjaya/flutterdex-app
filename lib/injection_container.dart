@@ -5,7 +5,7 @@ import 'package:flutterdex/core/data/local/theme_mode_config.dart';
 import 'package:flutterdex/core/network/network.dart';
 import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
@@ -48,8 +48,8 @@ void setup() {
   );
 
   // data sources
-  getIt.registerSingletonAsync<PokeapiLocalSource>(
-    () async => PokeapiLocalSourceImpl(
+  getIt.registerSingletonAsync<PokeapiLocalDataSource>(
+    () async => PokeapiLocalDataSourceImpl(
       database: getIt(),
     ),
     dependsOn: [Database],

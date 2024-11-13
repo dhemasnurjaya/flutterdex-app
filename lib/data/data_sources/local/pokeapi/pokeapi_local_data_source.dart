@@ -7,7 +7,7 @@ import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class PokeapiLocalSource {
+abstract class PokeapiLocalDataSource {
   Future<List<PokemonModel>> getPokemonList({
     String searchQuery = '',
     int limit = 20,
@@ -29,8 +29,8 @@ abstract class PokeapiLocalSource {
   Future<List<PokemonEvolutionModel>> getPokemonEvolutions({required int id});
 }
 
-class PokeapiLocalSourceImpl implements PokeapiLocalSource {
-  PokeapiLocalSourceImpl({
+class PokeapiLocalDataSourceImpl implements PokeapiLocalDataSource {
+  PokeapiLocalDataSourceImpl({
     required this.database,
   });
   final Database database;

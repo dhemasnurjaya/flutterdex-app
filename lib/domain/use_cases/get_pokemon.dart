@@ -13,7 +13,7 @@ class GetPokemon extends UseCase<PokemonDetailInfo, GetPokemonParams> {
   Future<Either<Failure, PokemonDetailInfo>> execute(
     GetPokemonParams params,
   ) async {
-    return repository.getPokemonSpecies(id: params.id);
+    return repository.getPokemonDetails(id: params.id);
   }
 }
 

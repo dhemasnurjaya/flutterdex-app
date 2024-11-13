@@ -7,17 +7,13 @@ import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract class PokeapiRepository {
-  Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonList({
+  Future<Either<Failure, List<PokemonBasicInfo>>> getPokemons({
     required String searchQuery,
     int limit = 20,
     int offset = 0,
   });
 
-  Future<Either<Failure, PokemonBasicInfo?>> getPokemon({
-    required int id,
-  });
-
-  Future<Either<Failure, PokemonDetailInfo>> getPokemonSpecies({
+  Future<Either<Failure, PokemonDetailInfo>> getPokemonDetails({
     required int id,
   });
 
