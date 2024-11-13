@@ -14,7 +14,7 @@ class GetPokemonEvolutions
   final PokeapiRepository repository;
 
   @override
-  Future<Either<Failure, List<PokemonEvolutions>>> execute(
+  Future<Either<Failure, List<PokemonEvolutions>>> call(
     GetPokemonEvolutionsParams params,
   ) {
     return repository.getPokemonEvolutions(id: params.pokemonId);

@@ -39,8 +39,12 @@ mixin _$PokemonEvolutionModel {
   bool? get needsOverworldRain => throw _privateConstructorUsedError;
   bool? get turnUpsideDown => throw _privateConstructorUsedError;
 
+  /// Serializes this PokemonEvolutionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PokemonEvolutionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PokemonEvolutionModelCopyWith<PokemonEvolutionModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -82,6 +86,8 @@ class _$PokemonEvolutionModelCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PokemonEvolutionModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -214,6 +220,8 @@ class __$$PokemonEvolutionModelImplCopyWithImpl<$Res>
       $Res Function(_$PokemonEvolutionModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PokemonEvolutionModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -409,7 +417,7 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
                 other.turnUpsideDown == turnUpsideDown));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -431,7 +439,9 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
       needsOverworldRain,
       turnUpsideDown);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonEvolutionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PokemonEvolutionModelImplCopyWith<_$PokemonEvolutionModelImpl>
@@ -503,8 +513,11 @@ abstract class _PokemonEvolutionModel implements PokemonEvolutionModel {
   bool? get needsOverworldRain;
   @override
   bool? get turnUpsideDown;
+
+  /// Create a copy of PokemonEvolutionModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PokemonEvolutionModelImplCopyWith<_$PokemonEvolutionModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

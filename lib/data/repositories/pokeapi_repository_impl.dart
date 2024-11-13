@@ -1,8 +1,8 @@
 import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/core/error/unknown_failure.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
-import 'package:flutterdex/domain/entities/pokemon_abilities.dart';
+import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
@@ -14,10 +14,10 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   PokeapiRepositoryImpl({
     required this.localSource,
   });
-  final PokeapiLocalSource localSource;
+  final PokeapiLocalDataSource localSource;
 
   @override
-  Future<Either<Failure, List<PokemonBasicInfo>>> getPokemonList({
+  Future<Either<Failure, List<PokemonBasicInfo>>> getPokemons({
     required String searchQuery,
     int limit = 20,
     int offset = 0,
@@ -28,14 +28,7 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
         limit: limit,
         offset: offset,
       );
-      final pokemons = result.map(
-        (e) => PokemonBasicInfo(
-          id: e.id,
-          name: e.name,
-          genus: e.genus,
-          types: e.types.split(','),
-        ),
-      );
+      final pokemons = result.map(PokemonBasicInfo.fromModel);
 
       return right(pokemons.toList());
     } on Exception catch (e) {
@@ -44,55 +37,15 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, PokemonBasicInfo>> getPokemon({
-    required int id,
+  Future<Either<Failure, PokemonDetailInfo>> getPokemonDetails({
+    required int pokemonId,
   }) async {
     try {
-      final result = await localSource.getPokemon(id: id);
-      final pokemonBasicInfo = PokemonBasicInfo(
-        id: result.id,
-        name: result.name,
-        genus: result.genus,
-        types: result.types.split(','),
-      );
-      return right(pokemonBasicInfo);
-    } on Exception catch (e) {
-      return left(
-        UnknownFailure(message: e.toString(), cause: e),
-      );
-    }
-  }
-
-  @override
-  Future<Either<Failure, PokemonDetailInfo>> getPokemonSpecies({
-    required int id,
-  }) async {
-    try {
-      final pokemon = await localSource.getPokemonSpecies(id: id);
-      final eggGroups = await localSource.getPokemonEggGroups(id: id);
-
-      final heightInKg = pokemon.height / 10;
-      final weightInMeter = pokemon.weight / 10;
-      final isGenderless = pokemon.genderRate == -1;
-      final femalePercentage =
-          isGenderless ? null : (pokemon.genderRate / 8.0) * 100;
-      final malePercentage = isGenderless ? null : 100 - femalePercentage!;
-      final capturePercentage = (pokemon.captureRate / 255.0) * 100;
-
-      final pokemonDetailInfo = PokemonDetailInfo(
-        id: pokemon.id,
-        name: pokemon.name,
-        heightInMeter: heightInKg,
-        weightInKg: weightInMeter,
-        malePercentage: malePercentage,
-        femalePercentage: femalePercentage,
-        capturePercentage: capturePercentage,
-        baseFriendship: pokemon.baseHappiness,
-        isBaby: pokemon.isBaby,
-        hatchCounter: pokemon.hatchCounter,
-        description: pokemon.description,
-        growthRate: pokemon.growthRate,
-        eggGroups: eggGroups.map((e) => e.name).toList(),
+      final species = await localSource.getPokemonSpecies(id: pokemonId);
+      final eggGroups = await localSource.getPokemonEggGroups(id: pokemonId);
+      final pokemonDetailInfo = PokemonDetailInfo.fromModels(
+        species,
+        eggGroups,
       );
       return right(pokemonDetailInfo);
     } on Exception catch (e) {
@@ -104,18 +57,12 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
   @override
   Future<Either<Failure, List<PokemonStat>>> getPokemonStats({
-    required int id,
+    required int pokemonId,
   }) async {
     try {
-      final result = await localSource.getPokemonStats(id: id);
-      final pokemonStatsList = result.map(
-        (e) => PokemonStat(
-          name: e.name,
-          value: e.value,
-          effortValue: e.effortValue,
-        ),
-      );
-      return right(pokemonStatsList.toList());
+      final result = await localSource.getPokemonStats(id: pokemonId);
+      final pokemonStats = result.map(PokemonStat.fromModel).toList();
+      return right(pokemonStats);
     } on Exception catch (e) {
       return left(
         UnknownFailure(message: e.toString(), cause: e),
@@ -125,18 +72,11 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
 
   @override
   Future<Either<Failure, List<PokemonAbility>>> getPokemonAbilities({
-    required int id,
+    required int pokemonId,
   }) async {
     try {
-      final result = await localSource.getPokemonAbilities(id: id);
-      final pokemonAbilities = result.map(
-        (e) => PokemonAbility(
-          isHidden: e.isHidden,
-          name: e.name,
-          description: e.description,
-          generation: e.generation,
-        ),
-      );
+      final result = await localSource.getPokemonAbilities(id: pokemonId);
+      final pokemonAbilities = result.map(PokemonAbility.fromModel);
       return right(pokemonAbilities.toList());
     } on Exception catch (e) {
       return left(

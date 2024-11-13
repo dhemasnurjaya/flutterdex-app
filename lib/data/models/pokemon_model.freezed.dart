@@ -25,8 +25,12 @@ mixin _$PokemonModel {
   String get types => throw _privateConstructorUsedError;
   String get genus => throw _privateConstructorUsedError;
 
+  /// Serializes this PokemonModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PokemonModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PokemonModelCopyWith<PokemonModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PokemonModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +104,8 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
       _$PokemonModelImpl _value, $Res Function(_$PokemonModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PokemonModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -164,11 +172,13 @@ class _$PokemonModelImpl implements _PokemonModel {
             (identical(other.genus, genus) || other.genus == genus));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, types, genus);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PokemonModelImplCopyWith<_$PokemonModelImpl> get copyWith =>
@@ -200,8 +210,11 @@ abstract class _PokemonModel implements PokemonModel {
   String get types;
   @override
   String get genus;
+
+  /// Create a copy of PokemonModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PokemonModelImplCopyWith<_$PokemonModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

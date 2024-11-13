@@ -5,18 +5,18 @@ import 'package:flutterdex/core/data/local/theme_mode_config.dart';
 import 'package:flutterdex/core/network/network.dart';
 import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
-import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_source.dart';
+import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
-import 'package:flutterdex/domain/use_cases/get_pokemon.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemon_details.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_evolutions.dart';
-import 'package:flutterdex/domain/use_cases/get_pokemon_list.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_stats.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemons.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_details/pokemon_details_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,8 +48,8 @@ void setup() {
   );
 
   // data sources
-  getIt.registerSingletonAsync<PokeapiLocalSource>(
-    () async => PokeapiLocalSourceImpl(
+  getIt.registerSingletonAsync<PokeapiLocalDataSource>(
+    () async => PokeapiLocalDataSourceImpl(
       database: getIt(),
     ),
     dependsOn: [Database],
@@ -63,13 +63,13 @@ void setup() {
   );
 
   // use cases
-  getIt.registerLazySingleton<GetPokemonList>(
-    () => GetPokemonList(
+  getIt.registerLazySingleton<GetPokemons>(
+    () => GetPokemons(
       repository: getIt(),
     ),
   );
-  getIt.registerLazySingleton<GetPokemon>(
-    () => GetPokemon(
+  getIt.registerLazySingleton<GetPokemonDetails>(
+    () => GetPokemonDetails(
       repository: getIt(),
     ),
   );
@@ -102,12 +102,12 @@ void setup() {
   );
   getIt.registerFactory<PokemonListBloc>(
     () => PokemonListBloc(
-      getPokemonList: getIt(),
+      getPokemons: getIt(),
     ),
   );
-  getIt.registerFactory<PokemonDetailBloc>(
-    () => PokemonDetailBloc(
-      getPokemon: getIt(),
+  getIt.registerFactory<PokemonDetailsBloc>(
+    () => PokemonDetailsBloc(
+      getPokemonDetails: getIt(),
     ),
   );
   getIt.registerFactory<PokemonStatsBloc>(

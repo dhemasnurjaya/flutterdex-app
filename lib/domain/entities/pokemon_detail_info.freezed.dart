@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PokemonDetailInfo _$PokemonDetailInfoFromJson(Map<String, dynamic> json) {
-  return _PokemonDetailInfo.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PokemonDetailInfo {
   int get id => throw _privateConstructorUsedError;
@@ -34,8 +30,9 @@ mixin _$PokemonDetailInfo {
   String get growthRate => throw _privateConstructorUsedError;
   List<String> get eggGroups => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonDetailInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PokemonDetailInfoCopyWith<PokemonDetailInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -72,6 +69,8 @@ class _$PokemonDetailInfoCopyWithImpl<$Res, $Val extends PokemonDetailInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PokemonDetailInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -178,6 +177,8 @@ class __$$PokemonDetailInfoImplCopyWithImpl<$Res>
       $Res Function(_$PokemonDetailInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PokemonDetailInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -253,7 +254,7 @@ class __$$PokemonDetailInfoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
   _$PokemonDetailInfoImpl(
       {required this.id,
@@ -270,9 +271,6 @@ class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
       required this.growthRate,
       required final List<String> eggGroups})
       : _eggGroups = eggGroups;
-
-  factory _$PokemonDetailInfoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PokemonDetailInfoImplFromJson(json);
 
   @override
   final int id;
@@ -341,7 +339,6 @@ class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
                 .equals(other._eggGroups, _eggGroups));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -359,19 +356,14 @@ class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
       growthRate,
       const DeepCollectionEquality().hash(_eggGroups));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonDetailInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PokemonDetailInfoImplCopyWith<_$PokemonDetailInfoImpl> get copyWith =>
       __$$PokemonDetailInfoImplCopyWithImpl<_$PokemonDetailInfoImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PokemonDetailInfoImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PokemonDetailInfo implements PokemonDetailInfo {
@@ -389,9 +381,6 @@ abstract class _PokemonDetailInfo implements PokemonDetailInfo {
       required final String description,
       required final String growthRate,
       required final List<String> eggGroups}) = _$PokemonDetailInfoImpl;
-
-  factory _PokemonDetailInfo.fromJson(Map<String, dynamic> json) =
-      _$PokemonDetailInfoImpl.fromJson;
 
   @override
   int get id;
@@ -419,8 +408,11 @@ abstract class _PokemonDetailInfo implements PokemonDetailInfo {
   String get growthRate;
   @override
   List<String> get eggGroups;
+
+  /// Create a copy of PokemonDetailInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PokemonDetailInfoImplCopyWith<_$PokemonDetailInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

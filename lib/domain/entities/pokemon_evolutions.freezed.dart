@@ -14,17 +14,14 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PokemonEvolutions _$PokemonEvolutionsFromJson(Map<String, dynamic> json) {
-  return _PokemonEvolutions.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PokemonEvolutions {
   List<PokemonEvolution> get evolutionChains =>
       throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonEvolutions
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PokemonEvolutionsCopyWith<PokemonEvolutions> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +45,8 @@ class _$PokemonEvolutionsCopyWithImpl<$Res, $Val extends PokemonEvolutions>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PokemonEvolutions
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +80,8 @@ class __$$PokemonEvolutionsImplCopyWithImpl<$Res>
       $Res Function(_$PokemonEvolutionsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PokemonEvolutions
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -96,14 +97,11 @@ class __$$PokemonEvolutionsImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PokemonEvolutionsImpl implements _PokemonEvolutions {
   _$PokemonEvolutionsImpl(
       {required final List<PokemonEvolution> evolutionChains})
       : _evolutionChains = evolutionChains;
-
-  factory _$PokemonEvolutionsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PokemonEvolutionsImplFromJson(json);
 
   final List<PokemonEvolution> _evolutionChains;
   @override
@@ -127,24 +125,18 @@ class _$PokemonEvolutionsImpl implements _PokemonEvolutions {
                 .equals(other._evolutionChains, _evolutionChains));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_evolutionChains));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonEvolutions
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PokemonEvolutionsImplCopyWith<_$PokemonEvolutionsImpl> get copyWith =>
       __$$PokemonEvolutionsImplCopyWithImpl<_$PokemonEvolutionsImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PokemonEvolutionsImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PokemonEvolutions implements PokemonEvolutions {
@@ -152,19 +144,15 @@ abstract class _PokemonEvolutions implements PokemonEvolutions {
           {required final List<PokemonEvolution> evolutionChains}) =
       _$PokemonEvolutionsImpl;
 
-  factory _PokemonEvolutions.fromJson(Map<String, dynamic> json) =
-      _$PokemonEvolutionsImpl.fromJson;
-
   @override
   List<PokemonEvolution> get evolutionChains;
+
+  /// Create a copy of PokemonEvolutions
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PokemonEvolutionsImplCopyWith<_$PokemonEvolutionsImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-PokemonEvolution _$PokemonEvolutionFromJson(Map<String, dynamic> json) {
-  return _PokemonEvolution.fromJson(json);
 }
 
 /// @nodoc
@@ -184,8 +172,9 @@ mixin _$PokemonEvolution {
   bool? get needsOverworldRain => throw _privateConstructorUsedError;
   bool? get turnUpsideDown => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PokemonEvolutionCopyWith<PokemonEvolution> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -225,6 +214,8 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -303,6 +294,8 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
     ) as $Val);
   }
 
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PokemonBasicInfoCopyWith<$Res> get pokemon {
@@ -348,6 +341,8 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
       $Res Function(_$PokemonEvolutionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -428,7 +423,7 @@ class __$$PokemonEvolutionImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PokemonEvolutionImpl implements _PokemonEvolution {
   _$PokemonEvolutionImpl(
       {required this.pokemon,
@@ -446,9 +441,6 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
       required this.needsOverworldRain,
       required this.turnUpsideDown})
       : _evolutionTriggers = evolutionTriggers;
-
-  factory _$PokemonEvolutionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PokemonEvolutionImplFromJson(json);
 
   @override
   final PokemonBasicInfo pokemon;
@@ -524,7 +516,6 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
                 other.turnUpsideDown == turnUpsideDown));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -543,19 +534,14 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
       needsOverworldRain,
       turnUpsideDown);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PokemonEvolutionImplCopyWith<_$PokemonEvolutionImpl> get copyWith =>
       __$$PokemonEvolutionImplCopyWithImpl<_$PokemonEvolutionImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PokemonEvolutionImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PokemonEvolution implements PokemonEvolution {
@@ -574,9 +560,6 @@ abstract class _PokemonEvolution implements PokemonEvolution {
       required final int? relativePhysicalStats,
       required final bool? needsOverworldRain,
       required final bool? turnUpsideDown}) = _$PokemonEvolutionImpl;
-
-  factory _PokemonEvolution.fromJson(Map<String, dynamic> json) =
-      _$PokemonEvolutionImpl.fromJson;
 
   @override
   PokemonBasicInfo get pokemon;
@@ -606,8 +589,11 @@ abstract class _PokemonEvolution implements PokemonEvolution {
   bool? get needsOverworldRain;
   @override
   bool? get turnUpsideDown;
+
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PokemonEvolutionImplCopyWith<_$PokemonEvolutionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

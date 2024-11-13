@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PokemonBasicInfo _$PokemonBasicInfoFromJson(Map<String, dynamic> json) {
-  return _PokemonBasicInfo.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PokemonBasicInfo {
   int get id => throw _privateConstructorUsedError;
@@ -25,8 +21,9 @@ mixin _$PokemonBasicInfo {
   String get genus => throw _privateConstructorUsedError;
   List<String> get types => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonBasicInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PokemonBasicInfoCopyWith<PokemonBasicInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +47,8 @@ class _$PokemonBasicInfoCopyWithImpl<$Res, $Val extends PokemonBasicInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PokemonBasicInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +97,8 @@ class __$$PokemonBasicInfoImplCopyWithImpl<$Res>
       $Res Function(_$PokemonBasicInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PokemonBasicInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -128,7 +129,7 @@ class __$$PokemonBasicInfoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PokemonBasicInfoImpl implements _PokemonBasicInfo {
   _$PokemonBasicInfoImpl(
       {required this.id,
@@ -136,9 +137,6 @@ class _$PokemonBasicInfoImpl implements _PokemonBasicInfo {
       required this.genus,
       required final List<String> types})
       : _types = types;
-
-  factory _$PokemonBasicInfoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PokemonBasicInfoImplFromJson(json);
 
   @override
   final int id;
@@ -170,24 +168,18 @@ class _$PokemonBasicInfoImpl implements _PokemonBasicInfo {
             const DeepCollectionEquality().equals(other._types, _types));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, genus,
       const DeepCollectionEquality().hash(_types));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PokemonBasicInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PokemonBasicInfoImplCopyWith<_$PokemonBasicInfoImpl> get copyWith =>
       __$$PokemonBasicInfoImplCopyWithImpl<_$PokemonBasicInfoImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PokemonBasicInfoImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PokemonBasicInfo implements PokemonBasicInfo {
@@ -197,9 +189,6 @@ abstract class _PokemonBasicInfo implements PokemonBasicInfo {
       required final String genus,
       required final List<String> types}) = _$PokemonBasicInfoImpl;
 
-  factory _PokemonBasicInfo.fromJson(Map<String, dynamic> json) =
-      _$PokemonBasicInfoImpl.fromJson;
-
   @override
   int get id;
   @override
@@ -208,8 +197,11 @@ abstract class _PokemonBasicInfo implements PokemonBasicInfo {
   String get genus;
   @override
   List<String> get types;
+
+  /// Create a copy of PokemonBasicInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PokemonBasicInfoImplCopyWith<_$PokemonBasicInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

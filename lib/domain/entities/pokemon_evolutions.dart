@@ -3,16 +3,12 @@ import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon_evolutions.freezed.dart';
-part 'pokemon_evolutions.g.dart';
 
 @freezed
 class PokemonEvolutions with _$PokemonEvolutions {
   factory PokemonEvolutions({
     required List<PokemonEvolution> evolutionChains,
   }) = _PokemonEvolutions;
-
-  factory PokemonEvolutions.fromJson(Map<String, dynamic> json) =>
-      _$PokemonEvolutionsFromJson(json);
 }
 
 @freezed
@@ -56,7 +52,4 @@ class PokemonEvolution with _$PokemonEvolution {
         needsOverworldRain: model.needsOverworldRain,
         turnUpsideDown: model.turnUpsideDown,
       );
-
-  factory PokemonEvolution.fromJson(Map<String, dynamic> json) =>
-      _$PokemonEvolutionFromJson(json);
 }
