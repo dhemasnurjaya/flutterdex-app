@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_detail/pokemon_detail_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_details/pokemon_details_bloc.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:flutterdex/utilities/string_extension.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,16 +26,16 @@ class _PokemonAboutWidgetState extends State<PokemonAboutWidget> {
     super.initState();
 
     // get pokemon detail
-    BlocProvider.of<PokemonDetailBloc>(context).add(
-      GetPokemonDetailEvent(id: widget.pokemonId),
+    BlocProvider.of<PokemonDetailsBloc>(context).add(
+      GetPokemonDetailsEvent(pokemonId: widget.pokemonId),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+    return BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
       builder: (context, state) {
-        if (state is PokemonDetailLoadedState) {
+        if (state is PokemonDetailsLoadedState) {
           return Column(
             children: [
               _buildDescription(context, state.pokemonDetail),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PokemonAbilitiesWidget extends StatefulWidget {

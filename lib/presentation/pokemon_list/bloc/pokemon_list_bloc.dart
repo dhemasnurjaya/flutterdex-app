@@ -9,12 +9,12 @@ part 'pokemon_list_states.dart';
 
 class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   PokemonListBloc({
-    required this.getPokemonList,
+    required this.getPokemons,
   }) : super(const PokemonListInitial()) {
     on<GetPokemonListEvent>(_onGetPokemonList);
   }
 
-  final GetPokemons getPokemonList;
+  final GetPokemons getPokemons;
 
   Future<void> _onGetPokemonList(
     GetPokemonListEvent event,
@@ -22,7 +22,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   ) async {
     emit(const PokemonListLoadingState());
 
-    final result = await getPokemonList.call(
+    final result = await getPokemons(
       GetPokemonsParams(
         offset: event.offset,
         limit: event.limit,

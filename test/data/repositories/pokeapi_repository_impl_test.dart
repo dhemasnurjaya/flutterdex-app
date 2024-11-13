@@ -11,6 +11,7 @@ import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
+import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:mocktail/mocktail.dart';
@@ -296,7 +297,7 @@ void main() {
   });
 
   group('getPokemonEvolutions', () {
-    test('should return List<PokemonEvolutios> when success', () async {
+    test('should return List<PokemonEvolutions> when success', () async {
       // arrange
       const tId = 265;
       const tResult = <PokemonEvolutionModel>[
@@ -417,6 +418,8 @@ void main() {
       result.fold(
         (l) => fail('should not return left'),
         (r) {
+          expect(r, isA<List<PokemonEvolutions>>());
+
           // check evolution chains have the correct species
           expect(
             r.first.evolutionChains.map((e) => e.pokemon.name),

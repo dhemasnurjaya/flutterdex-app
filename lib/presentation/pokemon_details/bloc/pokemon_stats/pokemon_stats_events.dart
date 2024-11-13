@@ -5,9 +5,9 @@ abstract class PokemonStatsEvent extends Equatable {
 }
 
 class GetPokemonStatsEvent extends PokemonStatsEvent {
-  const GetPokemonStatsEvent({required this.id});
-  final int id;
+  const GetPokemonStatsEvent({required this.pokemonId});
+  final int pokemonId;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [pokemonId];
 }

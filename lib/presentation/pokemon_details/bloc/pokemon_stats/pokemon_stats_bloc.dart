@@ -21,7 +21,7 @@ class PokemonStatsBloc extends Bloc<PokemonStatsEvent, PokemonStatsState> {
     emit(const PokemonStatsLoadingState());
     final result = await getPokemonStats.call(
       GetPokemonStatsParams(
-        pokemonId: event.id,
+        pokemonId: event.pokemonId,
       ),
     );
     result.fold(

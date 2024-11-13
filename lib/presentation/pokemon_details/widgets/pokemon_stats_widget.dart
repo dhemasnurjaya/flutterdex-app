@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
-import 'package:flutterdex/presentation/pokemon_detail/bloc/pokemon_stats/pokemon_stats_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 
 class PokemonStatsWidget extends StatefulWidget {
@@ -25,7 +25,7 @@ class _PokemonStatsWidgetState extends State<PokemonStatsWidget> {
 
     // get pokemon stats
     BlocProvider.of<PokemonStatsBloc>(context).add(
-      GetPokemonStatsEvent(id: widget.pokemonId),
+      GetPokemonStatsEvent(pokemonId: widget.pokemonId),
     );
   }
 
