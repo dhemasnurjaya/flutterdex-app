@@ -1,9 +1,8 @@
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterdex/core/error/failure.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockPokeapiRepository extends Mock implements PokeapiRepository {}

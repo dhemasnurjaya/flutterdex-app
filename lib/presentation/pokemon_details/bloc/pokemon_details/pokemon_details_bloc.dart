@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterdex/core/presentation/bloc/error_state.dart';
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_details.dart';
 

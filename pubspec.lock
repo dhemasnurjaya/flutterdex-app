@@ -174,6 +174,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  clean_arch_core:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "5f1f669e28a8768f27864a85824f7090c10ad54d"
+      url: "https://github.com/dhemasnurjaya/clean-arch-core"
+    source: git
+    version: "0.0.1"
   clock:
     dependency: transitive
     description:
@@ -223,7 +232,7 @@ packages:
     source: hosted
     version: "2.3.7"
   equatable:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: equatable
       sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
@@ -268,7 +277,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_bloc:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_bloc
       sha256: b594505eac31a0518bdcb4b5b79573b8d9117b193cc80cc12e17d639b10aa27a
@@ -302,7 +311,7 @@ packages:
     source: hosted
     version: "10.8.0"
   fpdart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: fpdart
       sha256: "1b84ce64453974159f08046f5d05592020d1fcb2099d7fe6ec58da0e7337af77"
@@ -366,7 +375,7 @@ packages:
     source: hosted
     version: "2.3.2"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
@@ -646,7 +655,7 @@ packages:
     source: hosted
     version: "0.28.0"
   shared_preferences:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences
       sha256: "95f9997ca1fb9799d494d0cb2a780fd7be075818d59f00c43832ed112b158a82"
@@ -1035,5 +1044,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.5.4 <4.0.0"
   flutter: ">=3.24.0"

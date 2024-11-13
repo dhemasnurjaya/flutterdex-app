@@ -1,5 +1,6 @@
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/utilities/color_utility.dart';

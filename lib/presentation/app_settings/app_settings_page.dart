@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
 
 @RoutePage()
 class AppSettingsPage extends StatefulWidget {
