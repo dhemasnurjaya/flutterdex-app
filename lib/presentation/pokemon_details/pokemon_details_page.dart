@@ -28,6 +28,7 @@ class PokemonDetailsPage extends StatefulWidget {
 class _PokemonDetailsPageState extends State<PokemonDetailsPage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  PageController? _pageController;
 
   final _tabTitles = ['About', 'Stats', 'Abilities', 'Evolution', 'Moves'];
 
@@ -39,77 +40,38 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage>
       length: _tabTitles.length,
       vsync: this,
     );
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController?.dispose();
+    _tabController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
           _buildAppBar(),
-          SliverList.list(
-            children: [
-              _buildPokemonSprite(),
-              _buildPokemonName(),
-              _buildPokemonGenus(),
-              _buildPokemonTypes(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.startOffset,
-                  dividerHeight: 0,
-                  indicatorColor: darken(widget.baseColor),
-                  labelColor: darken(widget.baseColor),
-                  labelStyle: GoogleFonts.outfit().copyWith(
-                    fontSize: 16,
-                  ),
-                  tabs: _tabTitles.map(Text.new).toList(),
-                  onTap: (value) => setState(() {}),
-                ),
-              ),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
-                child: _getTabPage(_tabController?.index ?? 0),
-              ),
-            ],
-          ),
+          _buildPokemonSprite(),
+          _buildPokemonName(),
+          _buildPokemonGenus(),
+          _buildPokemonTypes(),
+          _buildInfoTabBar(),
+          _buildInfoPages(),
         ],
       ),
     );
   }
 
-  Widget _getTabPage(int index) {
-    switch (index) {
-      case 0:
-        return PokemonAboutWidget(
-          pokemonId: widget.pokemon.id,
-          baseColor: widget.baseColor,
-        );
-      case 1:
-        return PokemonStatsWidget(
-          pokemonId: widget.pokemon.id,
-          baseColor: widget.baseColor,
-        );
-      case 2:
-        return PokemonAbilitiesWidget(
-          pokemonId: widget.pokemon.id,
-          baseColor: widget.baseColor,
-        );
-      case 3:
-        return PokemonEvolutionsWidget(
-          pokemonId: widget.pokemon.id,
-          baseColor: widget.baseColor,
-        );
-      case 4:
-        return Container();
-      default:
-        return Container();
-    }
-  }
-
   Widget _buildAppBar() {
+    const defaultAppBarHeight = 56.0;
+    final statusBarHeight = MediaQuery.of(context).padding.vertical;
+
     final pokemonNumber = Text(
       '#${widget.pokemon.id.toString().padLeft(4, '0')}',
       style: GoogleFonts.outfit().copyWith(
@@ -118,29 +80,33 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage>
       ),
     );
 
-    return SliverAppBar(
-      title: pokemonNumber,
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
-        onPressed: () => context.router.maybePop(),
-      ),
-      actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.favorite_border,
-            color: Colors.black,
+    final customAppBar = Container(
+      height: defaultAppBarHeight + statusBarHeight,
+      padding: EdgeInsets.fromLTRB(8, statusBarHeight, 8, 0),
+      color: widget.baseColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () => context.router.maybePop(),
           ),
-          onPressed: () => context.router.maybePop(),
-        ),
-      ],
-      backgroundColor: widget.baseColor,
-      surfaceTintColor: Colors.transparent,
-      elevation: 0,
+          pokemonNumber,
+          IconButton(
+            icon: const Icon(
+              Icons.favorite_border,
+              color: Colors.black,
+            ),
+            onPressed: () => context.router.maybePop(),
+          ),
+        ],
+      ),
     );
+
+    return customAppBar;
   }
 
   Widget _buildPokemonSprite() {
@@ -198,9 +164,72 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage>
     );
   }
 
-  @override
-  void dispose() {
-    _tabController?.dispose();
-    super.dispose();
+  Widget _buildInfoTabBar() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: TabBar(
+        controller: _tabController,
+        isScrollable: true,
+        tabAlignment: TabAlignment.startOffset,
+        dividerHeight: 0,
+        indicatorColor: darken(widget.baseColor),
+        labelColor: darken(widget.baseColor),
+        labelStyle: GoogleFonts.outfit().copyWith(
+          fontSize: 16,
+        ),
+        tabs: _tabTitles.map(Text.new).toList(),
+        onTap: (value) => _pageController?.animateToPage(
+          value,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoPages() {
+    final pages = [
+      PokemonAboutWidget(
+        pokemonId: widget.pokemon.id,
+        baseColor: widget.baseColor,
+      ),
+      PokemonStatsWidget(
+        pokemonId: widget.pokemon.id,
+        baseColor: widget.baseColor,
+      ),
+      PokemonAbilitiesWidget(
+        pokemonId: widget.pokemon.id,
+        baseColor: widget.baseColor,
+      ),
+      PokemonEvolutionsWidget(
+        pokemonId: widget.pokemon.id,
+        baseColor: widget.baseColor,
+      ),
+      const Padding(
+        padding: EdgeInsets.all(16),
+        child: Text(
+          'Pokémon moves is under development.',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ];
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height / 2,
+        maxHeight: MediaQuery.of(context).size.height,
+      ),
+      child: PageView(
+        controller: _pageController,
+        onPageChanged: (value) {
+          _tabController?.animateTo(
+            value,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        },
+        children: pages,
+      ),
+    );
   }
 }

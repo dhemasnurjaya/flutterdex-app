@@ -51,7 +51,10 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
         if (state is PokemonEvolutionsEmptyState) {
           return const Padding(
             padding: EdgeInsets.all(16),
-            child: Text('This Pokémon has no evolutions.'),
+            child: Text(
+              'This Pokémon has no evolutions.',
+              textAlign: TextAlign.center,
+            ),
           );
         }
 
