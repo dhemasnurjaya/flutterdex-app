@@ -29,7 +29,7 @@ class PokemonListWidget extends StatelessWidget {
           pokemon: pokemons.elementAt(index),
           onTap: () {
             context.router.push(
-              PokemonDetailRoute(
+              PokemonDetailsRoute(
                 pokemon: pokemons.elementAt(index),
                 baseColor:
                     pokemonColors[pokemons.elementAt(index).types.first]!,

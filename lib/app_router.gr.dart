@@ -29,16 +29,16 @@ class AppSettingsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PokemonDetailPage]
-class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
-  PokemonDetailRoute({
+/// [PokemonDetailsPage]
+class PokemonDetailsRoute extends PageRouteInfo<PokemonDetailsRouteArgs> {
+  PokemonDetailsRoute({
     required PokemonBasicInfo pokemon,
     required Color baseColor,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          PokemonDetailRoute.name,
-          args: PokemonDetailRouteArgs(
+          PokemonDetailsRoute.name,
+          args: PokemonDetailsRouteArgs(
             pokemon: pokemon,
             baseColor: baseColor,
             key: key,
@@ -46,13 +46,13 @@ class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
           initialChildren: children,
         );
 
-  static const String name = 'PokemonDetailRoute';
+  static const String name = 'PokemonDetailsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<PokemonDetailRouteArgs>();
-      return PokemonDetailPage(
+      final args = data.argsAs<PokemonDetailsRouteArgs>();
+      return PokemonDetailsPage(
         pokemon: args.pokemon,
         baseColor: args.baseColor,
         key: args.key,
@@ -61,8 +61,8 @@ class PokemonDetailRoute extends PageRouteInfo<PokemonDetailRouteArgs> {
   );
 }
 
-class PokemonDetailRouteArgs {
-  const PokemonDetailRouteArgs({
+class PokemonDetailsRouteArgs {
+  const PokemonDetailsRouteArgs({
     required this.pokemon,
     required this.baseColor,
     this.key,
@@ -76,7 +76,7 @@ class PokemonDetailRouteArgs {
 
   @override
   String toString() {
-    return 'PokemonDetailRouteArgs{pokemon: $pokemon, baseColor: $baseColor, key: $key}';
+    return 'PokemonDetailsRouteArgs{pokemon: $pokemon, baseColor: $baseColor, key: $key}';
   }
 }
 
