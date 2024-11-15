@@ -172,7 +172,7 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
           ? null
           : () {
               context.router.push(
-                PokemonDetailRoute(
+                PokemonDetailsRoute(
                   pokemon: pokemonEvolution.pokemon,
                   baseColor:
                       pokemonColors[pokemonEvolution.pokemon.types.first]!,

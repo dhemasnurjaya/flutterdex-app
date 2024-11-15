@@ -12,8 +12,8 @@ import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
-class PokemonDetailPage extends StatefulWidget {
-  const PokemonDetailPage({
+class PokemonDetailsPage extends StatefulWidget {
+  const PokemonDetailsPage({
     required this.pokemon,
     required this.baseColor,
     super.key,
@@ -22,10 +22,10 @@ class PokemonDetailPage extends StatefulWidget {
   final Color baseColor;
 
   @override
-  State<PokemonDetailPage> createState() => _PokemonDetailPageState();
+  State<PokemonDetailsPage> createState() => _PokemonDetailsPageState();
 }
 
-class _PokemonDetailPageState extends State<PokemonDetailPage>
+class _PokemonDetailsPageState extends State<PokemonDetailsPage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
