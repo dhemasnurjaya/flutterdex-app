@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterdex/injection_container.dart';
 
-class PokemonSprite extends StatelessWidget {
-  const PokemonSprite(
+class PokemonSpriteWidget extends StatelessWidget {
+  const PokemonSpriteWidget(
     this.pokemonId, {
     this.padding = EdgeInsets.zero,
     this.height = 120.0,

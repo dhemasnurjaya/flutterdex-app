@@ -1,14 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutterdex/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
-import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_list/widgets/error_retry_widget.dart';
-import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_card.dart';
-import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_search_box.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_filter_widget.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_list_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
@@ -21,13 +17,18 @@ class PokemonListPage extends StatefulWidget {
 
 class _PokemonListPageState extends State<PokemonListPage> {
   final _pokemonScrollCtl = ScrollController();
-  final _pokemons = <PokemonBasicInfo>[];
+  final _pokemons = <PokemonBasicInfo>{};
+  final _filteredPokemons = <PokemonBasicInfo>{};
   final _limit = 50;
 
+  double _lastScrollPosition = 0;
   int _offset = 0;
+  int _filteredOffset = 0;
   bool _isLastPage = false;
   bool _isError = false;
   String _searchQuery = '';
+
+  bool get _isFiltered => _searchQuery.isNotEmpty;
 
   @override
   void initState() {
@@ -36,18 +37,22 @@ class _PokemonListPageState extends State<PokemonListPage> {
     // load initial pokemons
     _getPokemons();
 
-    // register scroll listener for lazy loading
     _pokemonScrollCtl.addListener(() {
-      if (_pokemonScrollCtl.position.pixels ==
-          _pokemonScrollCtl.position.maxScrollExtent) {
-        // prevent load more on error
-        if (!_isError) {
-          _offset += _limit;
-        }
+      // save last scroll position for unfiltered pokemons
+      if (!_isFiltered) {
+        _lastScrollPosition = _pokemonScrollCtl.position.pixels;
+      }
+
+      // lazy loading
+      final isEndOfScroll =
+          _lastScrollPosition == _pokemonScrollCtl.position.maxScrollExtent;
+      if (isEndOfScroll && !_isError) {
+        // update offset
+        _isFiltered ? _filteredOffset += _limit : _offset += _limit;
 
         // load more pokemons
         if (!_isLastPage) {
-          _getPokemons();
+          _getPokemons(query: _isFiltered ? _searchQuery : '');
         }
       }
     });
@@ -61,7 +66,17 @@ class _PokemonListPageState extends State<PokemonListPage> {
           setState(() {
             if (state is PokemonListLoadedState) {
               _isLastPage = state.pokemons.isEmpty;
-              _pokemons.addAll(state.pokemons);
+
+              if (_isFiltered) {
+                _filteredPokemons.addAll(state.pokemons);
+              } else {
+                _pokemons.addAll(state.pokemons);
+                _pokemonScrollCtl.animateTo(
+                  _lastScrollPosition,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
             }
 
             _isError = state is PokemonListErrorState;
@@ -130,8 +145,8 @@ class _PokemonListPageState extends State<PokemonListPage> {
         pinned: true,
         child: Padding(
           padding: padding,
-          child: PokemonSearchBox(
-            onSearch: _onSearch,
+          child: PokemonFilterWidget(
+            onSearch: (query) => _getPokemons(query: query),
           ),
         ),
       ),
@@ -141,52 +156,22 @@ class _PokemonListPageState extends State<PokemonListPage> {
   Widget _buildPokemonList() {
     return SliverPadding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      sliver: SliverGrid.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 4 / 5,
-        ),
-        itemCount: _pokemons.length + 1, // +1 for error indicator
-        itemBuilder: (context, index) {
-          if (index == _pokemons.length) {
-            if (_isError) {
-              return ErrorRetryWidget(onTapRetry: _getPokemons);
-            } else {
-              return const SizedBox();
-            }
-          }
-
-          return PokemonCard(
-            pokemon: _pokemons[index],
-            onTap: () {
-              context.router.push(
-                PokemonDetailRoute(
-                  pokemon: _pokemons[index],
-                  baseColor: pokemonColors[_pokemons[index].types.first]!,
-                ),
-              );
-            },
-          );
-        },
+      sliver: PokemonListWidget(
+        pokemons: _isFiltered ? _filteredPokemons : _pokemons,
       ),
     );
   }
 
-  void _onSearch(String query) {
+  void _getPokemons({String query = ''}) {
     setState(() {
       _searchQuery = query;
-      _offset = 0;
-      _pokemons.clear();
-      _getPokemons();
+      _filteredOffset = 0;
+      _filteredPokemons.clear();
     });
-  }
 
-  void _getPokemons() {
     context.read<PokemonListBloc>().add(
           GetPokemonListEvent(
-            offset: _offset,
+            offset: _isFiltered ? _filteredOffset : _offset,
             limit: _limit,
             searchQuery: _searchQuery,
           ),

@@ -6,7 +6,7 @@ import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_abilitie
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_about_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_evolutions_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_stats_widget.dart';
-import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -159,7 +159,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
           width: 190,
           child: Hero(
             tag: widget.pokemon,
-            child: PokemonSprite(widget.pokemon.id),
+            child: PokemonSpriteWidget(widget.pokemon.id),
           ),
         ),
       ],

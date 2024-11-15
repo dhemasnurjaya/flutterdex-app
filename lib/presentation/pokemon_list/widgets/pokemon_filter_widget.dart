@@ -4,8 +4,8 @@ import 'dart:math' show max;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class PokemonSearchBox extends StatefulWidget {
-  const PokemonSearchBox({
+class PokemonFilterWidget extends StatefulWidget {
+  const PokemonFilterWidget({
     required this.onSearch,
     this.focusNode,
     super.key,
@@ -15,10 +15,10 @@ class PokemonSearchBox extends StatefulWidget {
   final FocusNode? focusNode;
 
   @override
-  State<PokemonSearchBox> createState() => _PokemonSearchBoxState();
+  State<PokemonFilterWidget> createState() => _PokemonFilterWidgetState();
 }
 
-class _PokemonSearchBoxState extends State<PokemonSearchBox> {
+class _PokemonFilterWidgetState extends State<PokemonFilterWidget> {
   final _searchController = TextEditingController();
   Timer? _debounce;
   String _lastSearch = '';
