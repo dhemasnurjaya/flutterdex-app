@@ -1,9 +1,10 @@
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterdex/core/error/unknown_failure.dart';
+
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_evolutions.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
-import 'package:fpdart/fpdart.dart';
+
 import 'package:mocktail/mocktail.dart';
 
 class MockGetPokemonEvolutions extends Mock implements GetPokemonEvolutions {}

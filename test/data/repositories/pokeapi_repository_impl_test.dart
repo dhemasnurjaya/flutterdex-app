@@ -1,5 +1,5 @@
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterdex/core/error/unknown_failure.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';

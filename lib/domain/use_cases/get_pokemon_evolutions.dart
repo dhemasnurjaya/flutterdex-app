@@ -1,9 +1,6 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutterdex/core/domain/use_case.dart';
-import 'package:flutterdex/core/error/failure.dart';
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
-import 'package:fpdart/fpdart.dart';
 
 class GetPokemonEvolutions
     extends UseCase<List<PokemonEvolutions>, GetPokemonEvolutionsParams> {

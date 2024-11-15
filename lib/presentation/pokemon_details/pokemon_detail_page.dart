@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/presentation/curve_clipper.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_abilities_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_about_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_evolutions_widget.dart';

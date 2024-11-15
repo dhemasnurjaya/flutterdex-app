@@ -1,9 +1,6 @@
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterdex/core/data/local/config.dart';
-import 'package:flutterdex/core/data/local/theme_mode_config.dart';
-import 'package:flutterdex/core/network/network.dart';
-import 'package:flutterdex/core/presentation/theme/theme_mode_cubit.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_database.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
@@ -19,14 +16,14 @@ import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_evolutions/
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 final getIt = GetIt.instance;
 
 void setup() {
   // network
-  getIt.registerLazySingleton<Network>(NetworkImpl.new);
+  getIt.registerLazySingleton<Client>(Client.new);
+  getIt.registerLazySingleton<Network>(() => NetworkImpl(getIt()));
 
   // poke api database
   getIt.registerSingletonAsync<Database>(

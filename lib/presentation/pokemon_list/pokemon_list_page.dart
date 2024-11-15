@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterdex/core/presentation/widgets/error_retry_widget.dart';
-import 'package:flutterdex/core/router/app_router.dart';
+
+import 'package:flutterdex/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/error_retry_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_card.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_search_box.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -94,6 +95,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
     return SliverAppBar(
       elevation: 0,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      centerTitle: false,
       title: Text(
         'Pokémon',
         style: GoogleFonts.outfit().copyWith(

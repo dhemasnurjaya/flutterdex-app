@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterdex/core/presentation/curve_clipper.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
+import 'package:flutterdex/presentation/curve_clipper.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';

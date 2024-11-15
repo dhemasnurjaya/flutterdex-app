@@ -1,8 +1,9 @@
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterdex/core/error/unknown_failure.dart';
+
 import 'package:flutterdex/domain/use_cases/get_pokemon_stats.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
-import 'package:fpdart/fpdart.dart';
+
 import 'package:mocktail/mocktail.dart';
 
 class MockGetPokemonStats extends Mock implements GetPokemonStats {}

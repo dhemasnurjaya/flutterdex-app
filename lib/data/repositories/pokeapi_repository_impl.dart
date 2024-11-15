@@ -1,5 +1,4 @@
-import 'package:flutterdex/core/error/failure.dart';
-import 'package:flutterdex/core/error/unknown_failure.dart';
+import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
@@ -8,7 +7,6 @@ import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
-import 'package:fpdart/fpdart.dart';
 
 class PokeapiRepositoryImpl implements PokeapiRepository {
   PokeapiRepositoryImpl({
