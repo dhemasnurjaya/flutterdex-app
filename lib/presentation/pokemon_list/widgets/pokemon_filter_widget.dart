@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math' show max;
 
 import 'package:flutter/material.dart';
@@ -7,29 +6,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class PokemonFilterWidget extends StatefulWidget {
   const PokemonFilterWidget({
     required this.onSearch,
-    this.focusNode,
     super.key,
   });
 
   final void Function(String) onSearch;
-  final FocusNode? focusNode;
 
   @override
   State<PokemonFilterWidget> createState() => _PokemonFilterWidgetState();
 }
 
 class _PokemonFilterWidgetState extends State<PokemonFilterWidget> {
+  final _focusNode = FocusNode();
   final _searchController = TextEditingController();
-  Timer? _debounce;
-  String _lastSearch = '';
-
-  @override
-  void initState() {
-    super.initState();
-
-    // listen to search changes
-    _searchController.addListener(_onSearchChanged);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +44,25 @@ class _PokemonFilterWidgetState extends State<PokemonFilterWidget> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    focusNode: widget.focusNode,
+                    focusNode: _focusNode,
+                    textInputAction: TextInputAction.search,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name or Dex number',
                     ),
+                    onTapOutside: (_) {
+                      _focusNode.unfocus();
+                    },
+                    onSubmitted: (value) => widget.onSearch(value),
                   ),
                 ),
                 Visibility(
                   visible: _searchController.text.isNotEmpty,
                   child: IconButton(
-                    onPressed: _searchController.clear,
+                    onPressed: () {
+                      widget.onSearch('');
+                      _searchController.clear();
+                    },
                     icon: const Icon(FontAwesomeIcons.xmark),
                   ),
                 ),
@@ -98,23 +94,8 @@ class _PokemonFilterWidgetState extends State<PokemonFilterWidget> {
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
-    _debounce?.cancel();
     super.dispose();
-  }
-
-  void _onSearchChanged() {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      final searchText = _searchController.text;
-      if (_lastSearch == searchText) {
-        return;
-      }
-
-      widget.onSearch(searchText);
-      _lastSearch = searchText;
-    });
   }
 }
 
