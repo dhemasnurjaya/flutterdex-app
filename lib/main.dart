@@ -1,7 +1,7 @@
 import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterdex/app_router.dart';
-import 'package:flutterdex/app_theme.dart';
+import 'package:flutterdex/app_themes.dart';
 import 'package:flutterdex/injection_container.dart' as ic;
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_details/pokemon_details_bloc.dart';

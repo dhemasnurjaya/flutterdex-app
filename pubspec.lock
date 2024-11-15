@@ -179,7 +179,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "5f1f669e28a8768f27864a85824f7090c10ad54d"
+      resolved-ref: "7f501471f725dcf7e7f8de8f3fdb4bc13b230d4d"
       url: "https://github.com/dhemasnurjaya/clean-arch-core"
     source: git
     version: "0.0.1"

@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutterdex/app_router.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -162,7 +161,7 @@ class _PokemonEvolutionsWidgetState extends State<PokemonEvolutionsWidget> {
             color: Theme.of(context).disabledColor,
           ),
     );
-    final pokemonImage = PokemonSprite(pokemonEvolution.pokemon.id);
+    final pokemonImage = PokemonSpriteWidget(pokemonEvolution.pokemon.id);
 
     return ListTile(
       leading: pokemonImage,

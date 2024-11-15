@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/presentation/curve_clipper.dart';
 import 'package:flutterdex/presentation/pokemon_colors.dart';
-import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite.dart';
+import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
 import 'package:flutterdex/utilities/color_utility.dart';
 
@@ -76,7 +76,7 @@ class PokemonCard extends StatelessWidget {
             children: [
               Hero(
                 tag: pokemon,
-                child: PokemonSprite(
+                child: PokemonSpriteWidget(
                   pokemon.id,
                   padding: const EdgeInsets.all(8),
                   height: 100,
