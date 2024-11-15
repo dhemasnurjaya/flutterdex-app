@@ -82,24 +82,20 @@ class _PokemonListPageState extends State<PokemonListPage> {
             _isError = state is PokemonListErrorState;
           });
         },
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          onVerticalDragDown: (_) => FocusScope.of(context).unfocus(),
-          child: SafeArea(
-            child: CustomScrollView(
-              controller: _pokemonScrollCtl,
-              slivers: [
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 24,
-                  ),
+        child: SafeArea(
+          child: CustomScrollView(
+            controller: _pokemonScrollCtl,
+            slivers: [
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 24,
                 ),
-                _buildAppBar(),
-                _buildSubtitle(),
-                _buildSearchBox(),
-                _buildPokemonList(),
-              ],
-            ),
+              ),
+              _buildAppBar(),
+              _buildSubtitle(),
+              _buildPokemonFilter(),
+              _buildPokemonList(),
+            ],
           ),
         ),
       ),
@@ -135,7 +131,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
     );
   }
 
-  Widget _buildSearchBox() {
+  Widget _buildPokemonFilter() {
     const padding = EdgeInsets.symmetric(vertical: 12);
     return SliverPersistentHeader(
       pinned: true,
