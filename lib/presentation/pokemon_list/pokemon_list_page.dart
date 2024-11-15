@@ -95,6 +95,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
     return SliverAppBar(
       elevation: 0,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      centerTitle: false,
       title: Text(
         'Pokémon',
         style: GoogleFonts.outfit().copyWith(
