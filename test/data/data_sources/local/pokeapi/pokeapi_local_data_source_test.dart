@@ -6,6 +6,7 @@ import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_so
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
+import 'package:flutterdex/data/models/pokemon_natural_move_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:path/path.dart';
@@ -165,5 +166,20 @@ void main() {
     // assert
     expect(result, isA<List<PokemonEvolutionModel>>());
     expect(result.map((e) => e.name).toSet(), tExpectedPokemonNames);
+  });
+
+  test('getPokemonNaturalMoves', () async {
+    // arrange
+    const tId = 1;
+
+    // act
+    final result = await dataSource.getPokemonNaturalMoves(id: tId);
+
+    // assert
+    const tExpectedFirstMoveName = 'Growl';
+    const tExpectedLastMoveName = 'Solar Beam';
+    expect(result, isA<List<PokemonNaturalMoveModel>>());
+    expect(result.first.moveName, tExpectedFirstMoveName);
+    expect(result.last.moveName, tExpectedLastMoveName);
   });
 }

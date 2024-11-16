@@ -5,6 +5,7 @@ import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
+import 'package:flutterdex/domain/entities/pokemon_natural_move.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 
@@ -84,11 +85,25 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({
-    required int id,
+  Future<Either<Failure, List<PokemonNaturalMove>>> getPokemonNaturalMoves({
+    required int pokemonId,
   }) async {
     try {
-      final result = (await localSource.getPokemonEvolutions(id: id)).toList();
+      final result = await localSource.getPokemonNaturalMoves(id: pokemonId);
+      final pokemonNaturalMoves = result.map(PokemonNaturalMove.fromModel);
+      return right(pokemonNaturalMoves.toList());
+    } on Exception catch (e) {
+      return left(UnknownFailure(message: e.toString(), cause: e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({
+    required int pokemonId,
+  }) async {
+    try {
+      final result =
+          (await localSource.getPokemonEvolutions(id: pokemonId)).toList();
       final evolutionChains = <PokemonEvolutions>[];
       while (true) {
         if (result.length == 1) {

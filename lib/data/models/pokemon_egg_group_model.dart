@@ -1,7 +1,10 @@
-class PokemonEggGroupModel {
-  PokemonEggGroupModel({
-    required this.name,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final String name;
+part 'pokemon_egg_group_model.freezed.dart';
+
+@freezed
+class PokemonEggGroupModel with _$PokemonEggGroupModel {
+  const factory PokemonEggGroupModel({
+    required String name,
+  }) = _PokemonEggGroupModel;
 }

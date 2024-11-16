@@ -3,6 +3,7 @@ import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
+import 'package:flutterdex/data/models/pokemon_natural_move_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -27,6 +28,10 @@ abstract class PokeapiLocalDataSource {
   Future<List<PokemonEggGroupModel>> getPokemonEggGroups({required int id});
 
   Future<List<PokemonEvolutionModel>> getPokemonEvolutions({required int id});
+
+  Future<List<PokemonNaturalMoveModel>> getPokemonNaturalMoves({
+    required int id,
+  });
 }
 
 class PokeapiLocalDataSourceImpl implements PokeapiLocalDataSource {
@@ -165,6 +170,27 @@ class PokeapiLocalDataSourceImpl implements PokeapiLocalDataSource {
         relativePhysicalStats: row['relative_physical_stats'] as int?,
         needsOverworldRain: (row['needs_overworld_rain'] as int?) == 1,
         turnUpsideDown: (row['turn_upside_down'] as int?) == 1,
+      ),
+    );
+    return result.toList();
+  }
+
+  @override
+  Future<List<PokemonNaturalMoveModel>> getPokemonNaturalMoves({
+    required int id,
+  }) async {
+    final queryResult = await database.rawQuery(pokemonNaturalMovesQuery, [id]);
+    final result = queryResult.map(
+      (row) => PokemonNaturalMoveModel(
+        level: row['level']! as int,
+        moveName: row['move_name']! as String,
+        type: row['type']! as String,
+        accuracy: row['accuracy'] as int?,
+        power: row['power'] as int?,
+        pp: row['pp']! as int,
+        description: row['description']! as String,
+        generation: row['generation']! as String,
+        learnMethod: row['learn_method']! as String,
       ),
     );
     return result.toList();

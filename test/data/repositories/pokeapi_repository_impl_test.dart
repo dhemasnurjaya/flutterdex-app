@@ -5,6 +5,7 @@ import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
+import 'package:flutterdex/data/models/pokemon_natural_move_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
@@ -12,6 +13,7 @@ import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
+import 'package:flutterdex/domain/entities/pokemon_natural_move.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:mocktail/mocktail.dart';
@@ -102,7 +104,7 @@ void main() {
     test('should return PokemonDetailInfo when success', () async {
       // arrange
       const tId = 1;
-      final tSpecies = PokemonSpeciesModel(
+      const tSpecies = PokemonSpeciesModel(
         id: 1,
         name: 'bulbasaur',
         height: 7,
@@ -116,8 +118,8 @@ void main() {
         hatchCounter: 20,
       );
       final tEggGroups = <PokemonEggGroupModel>[
-        PokemonEggGroupModel(name: 'monster'),
-        PokemonEggGroupModel(name: 'grass'),
+        const PokemonEggGroupModel(name: 'monster'),
+        const PokemonEggGroupModel(name: 'grass'),
       ];
 
       when(() => localSource.getPokemonSpecies(id: tId))
@@ -176,32 +178,32 @@ void main() {
       // arrange
       const tId = 1;
       final tResult = <PokemonStatModel>[
-        PokemonStatModel(
+        const PokemonStatModel(
           name: 'hp',
           value: 45,
           effortValue: 0,
         ),
-        PokemonStatModel(
+        const PokemonStatModel(
           name: 'attack',
           value: 49,
           effortValue: 0,
         ),
-        PokemonStatModel(
+        const PokemonStatModel(
           name: 'defense',
           value: 49,
           effortValue: 0,
         ),
-        PokemonStatModel(
+        const PokemonStatModel(
           name: 'special-attack',
           value: 65,
           effortValue: 1,
         ),
-        PokemonStatModel(
+        const PokemonStatModel(
           name: 'special-defense',
           value: 65,
           effortValue: 0,
         ),
-        PokemonStatModel(
+        const PokemonStatModel(
           name: 'speed',
           value: 45,
           effortValue: 0,
@@ -247,13 +249,13 @@ void main() {
       // arrange
       const tId = 1;
       final tResult = <PokemonAbilityModel>[
-        PokemonAbilityModel(
+        const PokemonAbilityModel(
           name: 'overgrow',
           isHidden: false,
           description: 'Powers up Grass-type moves in a pinch.',
           generation: 'generation-iii',
         ),
-        PokemonAbilityModel(
+        const PokemonAbilityModel(
           name: 'chlorophyll',
           isHidden: true,
           description: 'Boosts the Speed stat in harsh sunlight.',
@@ -292,6 +294,70 @@ void main() {
         (r) => fail('should not return right'),
       );
       verify(() => localSource.getPokemonAbilities(id: tId));
+      verifyNoMoreInteractions(localSource);
+    });
+  });
+
+  group('getPokemonNaturalMoves', () {
+    test('should return List<PokemonNaturalMove> when success', () async {
+      // arrange
+      const tId = 1;
+      final tResult = <PokemonNaturalMoveModel>[
+        const PokemonNaturalMoveModel(
+          moveName: 'tackle',
+          type: 'normal',
+          generation: 'generation-i',
+          learnMethod: 'level-up',
+          level: 1,
+          power: 40,
+          accuracy: 100,
+          pp: 35,
+          description: 'description',
+        ),
+        const PokemonNaturalMoveModel(
+          moveName: 'growl',
+          type: 'normal',
+          generation: 'generation-i',
+          learnMethod: 'level-up',
+          level: 1,
+          power: null,
+          accuracy: 100,
+          pp: 40,
+          description: 'description',
+        ),
+      ];
+
+      when(() => localSource.getPokemonNaturalMoves(id: tId))
+          .thenAnswer((_) async => tResult);
+
+      // act
+      final result = await repository.getPokemonNaturalMoves(pokemonId: tId);
+
+      // assert
+      final tExpected = tResult.map(PokemonNaturalMove.fromModel).toList();
+      result.fold(
+        (l) => fail('should not return left'),
+        (r) => expect(r, tExpected),
+      );
+      verify(() => localSource.getPokemonNaturalMoves(id: tId));
+      verifyNoMoreInteractions(localSource);
+    });
+
+    test('should return Failure when exception occurs', () async {
+      // arrange
+      const tId = 1;
+      when(() => localSource.getPokemonNaturalMoves(id: tId))
+          .thenThrow(Exception());
+
+      // act
+      final result = await repository.getPokemonNaturalMoves(pokemonId: tId);
+
+      // assert
+      result.fold(
+        (l) => expect(l, isA<UnknownFailure>()),
+        (r) => fail('should not return right'),
+      );
+      verify(() => localSource.getPokemonNaturalMoves(id: tId));
       verifyNoMoreInteractions(localSource);
     });
   });
@@ -402,7 +468,7 @@ void main() {
           .thenAnswer((_) async => tResult);
 
       // act
-      final result = await repository.getPokemonEvolutions(id: tId);
+      final result = await repository.getPokemonEvolutions(pokemonId: tId);
 
       // assert
       final tExpectedFirstEvolutionChain = [
@@ -442,7 +508,7 @@ void main() {
           .thenThrow(Exception());
 
       // act
-      final result = await repository.getPokemonEvolutions(id: tId);
+      final result = await repository.getPokemonEvolutions(pokemonId: tId);
 
       // assert
       result.fold(

@@ -14,19 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) {
-  return _PokemonModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PokemonModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get types => throw _privateConstructorUsedError;
   String get genus => throw _privateConstructorUsedError;
-
-  /// Serializes this PokemonModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of PokemonModel
   /// with the given fields replaced by the non-null parameter values.
@@ -136,16 +129,13 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PokemonModelImpl implements _PokemonModel {
   _$PokemonModelImpl(
       {required this.id,
       required this.name,
       required this.types,
       required this.genus});
-
-  factory _$PokemonModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PokemonModelImplFromJson(json);
 
   @override
   final int id;
@@ -172,7 +162,6 @@ class _$PokemonModelImpl implements _PokemonModel {
             (identical(other.genus, genus) || other.genus == genus));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, types, genus);
 
@@ -183,13 +172,6 @@ class _$PokemonModelImpl implements _PokemonModel {
   @pragma('vm:prefer-inline')
   _$$PokemonModelImplCopyWith<_$PokemonModelImpl> get copyWith =>
       __$$PokemonModelImplCopyWithImpl<_$PokemonModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PokemonModelImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PokemonModel implements PokemonModel {
@@ -198,9 +180,6 @@ abstract class _PokemonModel implements PokemonModel {
       required final String name,
       required final String types,
       required final String genus}) = _$PokemonModelImpl;
-
-  factory _PokemonModel.fromJson(Map<String, dynamic> json) =
-      _$PokemonModelImpl.fromJson;
 
   @override
   int get id;

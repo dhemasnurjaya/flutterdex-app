@@ -20,7 +20,7 @@ void main() {
     // arrange
     const tPokemonId = 1;
     const tPokemonEvolutions = <PokemonEvolutions>[];
-    when(() => mockRepository.getPokemonEvolutions(id: tPokemonId))
+    when(() => mockRepository.getPokemonEvolutions(pokemonId: tPokemonId))
         .thenAnswer((_) async => const Right(tPokemonEvolutions));
     // act
     final result = await useCase(
@@ -31,6 +31,6 @@ void main() {
       result,
       const Right<Failure, List<PokemonEvolutions>>(tPokemonEvolutions),
     );
-    verify(() => mockRepository.getPokemonEvolutions(id: tPokemonId));
+    verify(() => mockRepository.getPokemonEvolutions(pokemonId: tPokemonId));
   });
 }

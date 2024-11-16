@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon_evolution_model.freezed.dart';
-part 'pokemon_evolution_model.g.dart';
 
 @freezed
 class PokemonEvolutionModel with _$PokemonEvolutionModel {
@@ -24,7 +23,4 @@ class PokemonEvolutionModel with _$PokemonEvolutionModel {
     required bool? needsOverworldRain,
     required bool? turnUpsideDown,
   }) = _PokemonEvolutionModel;
-
-  factory PokemonEvolutionModel.fromJson(Map<String, dynamic> json) =>
-      _$PokemonEvolutionModelFromJson(json);
 }

@@ -201,3 +201,32 @@ GROUP BY
 LIMIT 
   1;
 ''';
+
+const pokemonNaturalMovesQuery = '''
+SELECT
+  pm.level,
+  mn.name AS move_name,
+  m.power,
+  m.pp,
+  m.accuracy,
+  tn.name AS type,
+  meet.effect AS description,
+  gn.name AS generation,
+  mlmn.name AS learn_method
+FROM
+  pokemon_v2_pokemonmove pm
+  JOIN pokemon_v2_move m ON pm.move_id = m.id
+  JOIN pokemon_v2_movename mn ON m.id = mn.move_id AND mn.language_id = 9
+  JOIN pokemon_v2_movelearnmethodname mlmn ON pm.move_learn_method_id = mlmn.move_learn_method_id AND mlmn.language_id = 9
+  JOIN pokemon_v2_typename tn ON m.type_id = tn.type_id AND tn.language_id = 9
+  JOIN pokemon_v2_versiongroup vg ON pm.version_group_id = vg.id
+  JOIN pokemon_v2_generationname gn ON vg.generation_id = gn.generation_id AND gn.language_id = 9
+  JOIN pokemon_v2_moveeffecteffecttext meet ON m.move_effect_id = meet.move_effect_id AND meet.language_id = 9
+WHERE
+  pm.move_learn_method_id = 1
+  AND pm.pokemon_id = ?
+GROUP BY
+  pm.level, mn.name, gn.generation_id
+ORDER BY
+  pm.level, mn.name;
+''';

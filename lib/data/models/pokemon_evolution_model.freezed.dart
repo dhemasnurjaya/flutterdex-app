@@ -14,11 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PokemonEvolutionModel _$PokemonEvolutionModelFromJson(
-    Map<String, dynamic> json) {
-  return _PokemonEvolutionModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PokemonEvolutionModel {
   int get id => throw _privateConstructorUsedError;
@@ -38,9 +33,6 @@ mixin _$PokemonEvolutionModel {
   int? get relativePhysicalStats => throw _privateConstructorUsedError;
   bool? get needsOverworldRain => throw _privateConstructorUsedError;
   bool? get turnUpsideDown => throw _privateConstructorUsedError;
-
-  /// Serializes this PokemonEvolutionModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of PokemonEvolutionModel
   /// with the given fields replaced by the non-null parameter values.
@@ -317,7 +309,7 @@ class __$$PokemonEvolutionModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
   const _$PokemonEvolutionModelImpl(
       {required this.id,
@@ -337,9 +329,6 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
       required this.relativePhysicalStats,
       required this.needsOverworldRain,
       required this.turnUpsideDown});
-
-  factory _$PokemonEvolutionModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PokemonEvolutionModelImplFromJson(json);
 
   @override
   final int id;
@@ -417,7 +406,6 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
                 other.turnUpsideDown == turnUpsideDown));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -447,13 +435,6 @@ class _$PokemonEvolutionModelImpl implements _PokemonEvolutionModel {
   _$$PokemonEvolutionModelImplCopyWith<_$PokemonEvolutionModelImpl>
       get copyWith => __$$PokemonEvolutionModelImplCopyWithImpl<
           _$PokemonEvolutionModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PokemonEvolutionModelImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PokemonEvolutionModel implements PokemonEvolutionModel {
@@ -475,9 +456,6 @@ abstract class _PokemonEvolutionModel implements PokemonEvolutionModel {
       required final int? relativePhysicalStats,
       required final bool? needsOverworldRain,
       required final bool? turnUpsideDown}) = _$PokemonEvolutionModelImpl;
-
-  factory _PokemonEvolutionModel.fromJson(Map<String, dynamic> json) =
-      _$PokemonEvolutionModelImpl.fromJson;
 
   @override
   int get id;

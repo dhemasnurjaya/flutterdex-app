@@ -3,6 +3,7 @@ import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
+import 'package:flutterdex/domain/entities/pokemon_natural_move.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 
 abstract class PokeapiRepository {
@@ -25,6 +26,10 @@ abstract class PokeapiRepository {
   });
 
   Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({
-    required int id,
+    required int pokemonId,
+  });
+
+  Future<Either<Failure, List<PokemonNaturalMove>>> getPokemonNaturalMoves({
+    required int pokemonId,
   });
 }

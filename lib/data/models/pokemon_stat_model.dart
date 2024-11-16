@@ -1,10 +1,12 @@
-class PokemonStatModel {
-  PokemonStatModel({
-    required this.name,
-    required this.value,
-    required this.effortValue,
-  });
-  final String name;
-  final int value;
-  final int effortValue;
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'pokemon_stat_model.freezed.dart';
+
+@freezed
+class PokemonStatModel with _$PokemonStatModel {
+  const factory PokemonStatModel({
+    required String name,
+    required int value,
+    required int effortValue,
+  }) = _PokemonStatModel;
 }
