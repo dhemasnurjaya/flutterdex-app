@@ -20,7 +20,7 @@ class PokemonNaturalMovesLoadedState extends PokemonNaturalMovesState {
     required this.moves,
   });
 
-  final List<PokemonNaturalMove> moves;
+  final PokemonNaturalMoves moves;
 
   @override
   List<Object?> get props => [moves];

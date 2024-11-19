@@ -85,13 +85,13 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, List<PokemonNaturalMove>>> getPokemonNaturalMoves({
+  Future<Either<Failure, PokemonNaturalMoves>> getPokemonNaturalMoves({
     required int pokemonId,
   }) async {
     try {
       final result = await localSource.getPokemonNaturalMoves(id: pokemonId);
-      final pokemonNaturalMoves = result.map(PokemonNaturalMove.fromModel);
-      return right(pokemonNaturalMoves.toList());
+      final pokemonNaturalMoves = PokemonNaturalMoves.fromModels(result);
+      return right(pokemonNaturalMoves);
     } on Exception catch (e) {
       return left(UnknownFailure(message: e.toString(), cause: e));
     }

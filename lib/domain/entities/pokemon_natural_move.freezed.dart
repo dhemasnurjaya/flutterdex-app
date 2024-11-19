@@ -15,6 +15,146 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$PokemonNaturalMoves {
+  Map<String, List<PokemonNaturalMove>> get moves =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of PokemonNaturalMoves
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PokemonNaturalMovesCopyWith<PokemonNaturalMoves> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PokemonNaturalMovesCopyWith<$Res> {
+  factory $PokemonNaturalMovesCopyWith(
+          PokemonNaturalMoves value, $Res Function(PokemonNaturalMoves) then) =
+      _$PokemonNaturalMovesCopyWithImpl<$Res, PokemonNaturalMoves>;
+  @useResult
+  $Res call({Map<String, List<PokemonNaturalMove>> moves});
+}
+
+/// @nodoc
+class _$PokemonNaturalMovesCopyWithImpl<$Res, $Val extends PokemonNaturalMoves>
+    implements $PokemonNaturalMovesCopyWith<$Res> {
+  _$PokemonNaturalMovesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PokemonNaturalMoves
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? moves = null,
+  }) {
+    return _then(_value.copyWith(
+      moves: null == moves
+          ? _value.moves
+          : moves // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<PokemonNaturalMove>>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PokemonNaturalMovesImplCopyWith<$Res>
+    implements $PokemonNaturalMovesCopyWith<$Res> {
+  factory _$$PokemonNaturalMovesImplCopyWith(_$PokemonNaturalMovesImpl value,
+          $Res Function(_$PokemonNaturalMovesImpl) then) =
+      __$$PokemonNaturalMovesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Map<String, List<PokemonNaturalMove>> moves});
+}
+
+/// @nodoc
+class __$$PokemonNaturalMovesImplCopyWithImpl<$Res>
+    extends _$PokemonNaturalMovesCopyWithImpl<$Res, _$PokemonNaturalMovesImpl>
+    implements _$$PokemonNaturalMovesImplCopyWith<$Res> {
+  __$$PokemonNaturalMovesImplCopyWithImpl(_$PokemonNaturalMovesImpl _value,
+      $Res Function(_$PokemonNaturalMovesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PokemonNaturalMoves
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? moves = null,
+  }) {
+    return _then(_$PokemonNaturalMovesImpl(
+      moves: null == moves
+          ? _value._moves
+          : moves // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<PokemonNaturalMove>>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PokemonNaturalMovesImpl implements _PokemonNaturalMoves {
+  const _$PokemonNaturalMovesImpl(
+      {required final Map<String, List<PokemonNaturalMove>> moves})
+      : _moves = moves;
+
+  final Map<String, List<PokemonNaturalMove>> _moves;
+  @override
+  Map<String, List<PokemonNaturalMove>> get moves {
+    if (_moves is EqualUnmodifiableMapView) return _moves;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_moves);
+  }
+
+  @override
+  String toString() {
+    return 'PokemonNaturalMoves(moves: $moves)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PokemonNaturalMovesImpl &&
+            const DeepCollectionEquality().equals(other._moves, _moves));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_moves));
+
+  /// Create a copy of PokemonNaturalMoves
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PokemonNaturalMovesImplCopyWith<_$PokemonNaturalMovesImpl> get copyWith =>
+      __$$PokemonNaturalMovesImplCopyWithImpl<_$PokemonNaturalMovesImpl>(
+          this, _$identity);
+}
+
+abstract class _PokemonNaturalMoves implements PokemonNaturalMoves {
+  const factory _PokemonNaturalMoves(
+          {required final Map<String, List<PokemonNaturalMove>> moves}) =
+      _$PokemonNaturalMovesImpl;
+
+  @override
+  Map<String, List<PokemonNaturalMove>> get moves;
+
+  /// Create a copy of PokemonNaturalMoves
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PokemonNaturalMovesImplCopyWith<_$PokemonNaturalMovesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PokemonNaturalMove {
   String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;

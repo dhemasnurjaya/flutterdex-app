@@ -5,6 +5,7 @@ import 'package:flutterdex/presentation/curve_clipper.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_abilities_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_about_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_evolutions_widget.dart';
+import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_natural_moves_widget.dart';
 import 'package:flutterdex/presentation/pokemon_details/widgets/pokemon_stats_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_sprite_widget.dart';
 import 'package:flutterdex/presentation/pokemon_list/widgets/pokemon_type_chip.dart';
@@ -205,12 +206,8 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage>
         pokemonId: widget.pokemon.id,
         baseColor: widget.baseColor,
       ),
-      const Padding(
-        padding: EdgeInsets.all(16),
-        child: Text(
-          'Pokémon moves is under development.',
-          textAlign: TextAlign.center,
-        ),
+      PokemonNaturalMovesWidget(
+        pokemonId: widget.pokemon.id,
       ),
     ];
 

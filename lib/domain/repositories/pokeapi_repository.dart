@@ -29,7 +29,7 @@ abstract class PokeapiRepository {
     required int pokemonId,
   });
 
-  Future<Either<Failure, List<PokemonNaturalMove>>> getPokemonNaturalMoves({
+  Future<Either<Failure, PokemonNaturalMoves>> getPokemonNaturalMoves({
     required int pokemonId,
   });
 }

@@ -19,7 +19,9 @@ void main() {
   test('should get pokemon natural moves from the repository', () async {
     // arrange
     const pokemonId = 1;
-    const moves = <PokemonNaturalMove>[];
+    const moves = PokemonNaturalMoves(
+      moves: <String, List<PokemonNaturalMove>>{},
+    );
     when(() => repository.getPokemonNaturalMoves(pokemonId: pokemonId))
         .thenAnswer((_) async => const Right(moves));
 
@@ -28,7 +30,7 @@ void main() {
         await usecase(const GetPokemonNaturalMovesParams(pokemonId: pokemonId));
 
     // assert
-    expect(result, const Right<Failure, List<PokemonNaturalMove>>(moves));
+    expect(result, const Right<Failure, PokemonNaturalMoves>(moves));
     verify(() => repository.getPokemonNaturalMoves(pokemonId: pokemonId));
     verifyNoMoreInteractions(repository);
   });

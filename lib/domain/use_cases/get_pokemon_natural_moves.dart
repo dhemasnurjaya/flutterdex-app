@@ -3,7 +3,7 @@ import 'package:flutterdex/domain/entities/pokemon_natural_move.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 
 class GetPokemonNaturalMoves
-    extends UseCase<List<PokemonNaturalMove>, GetPokemonNaturalMovesParams> {
+    extends UseCase<PokemonNaturalMoves, GetPokemonNaturalMovesParams> {
   GetPokemonNaturalMoves({
     required this.repository,
   });
@@ -11,7 +11,7 @@ class GetPokemonNaturalMoves
   final PokeapiRepository repository;
 
   @override
-  Future<Either<Failure, List<PokemonNaturalMove>>> call(
+  Future<Either<Failure, PokemonNaturalMoves>> call(
     GetPokemonNaturalMovesParams params,
   ) {
     return repository.getPokemonNaturalMoves(pokemonId: params.pokemonId);

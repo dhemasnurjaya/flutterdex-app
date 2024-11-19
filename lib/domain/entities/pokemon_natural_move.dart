@@ -1,7 +1,22 @@
+import 'package:collection/collection.dart' show groupBy;
 import 'package:flutterdex/data/models/pokemon_natural_move_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon_natural_move.freezed.dart';
+
+@freezed
+class PokemonNaturalMoves with _$PokemonNaturalMoves {
+  const factory PokemonNaturalMoves({
+    required Map<String, List<PokemonNaturalMove>> moves,
+  }) = _PokemonNaturalMoves;
+
+  factory PokemonNaturalMoves.fromModels(List<PokemonNaturalMoveModel> models) {
+    final naturalMoves = models.map(PokemonNaturalMove.fromModel);
+    return PokemonNaturalMoves(
+      moves: groupBy(naturalMoves, (e) => e.generation),
+    );
+  }
+}
 
 @freezed
 class PokemonNaturalMove with _$PokemonNaturalMove {

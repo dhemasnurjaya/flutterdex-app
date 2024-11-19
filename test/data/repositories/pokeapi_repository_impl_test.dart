@@ -334,7 +334,7 @@ void main() {
       final result = await repository.getPokemonNaturalMoves(pokemonId: tId);
 
       // assert
-      final tExpected = tResult.map(PokemonNaturalMove.fromModel).toList();
+      final tExpected = PokemonNaturalMoves.fromModels(tResult);
       result.fold(
         (l) => fail('should not return left'),
         (r) => expect(r, tExpected),

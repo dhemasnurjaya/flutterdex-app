@@ -1,5 +1,6 @@
 import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutterdex/domain/entities/pokemon_natural_move.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_natural_moves.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_natural_moves/pokemon_natural_moves_bloc.dart';
 import 'package:mocktail/mocktail.dart';
@@ -33,8 +34,9 @@ void main() {
 
     test('should get data from the GetPokemonNaturalMoves use case', () async {
       // arrange
-      when(() => mockGetPokemonNaturalMoves(any()))
-          .thenAnswer((_) async => const Right([]));
+      when(() => mockGetPokemonNaturalMoves(any())).thenAnswer(
+        (_) async => const Right(PokemonNaturalMoves(moves: {})),
+      );
       // act
       bloc.add(const GetPokemonNaturalMovesEvent(pokemonId: tPokemonId));
       await untilCalled(() => mockGetPokemonNaturalMoves(any()));
@@ -52,13 +54,17 @@ void main() {
         () async {
       // arrange
       when(() => mockGetPokemonNaturalMoves(any()))
-          .thenAnswer((_) async => const Right([]));
+          .thenAnswer((_) async => const Right(PokemonNaturalMoves(moves: {})));
       // act
       bloc.add(const GetPokemonNaturalMovesEvent(pokemonId: tPokemonId));
       // assert
       final expected = [
         const PokemonNaturalMovesLoadingState(),
-        const PokemonNaturalMovesLoadedState(moves: []),
+        const PokemonNaturalMovesLoadedState(
+          moves: PokemonNaturalMoves(
+            moves: {},
+          ),
+        ),
       ];
       await expectLater(bloc.stream, emitsInOrder(expected));
     });
