@@ -11,10 +11,9 @@ class PokemonTypeChip extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: pokemonColors[type],
+        color: pokemonColors[type.toLowerCase()],
       ),
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      margin: const EdgeInsets.symmetric(horizontal: 2),
       child: Text(
         type.toTitleCase(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(

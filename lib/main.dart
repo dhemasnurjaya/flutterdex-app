@@ -6,7 +6,7 @@ import 'package:flutterdex/injection_container.dart' as ic;
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_details/pokemon_details_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_natural_moves/pokemon_natural_moves_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_moves/pokemon_moves_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 
@@ -47,7 +47,7 @@ class FlutterdexApp extends StatelessWidget {
         BlocProvider<PokemonAbilitiesBloc>(
           create: (context) => ic.getIt(),
         ),
-        BlocProvider<PokemonNaturalMovesBloc>(
+        BlocProvider<PokemonMovesBloc>(
           create: (context) => ic.getIt(),
         ),
         BlocProvider<PokemonEvolutionsBloc>(

@@ -7,4 +7,8 @@ extension StringExt on String {
     }
     return sb.toString().trim();
   }
+
+  String trimNewLines() {
+    return replaceAll(RegExp(r'\s+'), ' ').trim();
+  }
 }

@@ -1,11 +1,13 @@
 import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
+import 'package:flutterdex/data/enums/pokemon_generation.dart';
+import 'package:flutterdex/data/enums/pokemon_move_learn_method.dart';
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
-import 'package:flutterdex/data/models/pokemon_natural_move_model.dart';
+import 'package:flutterdex/data/models/pokemon_move_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:flutterdex/data/repositories/pokeapi_repository_impl.dart';
@@ -13,7 +15,7 @@ import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
-import 'package:flutterdex/domain/entities/pokemon_natural_move.dart';
+import 'package:flutterdex/domain/entities/pokemon_move.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:mocktail/mocktail.dart';
@@ -298,27 +300,26 @@ void main() {
     });
   });
 
-  group('getPokemonNaturalMoves', () {
-    test('should return List<PokemonNaturalMove> when success', () async {
+  group('getPokemonMoves', () {
+    const tId = 1;
+    const tGeneration = PokemonGeneration.gen1;
+    const tLearnMethod = PokemonMoveLearnMethod.levelUp;
+
+    test('should return List<PokemonMove> when success', () async {
       // arrange
-      const tId = 1;
-      final tResult = <PokemonNaturalMoveModel>[
-        const PokemonNaturalMoveModel(
+      final tResult = <PokemonMoveModel>[
+        const PokemonMoveModel(
           moveName: 'tackle',
           type: 'normal',
-          generation: 'generation-i',
-          learnMethod: 'level-up',
           level: 1,
           power: 40,
           accuracy: 100,
           pp: 35,
           description: 'description',
         ),
-        const PokemonNaturalMoveModel(
+        const PokemonMoveModel(
           moveName: 'growl',
           type: 'normal',
-          generation: 'generation-i',
-          learnMethod: 'level-up',
           level: 1,
           power: null,
           accuracy: 100,
@@ -327,37 +328,66 @@ void main() {
         ),
       ];
 
-      when(() => localSource.getPokemonNaturalMoves(id: tId))
-          .thenAnswer((_) async => tResult);
+      when(
+        () => localSource.getPokemonMoves(
+          pokemonId: tId,
+          learnMethod: tLearnMethod,
+          generation: tGeneration,
+        ),
+      ).thenAnswer((_) async => tResult);
 
       // act
-      final result = await repository.getPokemonNaturalMoves(pokemonId: tId);
+      final result = await repository.getPokemonMoves(
+        pokemonId: tId,
+        learnMethod: tLearnMethod,
+        generation: tGeneration,
+      );
 
       // assert
-      final tExpected = PokemonNaturalMoves.fromModels(tResult);
+      final tExpected = tResult.map(PokemonMove.fromModel).toList();
       result.fold(
         (l) => fail('should not return left'),
         (r) => expect(r, tExpected),
       );
-      verify(() => localSource.getPokemonNaturalMoves(id: tId));
+      verify(
+        () => localSource.getPokemonMoves(
+          pokemonId: tId,
+          learnMethod: tLearnMethod,
+          generation: tGeneration,
+        ),
+      );
       verifyNoMoreInteractions(localSource);
     });
 
     test('should return Failure when exception occurs', () async {
       // arrange
-      const tId = 1;
-      when(() => localSource.getPokemonNaturalMoves(id: tId))
-          .thenThrow(Exception());
+      when(
+        () => localSource.getPokemonMoves(
+          pokemonId: tId,
+          learnMethod: tLearnMethod,
+          generation: tGeneration,
+        ),
+      ).thenThrow(Exception());
 
       // act
-      final result = await repository.getPokemonNaturalMoves(pokemonId: tId);
+      final result = await repository.getPokemonMoves(
+        pokemonId: tId,
+        learnMethod: tLearnMethod,
+        generation: tGeneration,
+      );
 
       // assert
       result.fold(
         (l) => expect(l, isA<UnknownFailure>()),
         (r) => fail('should not return right'),
       );
-      verify(() => localSource.getPokemonNaturalMoves(id: tId));
+      verify(
+        () => localSource.getPokemonMoves(
+          pokemonId: tId,
+          learnMethod: tLearnMethod,
+          generation: tGeneration,
+        ),
+      );
       verifyNoMoreInteractions(localSource);
     });
   });

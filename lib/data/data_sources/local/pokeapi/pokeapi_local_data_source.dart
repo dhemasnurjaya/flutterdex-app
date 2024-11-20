@@ -1,9 +1,11 @@
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_queries.dart';
+import 'package:flutterdex/data/enums/pokemon_generation.dart';
+import 'package:flutterdex/data/enums/pokemon_move_learn_method.dart';
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_egg_group_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
-import 'package:flutterdex/data/models/pokemon_natural_move_model.dart';
+import 'package:flutterdex/data/models/pokemon_move_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -29,8 +31,10 @@ abstract class PokeapiLocalDataSource {
 
   Future<List<PokemonEvolutionModel>> getPokemonEvolutions({required int id});
 
-  Future<List<PokemonNaturalMoveModel>> getPokemonNaturalMoves({
-    required int id,
+  Future<List<PokemonMoveModel>> getPokemonMoves({
+    required int pokemonId,
+    required PokemonMoveLearnMethod learnMethod,
+    required PokemonGeneration generation,
   });
 }
 
@@ -176,21 +180,25 @@ class PokeapiLocalDataSourceImpl implements PokeapiLocalDataSource {
   }
 
   @override
-  Future<List<PokemonNaturalMoveModel>> getPokemonNaturalMoves({
-    required int id,
+  Future<List<PokemonMoveModel>> getPokemonMoves({
+    required int pokemonId,
+    required PokemonMoveLearnMethod learnMethod,
+    required PokemonGeneration generation,
   }) async {
-    final queryResult = await database.rawQuery(pokemonNaturalMovesQuery, [id]);
+    final queryResult = await database.rawQuery(pokemonMovesQuery, [
+      pokemonId,
+      learnMethod.id,
+      generation.id,
+    ]);
     final result = queryResult.map(
-      (row) => PokemonNaturalMoveModel(
-        level: row['level']! as int,
+      (row) => PokemonMoveModel(
         moveName: row['move_name']! as String,
+        level: row['level'] as int?,
         type: row['type']! as String,
         accuracy: row['accuracy'] as int?,
         power: row['power'] as int?,
         pp: row['pp']! as int,
         description: row['description']! as String,
-        generation: row['generation']! as String,
-        learnMethod: row['learn_method']! as String,
       ),
     );
     return result.toList();

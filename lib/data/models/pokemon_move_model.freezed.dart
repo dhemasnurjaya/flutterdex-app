@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'pokemon_natural_move_model.dart';
+part of 'pokemon_move_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,73 +15,66 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$PokemonNaturalMoveModel {
-  int get level => throw _privateConstructorUsedError;
+mixin _$PokemonMoveModel {
+  int? get level => throw _privateConstructorUsedError;
   String get moveName => throw _privateConstructorUsedError;
   int? get power => throw _privateConstructorUsedError;
   int get pp => throw _privateConstructorUsedError;
   int? get accuracy => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  String get generation => throw _privateConstructorUsedError;
-  String get learnMethod => throw _privateConstructorUsedError;
 
-  /// Create a copy of PokemonNaturalMoveModel
+  /// Create a copy of PokemonMoveModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PokemonNaturalMoveModelCopyWith<PokemonNaturalMoveModel> get copyWith =>
+  $PokemonMoveModelCopyWith<PokemonMoveModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PokemonNaturalMoveModelCopyWith<$Res> {
-  factory $PokemonNaturalMoveModelCopyWith(PokemonNaturalMoveModel value,
-          $Res Function(PokemonNaturalMoveModel) then) =
-      _$PokemonNaturalMoveModelCopyWithImpl<$Res, PokemonNaturalMoveModel>;
+abstract class $PokemonMoveModelCopyWith<$Res> {
+  factory $PokemonMoveModelCopyWith(
+          PokemonMoveModel value, $Res Function(PokemonMoveModel) then) =
+      _$PokemonMoveModelCopyWithImpl<$Res, PokemonMoveModel>;
   @useResult
   $Res call(
-      {int level,
+      {int? level,
       String moveName,
       int? power,
       int pp,
       int? accuracy,
       String type,
-      String description,
-      String generation,
-      String learnMethod});
+      String description});
 }
 
 /// @nodoc
-class _$PokemonNaturalMoveModelCopyWithImpl<$Res,
-        $Val extends PokemonNaturalMoveModel>
-    implements $PokemonNaturalMoveModelCopyWith<$Res> {
-  _$PokemonNaturalMoveModelCopyWithImpl(this._value, this._then);
+class _$PokemonMoveModelCopyWithImpl<$Res, $Val extends PokemonMoveModel>
+    implements $PokemonMoveModelCopyWith<$Res> {
+  _$PokemonMoveModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PokemonNaturalMoveModel
+  /// Create a copy of PokemonMoveModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? level = null,
+    Object? level = freezed,
     Object? moveName = null,
     Object? power = freezed,
     Object? pp = null,
     Object? accuracy = freezed,
     Object? type = null,
     Object? description = null,
-    Object? generation = null,
-    Object? learnMethod = null,
   }) {
     return _then(_value.copyWith(
-      level: null == level
+      level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       moveName: null == moveName
           ? _value.moveName
           : moveName // ignore: cast_nullable_to_non_nullable
@@ -105,70 +98,55 @@ class _$PokemonNaturalMoveModelCopyWithImpl<$Res,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      generation: null == generation
-          ? _value.generation
-          : generation // ignore: cast_nullable_to_non_nullable
-              as String,
-      learnMethod: null == learnMethod
-          ? _value.learnMethod
-          : learnMethod // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$PokemonNaturalMoveModelImplCopyWith<$Res>
-    implements $PokemonNaturalMoveModelCopyWith<$Res> {
-  factory _$$PokemonNaturalMoveModelImplCopyWith(
-          _$PokemonNaturalMoveModelImpl value,
-          $Res Function(_$PokemonNaturalMoveModelImpl) then) =
-      __$$PokemonNaturalMoveModelImplCopyWithImpl<$Res>;
+abstract class _$$PokemonMoveModelImplCopyWith<$Res>
+    implements $PokemonMoveModelCopyWith<$Res> {
+  factory _$$PokemonMoveModelImplCopyWith(_$PokemonMoveModelImpl value,
+          $Res Function(_$PokemonMoveModelImpl) then) =
+      __$$PokemonMoveModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {int level,
+      {int? level,
       String moveName,
       int? power,
       int pp,
       int? accuracy,
       String type,
-      String description,
-      String generation,
-      String learnMethod});
+      String description});
 }
 
 /// @nodoc
-class __$$PokemonNaturalMoveModelImplCopyWithImpl<$Res>
-    extends _$PokemonNaturalMoveModelCopyWithImpl<$Res,
-        _$PokemonNaturalMoveModelImpl>
-    implements _$$PokemonNaturalMoveModelImplCopyWith<$Res> {
-  __$$PokemonNaturalMoveModelImplCopyWithImpl(
-      _$PokemonNaturalMoveModelImpl _value,
-      $Res Function(_$PokemonNaturalMoveModelImpl) _then)
+class __$$PokemonMoveModelImplCopyWithImpl<$Res>
+    extends _$PokemonMoveModelCopyWithImpl<$Res, _$PokemonMoveModelImpl>
+    implements _$$PokemonMoveModelImplCopyWith<$Res> {
+  __$$PokemonMoveModelImplCopyWithImpl(_$PokemonMoveModelImpl _value,
+      $Res Function(_$PokemonMoveModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PokemonNaturalMoveModel
+  /// Create a copy of PokemonMoveModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? level = null,
+    Object? level = freezed,
     Object? moveName = null,
     Object? power = freezed,
     Object? pp = null,
     Object? accuracy = freezed,
     Object? type = null,
     Object? description = null,
-    Object? generation = null,
-    Object? learnMethod = null,
   }) {
-    return _then(_$PokemonNaturalMoveModelImpl(
-      level: null == level
+    return _then(_$PokemonMoveModelImpl(
+      level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       moveName: null == moveName
           ? _value.moveName
           : moveName // ignore: cast_nullable_to_non_nullable
@@ -192,14 +170,6 @@ class __$$PokemonNaturalMoveModelImplCopyWithImpl<$Res>
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      generation: null == generation
-          ? _value.generation
-          : generation // ignore: cast_nullable_to_non_nullable
-              as String,
-      learnMethod: null == learnMethod
-          ? _value.learnMethod
-          : learnMethod // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -207,20 +177,18 @@ class __$$PokemonNaturalMoveModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PokemonNaturalMoveModelImpl implements _PokemonNaturalMoveModel {
-  const _$PokemonNaturalMoveModelImpl(
+class _$PokemonMoveModelImpl implements _PokemonMoveModel {
+  const _$PokemonMoveModelImpl(
       {required this.level,
       required this.moveName,
       required this.power,
       required this.pp,
       required this.accuracy,
       required this.type,
-      required this.description,
-      required this.generation,
-      required this.learnMethod});
+      required this.description});
 
   @override
-  final int level;
+  final int? level;
   @override
   final String moveName;
   @override
@@ -233,21 +201,17 @@ class _$PokemonNaturalMoveModelImpl implements _PokemonNaturalMoveModel {
   final String type;
   @override
   final String description;
-  @override
-  final String generation;
-  @override
-  final String learnMethod;
 
   @override
   String toString() {
-    return 'PokemonNaturalMoveModel(level: $level, moveName: $moveName, power: $power, pp: $pp, accuracy: $accuracy, type: $type, description: $description, generation: $generation, learnMethod: $learnMethod)';
+    return 'PokemonMoveModel(level: $level, moveName: $moveName, power: $power, pp: $pp, accuracy: $accuracy, type: $type, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PokemonNaturalMoveModelImpl &&
+            other is _$PokemonMoveModelImpl &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.moveName, moveName) ||
                 other.moveName == moveName) &&
@@ -257,41 +221,35 @@ class _$PokemonNaturalMoveModelImpl implements _PokemonNaturalMoveModel {
                 other.accuracy == accuracy) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.generation, generation) ||
-                other.generation == generation) &&
-            (identical(other.learnMethod, learnMethod) ||
-                other.learnMethod == learnMethod));
+                other.description == description));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, level, moveName, power, pp,
-      accuracy, type, description, generation, learnMethod);
+  int get hashCode => Object.hash(
+      runtimeType, level, moveName, power, pp, accuracy, type, description);
 
-  /// Create a copy of PokemonNaturalMoveModel
+  /// Create a copy of PokemonMoveModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PokemonNaturalMoveModelImplCopyWith<_$PokemonNaturalMoveModelImpl>
-      get copyWith => __$$PokemonNaturalMoveModelImplCopyWithImpl<
-          _$PokemonNaturalMoveModelImpl>(this, _$identity);
+  _$$PokemonMoveModelImplCopyWith<_$PokemonMoveModelImpl> get copyWith =>
+      __$$PokemonMoveModelImplCopyWithImpl<_$PokemonMoveModelImpl>(
+          this, _$identity);
 }
 
-abstract class _PokemonNaturalMoveModel implements PokemonNaturalMoveModel {
-  const factory _PokemonNaturalMoveModel(
-      {required final int level,
+abstract class _PokemonMoveModel implements PokemonMoveModel {
+  const factory _PokemonMoveModel(
+      {required final int? level,
       required final String moveName,
       required final int? power,
       required final int pp,
       required final int? accuracy,
       required final String type,
-      required final String description,
-      required final String generation,
-      required final String learnMethod}) = _$PokemonNaturalMoveModelImpl;
+      required final String description}) = _$PokemonMoveModelImpl;
 
   @override
-  int get level;
+  int? get level;
   @override
   String get moveName;
   @override
@@ -304,15 +262,11 @@ abstract class _PokemonNaturalMoveModel implements PokemonNaturalMoveModel {
   String get type;
   @override
   String get description;
-  @override
-  String get generation;
-  @override
-  String get learnMethod;
 
-  /// Create a copy of PokemonNaturalMoveModel
+  /// Create a copy of PokemonMoveModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PokemonNaturalMoveModelImplCopyWith<_$PokemonNaturalMoveModelImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$PokemonMoveModelImplCopyWith<_$PokemonMoveModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

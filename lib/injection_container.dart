@@ -8,13 +8,13 @@ import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_abilities.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_details.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_evolutions.dart';
-import 'package:flutterdex/domain/use_cases/get_pokemon_natural_moves.dart';
+import 'package:flutterdex/domain/use_cases/get_pokemon_moves.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemon_stats.dart';
 import 'package:flutterdex/domain/use_cases/get_pokemons.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_abilities/pokemon_abilities_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_details/pokemon_details_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_evolutions/pokemon_evolutions_bloc.dart';
-import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_natural_moves/pokemon_natural_moves_bloc.dart';
+import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_moves/pokemon_moves_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_details/bloc/pokemon_stats/pokemon_stats_bloc.dart';
 import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -82,8 +82,8 @@ void setup() {
       repository: getIt(),
     ),
   );
-  getIt.registerLazySingleton<GetPokemonNaturalMoves>(
-    () => GetPokemonNaturalMoves(
+  getIt.registerLazySingleton<GetPokemonMoves>(
+    () => GetPokemonMoves(
       repository: getIt(),
     ),
   );
@@ -124,8 +124,8 @@ void setup() {
       getPokemonAbilities: getIt(),
     ),
   );
-  getIt.registerFactory<PokemonNaturalMovesBloc>(
-    () => PokemonNaturalMovesBloc(
+  getIt.registerFactory<PokemonMovesBloc>(
+    () => PokemonMovesBloc(
       getPokemonNaturalMoves: getIt(),
     ),
   );
