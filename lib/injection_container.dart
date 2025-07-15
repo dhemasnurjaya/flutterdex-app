@@ -18,7 +18,7 @@ import 'package:flutterdex/presentation/pokemon_list/bloc/pokemon_list_bloc.dart
 import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
 
-final getIt = GetIt.instance;
+final GetIt getIt = GetIt.instance;
 
 void setup() {
   // network
