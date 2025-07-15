@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,149 +9,90 @@ part of 'pokemon_detail_info.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PokemonDetailInfo {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  double get heightInMeter => throw _privateConstructorUsedError;
-  double get weightInKg => throw _privateConstructorUsedError;
-  double? get malePercentage => throw _privateConstructorUsedError;
-  double? get femalePercentage => throw _privateConstructorUsedError;
-  double get capturePercentage => throw _privateConstructorUsedError;
-  int? get baseFriendship => throw _privateConstructorUsedError;
-  bool get isBaby => throw _privateConstructorUsedError;
-  int? get hatchCounter => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get growthRate => throw _privateConstructorUsedError;
-  List<String> get eggGroups => throw _privateConstructorUsedError;
+  int get id;
+  String get name;
+  double get heightInMeter;
+  double get weightInKg;
+  double? get malePercentage;
+  double? get femalePercentage;
+  double get capturePercentage;
+  int? get baseFriendship;
+  bool get isBaby;
+  int? get hatchCounter;
+  String get description;
+  String get growthRate;
+  List<String> get eggGroups;
 
   /// Create a copy of PokemonDetailInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PokemonDetailInfoCopyWith<PokemonDetailInfo> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PokemonDetailInfoCopyWith<$Res> {
-  factory $PokemonDetailInfoCopyWith(
-          PokemonDetailInfo value, $Res Function(PokemonDetailInfo) then) =
-      _$PokemonDetailInfoCopyWithImpl<$Res, PokemonDetailInfo>;
-  @useResult
-  $Res call(
-      {int id,
-      String name,
-      double heightInMeter,
-      double weightInKg,
-      double? malePercentage,
-      double? femalePercentage,
-      double capturePercentage,
-      int? baseFriendship,
-      bool isBaby,
-      int? hatchCounter,
-      String description,
-      String growthRate,
-      List<String> eggGroups});
-}
-
-/// @nodoc
-class _$PokemonDetailInfoCopyWithImpl<$Res, $Val extends PokemonDetailInfo>
-    implements $PokemonDetailInfoCopyWith<$Res> {
-  _$PokemonDetailInfoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PokemonDetailInfo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PokemonDetailInfoCopyWith<PokemonDetailInfo> get copyWith =>
+      _$PokemonDetailInfoCopyWithImpl<PokemonDetailInfo>(
+          this as PokemonDetailInfo, _$identity);
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? heightInMeter = null,
-    Object? weightInKg = null,
-    Object? malePercentage = freezed,
-    Object? femalePercentage = freezed,
-    Object? capturePercentage = null,
-    Object? baseFriendship = freezed,
-    Object? isBaby = null,
-    Object? hatchCounter = freezed,
-    Object? description = null,
-    Object? growthRate = null,
-    Object? eggGroups = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      heightInMeter: null == heightInMeter
-          ? _value.heightInMeter
-          : heightInMeter // ignore: cast_nullable_to_non_nullable
-              as double,
-      weightInKg: null == weightInKg
-          ? _value.weightInKg
-          : weightInKg // ignore: cast_nullable_to_non_nullable
-              as double,
-      malePercentage: freezed == malePercentage
-          ? _value.malePercentage
-          : malePercentage // ignore: cast_nullable_to_non_nullable
-              as double?,
-      femalePercentage: freezed == femalePercentage
-          ? _value.femalePercentage
-          : femalePercentage // ignore: cast_nullable_to_non_nullable
-              as double?,
-      capturePercentage: null == capturePercentage
-          ? _value.capturePercentage
-          : capturePercentage // ignore: cast_nullable_to_non_nullable
-              as double,
-      baseFriendship: freezed == baseFriendship
-          ? _value.baseFriendship
-          : baseFriendship // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isBaby: null == isBaby
-          ? _value.isBaby
-          : isBaby // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hatchCounter: freezed == hatchCounter
-          ? _value.hatchCounter
-          : hatchCounter // ignore: cast_nullable_to_non_nullable
-              as int?,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      growthRate: null == growthRate
-          ? _value.growthRate
-          : growthRate // ignore: cast_nullable_to_non_nullable
-              as String,
-      eggGroups: null == eggGroups
-          ? _value.eggGroups
-          : eggGroups // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PokemonDetailInfo &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.heightInMeter, heightInMeter) ||
+                other.heightInMeter == heightInMeter) &&
+            (identical(other.weightInKg, weightInKg) ||
+                other.weightInKg == weightInKg) &&
+            (identical(other.malePercentage, malePercentage) ||
+                other.malePercentage == malePercentage) &&
+            (identical(other.femalePercentage, femalePercentage) ||
+                other.femalePercentage == femalePercentage) &&
+            (identical(other.capturePercentage, capturePercentage) ||
+                other.capturePercentage == capturePercentage) &&
+            (identical(other.baseFriendship, baseFriendship) ||
+                other.baseFriendship == baseFriendship) &&
+            (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
+            (identical(other.hatchCounter, hatchCounter) ||
+                other.hatchCounter == hatchCounter) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.growthRate, growthRate) ||
+                other.growthRate == growthRate) &&
+            const DeepCollectionEquality().equals(other.eggGroups, eggGroups));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      heightInMeter,
+      weightInKg,
+      malePercentage,
+      femalePercentage,
+      capturePercentage,
+      baseFriendship,
+      isBaby,
+      hatchCounter,
+      description,
+      growthRate,
+      const DeepCollectionEquality().hash(eggGroups));
+
+  @override
+  String toString() {
+    return 'PokemonDetailInfo(id: $id, name: $name, heightInMeter: $heightInMeter, weightInKg: $weightInKg, malePercentage: $malePercentage, femalePercentage: $femalePercentage, capturePercentage: $capturePercentage, baseFriendship: $baseFriendship, isBaby: $isBaby, hatchCounter: $hatchCounter, description: $description, growthRate: $growthRate, eggGroups: $eggGroups)';
   }
 }
 
 /// @nodoc
-abstract class _$$PokemonDetailInfoImplCopyWith<$Res>
-    implements $PokemonDetailInfoCopyWith<$Res> {
-  factory _$$PokemonDetailInfoImplCopyWith(_$PokemonDetailInfoImpl value,
-          $Res Function(_$PokemonDetailInfoImpl) then) =
-      __$$PokemonDetailInfoImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PokemonDetailInfoCopyWith<$Res> {
+  factory $PokemonDetailInfoCopyWith(
+          PokemonDetailInfo value, $Res Function(PokemonDetailInfo) _then) =
+      _$PokemonDetailInfoCopyWithImpl;
   @useResult
   $Res call(
       {int id,
@@ -170,12 +111,12 @@ abstract class _$$PokemonDetailInfoImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PokemonDetailInfoImplCopyWithImpl<$Res>
-    extends _$PokemonDetailInfoCopyWithImpl<$Res, _$PokemonDetailInfoImpl>
-    implements _$$PokemonDetailInfoImplCopyWith<$Res> {
-  __$$PokemonDetailInfoImplCopyWithImpl(_$PokemonDetailInfoImpl _value,
-      $Res Function(_$PokemonDetailInfoImpl) _then)
-      : super(_value, _then);
+class _$PokemonDetailInfoCopyWithImpl<$Res>
+    implements $PokemonDetailInfoCopyWith<$Res> {
+  _$PokemonDetailInfoCopyWithImpl(this._self, this._then);
+
+  final PokemonDetailInfo _self;
+  final $Res Function(PokemonDetailInfo) _then;
 
   /// Create a copy of PokemonDetailInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -196,67 +137,305 @@ class __$$PokemonDetailInfoImplCopyWithImpl<$Res>
     Object? growthRate = null,
     Object? eggGroups = null,
   }) {
-    return _then(_$PokemonDetailInfoImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       heightInMeter: null == heightInMeter
-          ? _value.heightInMeter
+          ? _self.heightInMeter
           : heightInMeter // ignore: cast_nullable_to_non_nullable
               as double,
       weightInKg: null == weightInKg
-          ? _value.weightInKg
+          ? _self.weightInKg
           : weightInKg // ignore: cast_nullable_to_non_nullable
               as double,
       malePercentage: freezed == malePercentage
-          ? _value.malePercentage
+          ? _self.malePercentage
           : malePercentage // ignore: cast_nullable_to_non_nullable
               as double?,
       femalePercentage: freezed == femalePercentage
-          ? _value.femalePercentage
+          ? _self.femalePercentage
           : femalePercentage // ignore: cast_nullable_to_non_nullable
               as double?,
       capturePercentage: null == capturePercentage
-          ? _value.capturePercentage
+          ? _self.capturePercentage
           : capturePercentage // ignore: cast_nullable_to_non_nullable
               as double,
       baseFriendship: freezed == baseFriendship
-          ? _value.baseFriendship
+          ? _self.baseFriendship
           : baseFriendship // ignore: cast_nullable_to_non_nullable
               as int?,
       isBaby: null == isBaby
-          ? _value.isBaby
+          ? _self.isBaby
           : isBaby // ignore: cast_nullable_to_non_nullable
               as bool,
       hatchCounter: freezed == hatchCounter
-          ? _value.hatchCounter
+          ? _self.hatchCounter
           : hatchCounter // ignore: cast_nullable_to_non_nullable
               as int?,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       growthRate: null == growthRate
-          ? _value.growthRate
+          ? _self.growthRate
           : growthRate // ignore: cast_nullable_to_non_nullable
               as String,
       eggGroups: null == eggGroups
-          ? _value._eggGroups
+          ? _self.eggGroups
           : eggGroups // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [PokemonDetailInfo].
+extension PokemonDetailInfoPatterns on PokemonDetailInfo {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PokemonDetailInfo value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonDetailInfo() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PokemonDetailInfo value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonDetailInfo():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PokemonDetailInfo value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonDetailInfo() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int id,
+            String name,
+            double heightInMeter,
+            double weightInKg,
+            double? malePercentage,
+            double? femalePercentage,
+            double capturePercentage,
+            int? baseFriendship,
+            bool isBaby,
+            int? hatchCounter,
+            String description,
+            String growthRate,
+            List<String> eggGroups)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonDetailInfo() when $default != null:
+        return $default(
+            _that.id,
+            _that.name,
+            _that.heightInMeter,
+            _that.weightInKg,
+            _that.malePercentage,
+            _that.femalePercentage,
+            _that.capturePercentage,
+            _that.baseFriendship,
+            _that.isBaby,
+            _that.hatchCounter,
+            _that.description,
+            _that.growthRate,
+            _that.eggGroups);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int id,
+            String name,
+            double heightInMeter,
+            double weightInKg,
+            double? malePercentage,
+            double? femalePercentage,
+            double capturePercentage,
+            int? baseFriendship,
+            bool isBaby,
+            int? hatchCounter,
+            String description,
+            String growthRate,
+            List<String> eggGroups)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonDetailInfo():
+        return $default(
+            _that.id,
+            _that.name,
+            _that.heightInMeter,
+            _that.weightInKg,
+            _that.malePercentage,
+            _that.femalePercentage,
+            _that.capturePercentage,
+            _that.baseFriendship,
+            _that.isBaby,
+            _that.hatchCounter,
+            _that.description,
+            _that.growthRate,
+            _that.eggGroups);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int id,
+            String name,
+            double heightInMeter,
+            double weightInKg,
+            double? malePercentage,
+            double? femalePercentage,
+            double capturePercentage,
+            int? baseFriendship,
+            bool isBaby,
+            int? hatchCounter,
+            String description,
+            String growthRate,
+            List<String> eggGroups)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonDetailInfo() when $default != null:
+        return $default(
+            _that.id,
+            _that.name,
+            _that.heightInMeter,
+            _that.weightInKg,
+            _that.malePercentage,
+            _that.femalePercentage,
+            _that.capturePercentage,
+            _that.baseFriendship,
+            _that.isBaby,
+            _that.hatchCounter,
+            _that.description,
+            _that.growthRate,
+            _that.eggGroups);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
-  _$PokemonDetailInfoImpl(
+class _PokemonDetailInfo implements PokemonDetailInfo {
+  _PokemonDetailInfo(
       {required this.id,
       required this.name,
       required this.heightInMeter,
@@ -304,16 +483,19 @@ class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
     return EqualUnmodifiableListView(_eggGroups);
   }
 
+  /// Create a copy of PokemonDetailInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PokemonDetailInfo(id: $id, name: $name, heightInMeter: $heightInMeter, weightInKg: $weightInKg, malePercentage: $malePercentage, femalePercentage: $femalePercentage, capturePercentage: $capturePercentage, baseFriendship: $baseFriendship, isBaby: $isBaby, hatchCounter: $hatchCounter, description: $description, growthRate: $growthRate, eggGroups: $eggGroups)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PokemonDetailInfoCopyWith<_PokemonDetailInfo> get copyWith =>
+      __$PokemonDetailInfoCopyWithImpl<_PokemonDetailInfo>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PokemonDetailInfoImpl &&
+            other is _PokemonDetailInfo &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.heightInMeter, heightInMeter) ||
@@ -356,63 +538,118 @@ class _$PokemonDetailInfoImpl implements _PokemonDetailInfo {
       growthRate,
       const DeepCollectionEquality().hash(_eggGroups));
 
+  @override
+  String toString() {
+    return 'PokemonDetailInfo(id: $id, name: $name, heightInMeter: $heightInMeter, weightInKg: $weightInKg, malePercentage: $malePercentage, femalePercentage: $femalePercentage, capturePercentage: $capturePercentage, baseFriendship: $baseFriendship, isBaby: $isBaby, hatchCounter: $hatchCounter, description: $description, growthRate: $growthRate, eggGroups: $eggGroups)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PokemonDetailInfoCopyWith<$Res>
+    implements $PokemonDetailInfoCopyWith<$Res> {
+  factory _$PokemonDetailInfoCopyWith(
+          _PokemonDetailInfo value, $Res Function(_PokemonDetailInfo) _then) =
+      __$PokemonDetailInfoCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      double heightInMeter,
+      double weightInKg,
+      double? malePercentage,
+      double? femalePercentage,
+      double capturePercentage,
+      int? baseFriendship,
+      bool isBaby,
+      int? hatchCounter,
+      String description,
+      String growthRate,
+      List<String> eggGroups});
+}
+
+/// @nodoc
+class __$PokemonDetailInfoCopyWithImpl<$Res>
+    implements _$PokemonDetailInfoCopyWith<$Res> {
+  __$PokemonDetailInfoCopyWithImpl(this._self, this._then);
+
+  final _PokemonDetailInfo _self;
+  final $Res Function(_PokemonDetailInfo) _then;
+
   /// Create a copy of PokemonDetailInfo
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PokemonDetailInfoImplCopyWith<_$PokemonDetailInfoImpl> get copyWith =>
-      __$$PokemonDetailInfoImplCopyWithImpl<_$PokemonDetailInfoImpl>(
-          this, _$identity);
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? heightInMeter = null,
+    Object? weightInKg = null,
+    Object? malePercentage = freezed,
+    Object? femalePercentage = freezed,
+    Object? capturePercentage = null,
+    Object? baseFriendship = freezed,
+    Object? isBaby = null,
+    Object? hatchCounter = freezed,
+    Object? description = null,
+    Object? growthRate = null,
+    Object? eggGroups = null,
+  }) {
+    return _then(_PokemonDetailInfo(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      heightInMeter: null == heightInMeter
+          ? _self.heightInMeter
+          : heightInMeter // ignore: cast_nullable_to_non_nullable
+              as double,
+      weightInKg: null == weightInKg
+          ? _self.weightInKg
+          : weightInKg // ignore: cast_nullable_to_non_nullable
+              as double,
+      malePercentage: freezed == malePercentage
+          ? _self.malePercentage
+          : malePercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      femalePercentage: freezed == femalePercentage
+          ? _self.femalePercentage
+          : femalePercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      capturePercentage: null == capturePercentage
+          ? _self.capturePercentage
+          : capturePercentage // ignore: cast_nullable_to_non_nullable
+              as double,
+      baseFriendship: freezed == baseFriendship
+          ? _self.baseFriendship
+          : baseFriendship // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isBaby: null == isBaby
+          ? _self.isBaby
+          : isBaby // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hatchCounter: freezed == hatchCounter
+          ? _self.hatchCounter
+          : hatchCounter // ignore: cast_nullable_to_non_nullable
+              as int?,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      growthRate: null == growthRate
+          ? _self.growthRate
+          : growthRate // ignore: cast_nullable_to_non_nullable
+              as String,
+      eggGroups: null == eggGroups
+          ? _self._eggGroups
+          : eggGroups // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
 }
 
-abstract class _PokemonDetailInfo implements PokemonDetailInfo {
-  factory _PokemonDetailInfo(
-      {required final int id,
-      required final String name,
-      required final double heightInMeter,
-      required final double weightInKg,
-      required final double? malePercentage,
-      required final double? femalePercentage,
-      required final double capturePercentage,
-      required final int? baseFriendship,
-      required final bool isBaby,
-      required final int? hatchCounter,
-      required final String description,
-      required final String growthRate,
-      required final List<String> eggGroups}) = _$PokemonDetailInfoImpl;
-
-  @override
-  int get id;
-  @override
-  String get name;
-  @override
-  double get heightInMeter;
-  @override
-  double get weightInKg;
-  @override
-  double? get malePercentage;
-  @override
-  double? get femalePercentage;
-  @override
-  double get capturePercentage;
-  @override
-  int? get baseFriendship;
-  @override
-  bool get isBaby;
-  @override
-  int? get hatchCounter;
-  @override
-  String get description;
-  @override
-  String get growthRate;
-  @override
-  List<String> get eggGroups;
-
-  /// Create a copy of PokemonDetailInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PokemonDetailInfoImplCopyWith<_$PokemonDetailInfoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

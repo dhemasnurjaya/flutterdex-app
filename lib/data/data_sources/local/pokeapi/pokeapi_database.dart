@@ -18,7 +18,7 @@ class PokeapiDatabase {
       // Make sure the parent directory exists
       try {
         await Directory(dirname(path)).create(recursive: true);
-      } catch (_) {}
+      } on Exception catch (_) {}
 
       // Copy from asset
       final data = await rootBundle.load(

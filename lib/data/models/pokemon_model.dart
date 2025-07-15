@@ -5,7 +5,7 @@ part 'pokemon_model.g.dart';
 
 /// Contains basic data about a Pokemon, used for Pokemon list
 @freezed
-class PokemonModel with _$PokemonModel {
+abstract class PokemonModel with _$PokemonModel {
   factory PokemonModel({
     required int id,
     required String name,
