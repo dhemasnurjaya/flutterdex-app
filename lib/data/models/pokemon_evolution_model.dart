@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pokemon_evolution_model.freezed.dart';
 
 @freezed
-class PokemonEvolutionModel with _$PokemonEvolutionModel {
+abstract class PokemonEvolutionModel with _$PokemonEvolutionModel {
   const factory PokemonEvolutionModel({
     required int id,
     required String name,

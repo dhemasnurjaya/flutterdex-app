@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -13,10 +14,7 @@ part of 'app_router.dart';
 /// [AppSettingsPage]
 class AppSettingsRoute extends PageRouteInfo<void> {
   const AppSettingsRoute({List<PageRouteInfo>? children})
-      : super(
-          AppSettingsRoute.name,
-          initialChildren: children,
-        );
+      : super(AppSettingsRoute.name, initialChildren: children);
 
   static const String name = 'AppSettingsRoute';
 
@@ -78,16 +76,25 @@ class PokemonDetailsRouteArgs {
   String toString() {
     return 'PokemonDetailsRouteArgs{pokemon: $pokemon, baseColor: $baseColor, key: $key}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PokemonDetailsRouteArgs) return false;
+    return pokemon == other.pokemon &&
+        baseColor == other.baseColor &&
+        key == other.key;
+  }
+
+  @override
+  int get hashCode => pokemon.hashCode ^ baseColor.hashCode ^ key.hashCode;
 }
 
 /// generated route for
 /// [PokemonListPage]
 class PokemonListRoute extends PageRouteInfo<void> {
   const PokemonListRoute({List<PageRouteInfo>? children})
-      : super(
-          PokemonListRoute.name,
-          initialChildren: children,
-        );
+      : super(PokemonListRoute.name, initialChildren: children);
 
   static const String name = 'PokemonListRoute';
 

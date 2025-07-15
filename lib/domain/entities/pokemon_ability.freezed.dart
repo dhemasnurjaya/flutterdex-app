@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,95 +9,65 @@ part of 'pokemon_ability.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PokemonAbility {
-  bool get isHidden => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get generation => throw _privateConstructorUsedError;
+  bool get isHidden;
+  String get name;
+  String get description;
+  String get generation;
 
   /// Create a copy of PokemonAbility
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PokemonAbilityCopyWith<PokemonAbility> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PokemonAbilityCopyWith<$Res> {
-  factory $PokemonAbilityCopyWith(
-          PokemonAbility value, $Res Function(PokemonAbility) then) =
-      _$PokemonAbilityCopyWithImpl<$Res, PokemonAbility>;
-  @useResult
-  $Res call(
-      {bool isHidden, String name, String description, String generation});
-}
-
-/// @nodoc
-class _$PokemonAbilityCopyWithImpl<$Res, $Val extends PokemonAbility>
-    implements $PokemonAbilityCopyWith<$Res> {
-  _$PokemonAbilityCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PokemonAbility
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PokemonAbilityCopyWith<PokemonAbility> get copyWith =>
+      _$PokemonAbilityCopyWithImpl<PokemonAbility>(
+          this as PokemonAbility, _$identity);
+
   @override
-  $Res call({
-    Object? isHidden = null,
-    Object? name = null,
-    Object? description = null,
-    Object? generation = null,
-  }) {
-    return _then(_value.copyWith(
-      isHidden: null == isHidden
-          ? _value.isHidden
-          : isHidden // ignore: cast_nullable_to_non_nullable
-              as bool,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      generation: null == generation
-          ? _value.generation
-          : generation // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PokemonAbility &&
+            (identical(other.isHidden, isHidden) ||
+                other.isHidden == isHidden) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.generation, generation) ||
+                other.generation == generation));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, isHidden, name, description, generation);
+
+  @override
+  String toString() {
+    return 'PokemonAbility(isHidden: $isHidden, name: $name, description: $description, generation: $generation)';
   }
 }
 
 /// @nodoc
-abstract class _$$PokemonAbilityImplCopyWith<$Res>
-    implements $PokemonAbilityCopyWith<$Res> {
-  factory _$$PokemonAbilityImplCopyWith(_$PokemonAbilityImpl value,
-          $Res Function(_$PokemonAbilityImpl) then) =
-      __$$PokemonAbilityImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PokemonAbilityCopyWith<$Res> {
+  factory $PokemonAbilityCopyWith(
+          PokemonAbility value, $Res Function(PokemonAbility) _then) =
+      _$PokemonAbilityCopyWithImpl;
   @useResult
   $Res call(
       {bool isHidden, String name, String description, String generation});
 }
 
 /// @nodoc
-class __$$PokemonAbilityImplCopyWithImpl<$Res>
-    extends _$PokemonAbilityCopyWithImpl<$Res, _$PokemonAbilityImpl>
-    implements _$$PokemonAbilityImplCopyWith<$Res> {
-  __$$PokemonAbilityImplCopyWithImpl(
-      _$PokemonAbilityImpl _value, $Res Function(_$PokemonAbilityImpl) _then)
-      : super(_value, _then);
+class _$PokemonAbilityCopyWithImpl<$Res>
+    implements $PokemonAbilityCopyWith<$Res> {
+  _$PokemonAbilityCopyWithImpl(this._self, this._then);
+
+  final PokemonAbility _self;
+  final $Res Function(PokemonAbility) _then;
 
   /// Create a copy of PokemonAbility
   /// with the given fields replaced by the non-null parameter values.
@@ -109,31 +79,197 @@ class __$$PokemonAbilityImplCopyWithImpl<$Res>
     Object? description = null,
     Object? generation = null,
   }) {
-    return _then(_$PokemonAbilityImpl(
+    return _then(_self.copyWith(
       isHidden: null == isHidden
-          ? _value.isHidden
+          ? _self.isHidden
           : isHidden // ignore: cast_nullable_to_non_nullable
               as bool,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       generation: null == generation
-          ? _value.generation
+          ? _self.generation
           : generation // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [PokemonAbility].
+extension PokemonAbilityPatterns on PokemonAbility {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PokemonAbility value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonAbility() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PokemonAbility value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonAbility():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PokemonAbility value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonAbility() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool isHidden, String name, String description, String generation)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonAbility() when $default != null:
+        return $default(
+            _that.isHidden, _that.name, _that.description, _that.generation);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool isHidden, String name, String description, String generation)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonAbility():
+        return $default(
+            _that.isHidden, _that.name, _that.description, _that.generation);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool isHidden, String name, String description, String generation)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonAbility() when $default != null:
+        return $default(
+            _that.isHidden, _that.name, _that.description, _that.generation);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$PokemonAbilityImpl implements _PokemonAbility {
-  const _$PokemonAbilityImpl(
+class _PokemonAbility implements PokemonAbility {
+  const _PokemonAbility(
       {required this.isHidden,
       required this.name,
       required this.description,
@@ -148,16 +284,19 @@ class _$PokemonAbilityImpl implements _PokemonAbility {
   @override
   final String generation;
 
+  /// Create a copy of PokemonAbility
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PokemonAbility(isHidden: $isHidden, name: $name, description: $description, generation: $generation)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PokemonAbilityCopyWith<_PokemonAbility> get copyWith =>
+      __$PokemonAbilityCopyWithImpl<_PokemonAbility>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PokemonAbilityImpl &&
+            other is _PokemonAbility &&
             (identical(other.isHidden, isHidden) ||
                 other.isHidden == isHidden) &&
             (identical(other.name, name) || other.name == name) &&
@@ -171,36 +310,61 @@ class _$PokemonAbilityImpl implements _PokemonAbility {
   int get hashCode =>
       Object.hash(runtimeType, isHidden, name, description, generation);
 
+  @override
+  String toString() {
+    return 'PokemonAbility(isHidden: $isHidden, name: $name, description: $description, generation: $generation)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PokemonAbilityCopyWith<$Res>
+    implements $PokemonAbilityCopyWith<$Res> {
+  factory _$PokemonAbilityCopyWith(
+          _PokemonAbility value, $Res Function(_PokemonAbility) _then) =
+      __$PokemonAbilityCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool isHidden, String name, String description, String generation});
+}
+
+/// @nodoc
+class __$PokemonAbilityCopyWithImpl<$Res>
+    implements _$PokemonAbilityCopyWith<$Res> {
+  __$PokemonAbilityCopyWithImpl(this._self, this._then);
+
+  final _PokemonAbility _self;
+  final $Res Function(_PokemonAbility) _then;
+
   /// Create a copy of PokemonAbility
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PokemonAbilityImplCopyWith<_$PokemonAbilityImpl> get copyWith =>
-      __$$PokemonAbilityImplCopyWithImpl<_$PokemonAbilityImpl>(
-          this, _$identity);
+  $Res call({
+    Object? isHidden = null,
+    Object? name = null,
+    Object? description = null,
+    Object? generation = null,
+  }) {
+    return _then(_PokemonAbility(
+      isHidden: null == isHidden
+          ? _self.isHidden
+          : isHidden // ignore: cast_nullable_to_non_nullable
+              as bool,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      generation: null == generation
+          ? _self.generation
+          : generation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
-abstract class _PokemonAbility implements PokemonAbility {
-  const factory _PokemonAbility(
-      {required final bool isHidden,
-      required final String name,
-      required final String description,
-      required final String generation}) = _$PokemonAbilityImpl;
-
-  @override
-  bool get isHidden;
-  @override
-  String get name;
-  @override
-  String get description;
-  @override
-  String get generation;
-
-  /// Create a copy of PokemonAbility
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PokemonAbilityImplCopyWith<_$PokemonAbilityImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
