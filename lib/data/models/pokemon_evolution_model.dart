@@ -4,7 +4,7 @@ part 'pokemon_evolution_model.freezed.dart';
 part 'pokemon_evolution_model.g.dart';
 
 @freezed
-class PokemonEvolutionModel with _$PokemonEvolutionModel {
+abstract class PokemonEvolutionModel with _$PokemonEvolutionModel {
   const factory PokemonEvolutionModel({
     required int id,
     required String name,

@@ -6,9 +6,9 @@ part of 'pokemon_evolution_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PokemonEvolutionModelImpl _$$PokemonEvolutionModelImplFromJson(
+_PokemonEvolutionModel _$PokemonEvolutionModelFromJson(
         Map<String, dynamic> json) =>
-    _$PokemonEvolutionModelImpl(
+    _PokemonEvolutionModel(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       types: json['types'] as String,
@@ -28,8 +28,8 @@ _$PokemonEvolutionModelImpl _$$PokemonEvolutionModelImplFromJson(
       turnUpsideDown: json['turnUpsideDown'] as bool?,
     );
 
-Map<String, dynamic> _$$PokemonEvolutionModelImplToJson(
-        _$PokemonEvolutionModelImpl instance) =>
+Map<String, dynamic> _$PokemonEvolutionModelToJson(
+        _PokemonEvolutionModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

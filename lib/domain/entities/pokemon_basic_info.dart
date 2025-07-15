@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pokemon_basic_info.freezed.dart';
 
 @freezed
-class PokemonBasicInfo with _$PokemonBasicInfo {
+abstract class PokemonBasicInfo with _$PokemonBasicInfo {
   factory PokemonBasicInfo({
     required int id,
     required String name,

@@ -5,14 +5,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pokemon_evolutions.freezed.dart';
 
 @freezed
-class PokemonEvolutions with _$PokemonEvolutions {
+abstract class PokemonEvolutions with _$PokemonEvolutions {
   factory PokemonEvolutions({
     required List<PokemonEvolution> evolutionChains,
   }) = _PokemonEvolutions;
 }
 
 @freezed
-class PokemonEvolution with _$PokemonEvolution {
+abstract class PokemonEvolution with _$PokemonEvolution {
   factory PokemonEvolution({
     required PokemonBasicInfo pokemon,
     required bool isBaby,

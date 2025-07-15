@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,76 +9,56 @@ part of 'pokemon_evolutions.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PokemonEvolutions {
-  List<PokemonEvolution> get evolutionChains =>
-      throw _privateConstructorUsedError;
+  List<PokemonEvolution> get evolutionChains;
 
   /// Create a copy of PokemonEvolutions
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PokemonEvolutionsCopyWith<PokemonEvolutions> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PokemonEvolutionsCopyWith<$Res> {
-  factory $PokemonEvolutionsCopyWith(
-          PokemonEvolutions value, $Res Function(PokemonEvolutions) then) =
-      _$PokemonEvolutionsCopyWithImpl<$Res, PokemonEvolutions>;
-  @useResult
-  $Res call({List<PokemonEvolution> evolutionChains});
-}
-
-/// @nodoc
-class _$PokemonEvolutionsCopyWithImpl<$Res, $Val extends PokemonEvolutions>
-    implements $PokemonEvolutionsCopyWith<$Res> {
-  _$PokemonEvolutionsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PokemonEvolutions
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PokemonEvolutionsCopyWith<PokemonEvolutions> get copyWith =>
+      _$PokemonEvolutionsCopyWithImpl<PokemonEvolutions>(
+          this as PokemonEvolutions, _$identity);
+
   @override
-  $Res call({
-    Object? evolutionChains = null,
-  }) {
-    return _then(_value.copyWith(
-      evolutionChains: null == evolutionChains
-          ? _value.evolutionChains
-          : evolutionChains // ignore: cast_nullable_to_non_nullable
-              as List<PokemonEvolution>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PokemonEvolutions &&
+            const DeepCollectionEquality()
+                .equals(other.evolutionChains, evolutionChains));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(evolutionChains));
+
+  @override
+  String toString() {
+    return 'PokemonEvolutions(evolutionChains: $evolutionChains)';
   }
 }
 
 /// @nodoc
-abstract class _$$PokemonEvolutionsImplCopyWith<$Res>
-    implements $PokemonEvolutionsCopyWith<$Res> {
-  factory _$$PokemonEvolutionsImplCopyWith(_$PokemonEvolutionsImpl value,
-          $Res Function(_$PokemonEvolutionsImpl) then) =
-      __$$PokemonEvolutionsImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PokemonEvolutionsCopyWith<$Res> {
+  factory $PokemonEvolutionsCopyWith(
+          PokemonEvolutions value, $Res Function(PokemonEvolutions) _then) =
+      _$PokemonEvolutionsCopyWithImpl;
   @useResult
   $Res call({List<PokemonEvolution> evolutionChains});
 }
 
 /// @nodoc
-class __$$PokemonEvolutionsImplCopyWithImpl<$Res>
-    extends _$PokemonEvolutionsCopyWithImpl<$Res, _$PokemonEvolutionsImpl>
-    implements _$$PokemonEvolutionsImplCopyWith<$Res> {
-  __$$PokemonEvolutionsImplCopyWithImpl(_$PokemonEvolutionsImpl _value,
-      $Res Function(_$PokemonEvolutionsImpl) _then)
-      : super(_value, _then);
+class _$PokemonEvolutionsCopyWithImpl<$Res>
+    implements $PokemonEvolutionsCopyWith<$Res> {
+  _$PokemonEvolutionsCopyWithImpl(this._self, this._then);
+
+  final PokemonEvolutions _self;
+  final $Res Function(PokemonEvolutions) _then;
 
   /// Create a copy of PokemonEvolutions
   /// with the given fields replaced by the non-null parameter values.
@@ -87,20 +67,176 @@ class __$$PokemonEvolutionsImplCopyWithImpl<$Res>
   $Res call({
     Object? evolutionChains = null,
   }) {
-    return _then(_$PokemonEvolutionsImpl(
+    return _then(_self.copyWith(
       evolutionChains: null == evolutionChains
-          ? _value._evolutionChains
+          ? _self.evolutionChains
           : evolutionChains // ignore: cast_nullable_to_non_nullable
               as List<PokemonEvolution>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [PokemonEvolutions].
+extension PokemonEvolutionsPatterns on PokemonEvolutions {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PokemonEvolutions value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolutions() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PokemonEvolutions value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolutions():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PokemonEvolutions value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolutions() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(List<PokemonEvolution> evolutionChains)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolutions() when $default != null:
+        return $default(_that.evolutionChains);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(List<PokemonEvolution> evolutionChains) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolutions():
+        return $default(_that.evolutionChains);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(List<PokemonEvolution> evolutionChains)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolutions() when $default != null:
+        return $default(_that.evolutionChains);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$PokemonEvolutionsImpl implements _PokemonEvolutions {
-  _$PokemonEvolutionsImpl(
-      {required final List<PokemonEvolution> evolutionChains})
+class _PokemonEvolutions implements PokemonEvolutions {
+  _PokemonEvolutions({required final List<PokemonEvolution> evolutionChains})
       : _evolutionChains = evolutionChains;
 
   final List<PokemonEvolution> _evolutionChains;
@@ -111,16 +247,19 @@ class _$PokemonEvolutionsImpl implements _PokemonEvolutions {
     return EqualUnmodifiableListView(_evolutionChains);
   }
 
+  /// Create a copy of PokemonEvolutions
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PokemonEvolutions(evolutionChains: $evolutionChains)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PokemonEvolutionsCopyWith<_PokemonEvolutions> get copyWith =>
+      __$PokemonEvolutionsCopyWithImpl<_PokemonEvolutions>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PokemonEvolutionsImpl &&
+            other is _PokemonEvolutions &&
             const DeepCollectionEquality()
                 .equals(other._evolutionChains, _evolutionChains));
   }
@@ -129,61 +268,134 @@ class _$PokemonEvolutionsImpl implements _PokemonEvolutions {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_evolutionChains));
 
-  /// Create a copy of PokemonEvolutions
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PokemonEvolutionsImplCopyWith<_$PokemonEvolutionsImpl> get copyWith =>
-      __$$PokemonEvolutionsImplCopyWithImpl<_$PokemonEvolutionsImpl>(
-          this, _$identity);
+  String toString() {
+    return 'PokemonEvolutions(evolutionChains: $evolutionChains)';
+  }
 }
 
-abstract class _PokemonEvolutions implements PokemonEvolutions {
-  factory _PokemonEvolutions(
-          {required final List<PokemonEvolution> evolutionChains}) =
-      _$PokemonEvolutionsImpl;
-
+/// @nodoc
+abstract mixin class _$PokemonEvolutionsCopyWith<$Res>
+    implements $PokemonEvolutionsCopyWith<$Res> {
+  factory _$PokemonEvolutionsCopyWith(
+          _PokemonEvolutions value, $Res Function(_PokemonEvolutions) _then) =
+      __$PokemonEvolutionsCopyWithImpl;
   @override
-  List<PokemonEvolution> get evolutionChains;
+  @useResult
+  $Res call({List<PokemonEvolution> evolutionChains});
+}
+
+/// @nodoc
+class __$PokemonEvolutionsCopyWithImpl<$Res>
+    implements _$PokemonEvolutionsCopyWith<$Res> {
+  __$PokemonEvolutionsCopyWithImpl(this._self, this._then);
+
+  final _PokemonEvolutions _self;
+  final $Res Function(_PokemonEvolutions) _then;
 
   /// Create a copy of PokemonEvolutions
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PokemonEvolutionsImplCopyWith<_$PokemonEvolutionsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? evolutionChains = null,
+  }) {
+    return _then(_PokemonEvolutions(
+      evolutionChains: null == evolutionChains
+          ? _self._evolutionChains
+          : evolutionChains // ignore: cast_nullable_to_non_nullable
+              as List<PokemonEvolution>,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$PokemonEvolution {
-  PokemonBasicInfo get pokemon => throw _privateConstructorUsedError;
-  bool get isBaby => throw _privateConstructorUsedError;
-  int? get evolvesFromSpeciesId => throw _privateConstructorUsedError;
-  List<String> get evolutionTriggers => throw _privateConstructorUsedError;
-  int? get minLevel => throw _privateConstructorUsedError;
-  String? get heldItem => throw _privateConstructorUsedError;
-  String? get evolutionItem => throw _privateConstructorUsedError;
-  String? get timeOfDay => throw _privateConstructorUsedError;
-  int? get minHappiness => throw _privateConstructorUsedError;
-  int? get minAffection => throw _privateConstructorUsedError;
-  int? get minBeauty => throw _privateConstructorUsedError;
-  int? get relativePhysicalStats => throw _privateConstructorUsedError;
-  bool? get needsOverworldRain => throw _privateConstructorUsedError;
-  bool? get turnUpsideDown => throw _privateConstructorUsedError;
+  PokemonBasicInfo get pokemon;
+  bool get isBaby;
+  int? get evolvesFromSpeciesId;
+  List<String> get evolutionTriggers;
+  int? get minLevel;
+  String? get heldItem;
+  String? get evolutionItem;
+  String? get timeOfDay;
+  int? get minHappiness;
+  int? get minAffection;
+  int? get minBeauty;
+  int? get relativePhysicalStats;
+  bool? get needsOverworldRain;
+  bool? get turnUpsideDown;
 
   /// Create a copy of PokemonEvolution
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $PokemonEvolutionCopyWith<PokemonEvolution> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$PokemonEvolutionCopyWithImpl<PokemonEvolution>(
+          this as PokemonEvolution, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PokemonEvolution &&
+            (identical(other.pokemon, pokemon) || other.pokemon == pokemon) &&
+            (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
+            (identical(other.evolvesFromSpeciesId, evolvesFromSpeciesId) ||
+                other.evolvesFromSpeciesId == evolvesFromSpeciesId) &&
+            const DeepCollectionEquality()
+                .equals(other.evolutionTriggers, evolutionTriggers) &&
+            (identical(other.minLevel, minLevel) ||
+                other.minLevel == minLevel) &&
+            (identical(other.heldItem, heldItem) ||
+                other.heldItem == heldItem) &&
+            (identical(other.evolutionItem, evolutionItem) ||
+                other.evolutionItem == evolutionItem) &&
+            (identical(other.timeOfDay, timeOfDay) ||
+                other.timeOfDay == timeOfDay) &&
+            (identical(other.minHappiness, minHappiness) ||
+                other.minHappiness == minHappiness) &&
+            (identical(other.minAffection, minAffection) ||
+                other.minAffection == minAffection) &&
+            (identical(other.minBeauty, minBeauty) ||
+                other.minBeauty == minBeauty) &&
+            (identical(other.relativePhysicalStats, relativePhysicalStats) ||
+                other.relativePhysicalStats == relativePhysicalStats) &&
+            (identical(other.needsOverworldRain, needsOverworldRain) ||
+                other.needsOverworldRain == needsOverworldRain) &&
+            (identical(other.turnUpsideDown, turnUpsideDown) ||
+                other.turnUpsideDown == turnUpsideDown));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      pokemon,
+      isBaby,
+      evolvesFromSpeciesId,
+      const DeepCollectionEquality().hash(evolutionTriggers),
+      minLevel,
+      heldItem,
+      evolutionItem,
+      timeOfDay,
+      minHappiness,
+      minAffection,
+      minBeauty,
+      relativePhysicalStats,
+      needsOverworldRain,
+      turnUpsideDown);
+
+  @override
+  String toString() {
+    return 'PokemonEvolution(pokemon: $pokemon, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTriggers: $evolutionTriggers, minLevel: $minLevel, heldItem: $heldItem, evolutionItem: $evolutionItem, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
+  }
 }
 
 /// @nodoc
-abstract class $PokemonEvolutionCopyWith<$Res> {
+abstract mixin class $PokemonEvolutionCopyWith<$Res> {
   factory $PokemonEvolutionCopyWith(
-          PokemonEvolution value, $Res Function(PokemonEvolution) then) =
-      _$PokemonEvolutionCopyWithImpl<$Res, PokemonEvolution>;
+          PokemonEvolution value, $Res Function(PokemonEvolution) _then) =
+      _$PokemonEvolutionCopyWithImpl;
   @useResult
   $Res call(
       {PokemonBasicInfo pokemon,
@@ -205,14 +417,12 @@ abstract class $PokemonEvolutionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
+class _$PokemonEvolutionCopyWithImpl<$Res>
     implements $PokemonEvolutionCopyWith<$Res> {
-  _$PokemonEvolutionCopyWithImpl(this._value, this._then);
+  _$PokemonEvolutionCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final PokemonEvolution _self;
+  final $Res Function(PokemonEvolution) _then;
 
   /// Create a copy of PokemonEvolution
   /// with the given fields replaced by the non-null parameter values.
@@ -234,64 +444,64 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
     Object? needsOverworldRain = freezed,
     Object? turnUpsideDown = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       pokemon: null == pokemon
-          ? _value.pokemon
+          ? _self.pokemon
           : pokemon // ignore: cast_nullable_to_non_nullable
               as PokemonBasicInfo,
       isBaby: null == isBaby
-          ? _value.isBaby
+          ? _self.isBaby
           : isBaby // ignore: cast_nullable_to_non_nullable
               as bool,
       evolvesFromSpeciesId: freezed == evolvesFromSpeciesId
-          ? _value.evolvesFromSpeciesId
+          ? _self.evolvesFromSpeciesId
           : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
               as int?,
       evolutionTriggers: null == evolutionTriggers
-          ? _value.evolutionTriggers
+          ? _self.evolutionTriggers
           : evolutionTriggers // ignore: cast_nullable_to_non_nullable
               as List<String>,
       minLevel: freezed == minLevel
-          ? _value.minLevel
+          ? _self.minLevel
           : minLevel // ignore: cast_nullable_to_non_nullable
               as int?,
       heldItem: freezed == heldItem
-          ? _value.heldItem
+          ? _self.heldItem
           : heldItem // ignore: cast_nullable_to_non_nullable
               as String?,
       evolutionItem: freezed == evolutionItem
-          ? _value.evolutionItem
+          ? _self.evolutionItem
           : evolutionItem // ignore: cast_nullable_to_non_nullable
               as String?,
       timeOfDay: freezed == timeOfDay
-          ? _value.timeOfDay
+          ? _self.timeOfDay
           : timeOfDay // ignore: cast_nullable_to_non_nullable
               as String?,
       minHappiness: freezed == minHappiness
-          ? _value.minHappiness
+          ? _self.minHappiness
           : minHappiness // ignore: cast_nullable_to_non_nullable
               as int?,
       minAffection: freezed == minAffection
-          ? _value.minAffection
+          ? _self.minAffection
           : minAffection // ignore: cast_nullable_to_non_nullable
               as int?,
       minBeauty: freezed == minBeauty
-          ? _value.minBeauty
+          ? _self.minBeauty
           : minBeauty // ignore: cast_nullable_to_non_nullable
               as int?,
       relativePhysicalStats: freezed == relativePhysicalStats
-          ? _value.relativePhysicalStats
+          ? _self.relativePhysicalStats
           : relativePhysicalStats // ignore: cast_nullable_to_non_nullable
               as int?,
       needsOverworldRain: freezed == needsOverworldRain
-          ? _value.needsOverworldRain
+          ? _self.needsOverworldRain
           : needsOverworldRain // ignore: cast_nullable_to_non_nullable
               as bool?,
       turnUpsideDown: freezed == turnUpsideDown
-          ? _value.turnUpsideDown
+          ? _self.turnUpsideDown
           : turnUpsideDown // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of PokemonEvolution
@@ -299,133 +509,260 @@ class _$PokemonEvolutionCopyWithImpl<$Res, $Val extends PokemonEvolution>
   @override
   @pragma('vm:prefer-inline')
   $PokemonBasicInfoCopyWith<$Res> get pokemon {
-    return $PokemonBasicInfoCopyWith<$Res>(_value.pokemon, (value) {
-      return _then(_value.copyWith(pokemon: value) as $Val);
+    return $PokemonBasicInfoCopyWith<$Res>(_self.pokemon, (value) {
+      return _then(_self.copyWith(pokemon: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$PokemonEvolutionImplCopyWith<$Res>
-    implements $PokemonEvolutionCopyWith<$Res> {
-  factory _$$PokemonEvolutionImplCopyWith(_$PokemonEvolutionImpl value,
-          $Res Function(_$PokemonEvolutionImpl) then) =
-      __$$PokemonEvolutionImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {PokemonBasicInfo pokemon,
-      bool isBaby,
-      int? evolvesFromSpeciesId,
-      List<String> evolutionTriggers,
-      int? minLevel,
-      String? heldItem,
-      String? evolutionItem,
-      String? timeOfDay,
-      int? minHappiness,
-      int? minAffection,
-      int? minBeauty,
-      int? relativePhysicalStats,
-      bool? needsOverworldRain,
-      bool? turnUpsideDown});
+/// Adds pattern-matching-related methods to [PokemonEvolution].
+extension PokemonEvolutionPatterns on PokemonEvolution {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $PokemonBasicInfoCopyWith<$Res> get pokemon;
-}
-
-/// @nodoc
-class __$$PokemonEvolutionImplCopyWithImpl<$Res>
-    extends _$PokemonEvolutionCopyWithImpl<$Res, _$PokemonEvolutionImpl>
-    implements _$$PokemonEvolutionImplCopyWith<$Res> {
-  __$$PokemonEvolutionImplCopyWithImpl(_$PokemonEvolutionImpl _value,
-      $Res Function(_$PokemonEvolutionImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PokemonEvolution
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pokemon = null,
-    Object? isBaby = null,
-    Object? evolvesFromSpeciesId = freezed,
-    Object? evolutionTriggers = null,
-    Object? minLevel = freezed,
-    Object? heldItem = freezed,
-    Object? evolutionItem = freezed,
-    Object? timeOfDay = freezed,
-    Object? minHappiness = freezed,
-    Object? minAffection = freezed,
-    Object? minBeauty = freezed,
-    Object? relativePhysicalStats = freezed,
-    Object? needsOverworldRain = freezed,
-    Object? turnUpsideDown = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PokemonEvolution value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$PokemonEvolutionImpl(
-      pokemon: null == pokemon
-          ? _value.pokemon
-          : pokemon // ignore: cast_nullable_to_non_nullable
-              as PokemonBasicInfo,
-      isBaby: null == isBaby
-          ? _value.isBaby
-          : isBaby // ignore: cast_nullable_to_non_nullable
-              as bool,
-      evolvesFromSpeciesId: freezed == evolvesFromSpeciesId
-          ? _value.evolvesFromSpeciesId
-          : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      evolutionTriggers: null == evolutionTriggers
-          ? _value._evolutionTriggers
-          : evolutionTriggers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      minLevel: freezed == minLevel
-          ? _value.minLevel
-          : minLevel // ignore: cast_nullable_to_non_nullable
-              as int?,
-      heldItem: freezed == heldItem
-          ? _value.heldItem
-          : heldItem // ignore: cast_nullable_to_non_nullable
-              as String?,
-      evolutionItem: freezed == evolutionItem
-          ? _value.evolutionItem
-          : evolutionItem // ignore: cast_nullable_to_non_nullable
-              as String?,
-      timeOfDay: freezed == timeOfDay
-          ? _value.timeOfDay
-          : timeOfDay // ignore: cast_nullable_to_non_nullable
-              as String?,
-      minHappiness: freezed == minHappiness
-          ? _value.minHappiness
-          : minHappiness // ignore: cast_nullable_to_non_nullable
-              as int?,
-      minAffection: freezed == minAffection
-          ? _value.minAffection
-          : minAffection // ignore: cast_nullable_to_non_nullable
-              as int?,
-      minBeauty: freezed == minBeauty
-          ? _value.minBeauty
-          : minBeauty // ignore: cast_nullable_to_non_nullable
-              as int?,
-      relativePhysicalStats: freezed == relativePhysicalStats
-          ? _value.relativePhysicalStats
-          : relativePhysicalStats // ignore: cast_nullable_to_non_nullable
-              as int?,
-      needsOverworldRain: freezed == needsOverworldRain
-          ? _value.needsOverworldRain
-          : needsOverworldRain // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      turnUpsideDown: freezed == turnUpsideDown
-          ? _value.turnUpsideDown
-          : turnUpsideDown // ignore: cast_nullable_to_non_nullable
-              as bool?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolution() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PokemonEvolution value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolution():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PokemonEvolution value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolution() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            PokemonBasicInfo pokemon,
+            bool isBaby,
+            int? evolvesFromSpeciesId,
+            List<String> evolutionTriggers,
+            int? minLevel,
+            String? heldItem,
+            String? evolutionItem,
+            String? timeOfDay,
+            int? minHappiness,
+            int? minAffection,
+            int? minBeauty,
+            int? relativePhysicalStats,
+            bool? needsOverworldRain,
+            bool? turnUpsideDown)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolution() when $default != null:
+        return $default(
+            _that.pokemon,
+            _that.isBaby,
+            _that.evolvesFromSpeciesId,
+            _that.evolutionTriggers,
+            _that.minLevel,
+            _that.heldItem,
+            _that.evolutionItem,
+            _that.timeOfDay,
+            _that.minHappiness,
+            _that.minAffection,
+            _that.minBeauty,
+            _that.relativePhysicalStats,
+            _that.needsOverworldRain,
+            _that.turnUpsideDown);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            PokemonBasicInfo pokemon,
+            bool isBaby,
+            int? evolvesFromSpeciesId,
+            List<String> evolutionTriggers,
+            int? minLevel,
+            String? heldItem,
+            String? evolutionItem,
+            String? timeOfDay,
+            int? minHappiness,
+            int? minAffection,
+            int? minBeauty,
+            int? relativePhysicalStats,
+            bool? needsOverworldRain,
+            bool? turnUpsideDown)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolution():
+        return $default(
+            _that.pokemon,
+            _that.isBaby,
+            _that.evolvesFromSpeciesId,
+            _that.evolutionTriggers,
+            _that.minLevel,
+            _that.heldItem,
+            _that.evolutionItem,
+            _that.timeOfDay,
+            _that.minHappiness,
+            _that.minAffection,
+            _that.minBeauty,
+            _that.relativePhysicalStats,
+            _that.needsOverworldRain,
+            _that.turnUpsideDown);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            PokemonBasicInfo pokemon,
+            bool isBaby,
+            int? evolvesFromSpeciesId,
+            List<String> evolutionTriggers,
+            int? minLevel,
+            String? heldItem,
+            String? evolutionItem,
+            String? timeOfDay,
+            int? minHappiness,
+            int? minAffection,
+            int? minBeauty,
+            int? relativePhysicalStats,
+            bool? needsOverworldRain,
+            bool? turnUpsideDown)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PokemonEvolution() when $default != null:
+        return $default(
+            _that.pokemon,
+            _that.isBaby,
+            _that.evolvesFromSpeciesId,
+            _that.evolutionTriggers,
+            _that.minLevel,
+            _that.heldItem,
+            _that.evolutionItem,
+            _that.timeOfDay,
+            _that.minHappiness,
+            _that.minAffection,
+            _that.minBeauty,
+            _that.relativePhysicalStats,
+            _that.needsOverworldRain,
+            _that.turnUpsideDown);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$PokemonEvolutionImpl implements _PokemonEvolution {
-  _$PokemonEvolutionImpl(
+class _PokemonEvolution implements PokemonEvolution {
+  _PokemonEvolution(
       {required this.pokemon,
       required this.isBaby,
       required this.evolvesFromSpeciesId,
@@ -478,16 +815,19 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
   @override
   final bool? turnUpsideDown;
 
+  /// Create a copy of PokemonEvolution
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PokemonEvolution(pokemon: $pokemon, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTriggers: $evolutionTriggers, minLevel: $minLevel, heldItem: $heldItem, evolutionItem: $evolutionItem, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PokemonEvolutionCopyWith<_PokemonEvolution> get copyWith =>
+      __$PokemonEvolutionCopyWithImpl<_PokemonEvolution>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PokemonEvolutionImpl &&
+            other is _PokemonEvolution &&
             (identical(other.pokemon, pokemon) || other.pokemon == pokemon) &&
             (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
             (identical(other.evolvesFromSpeciesId, evolvesFromSpeciesId) ||
@@ -534,66 +874,137 @@ class _$PokemonEvolutionImpl implements _PokemonEvolution {
       needsOverworldRain,
       turnUpsideDown);
 
+  @override
+  String toString() {
+    return 'PokemonEvolution(pokemon: $pokemon, isBaby: $isBaby, evolvesFromSpeciesId: $evolvesFromSpeciesId, evolutionTriggers: $evolutionTriggers, minLevel: $minLevel, heldItem: $heldItem, evolutionItem: $evolutionItem, timeOfDay: $timeOfDay, minHappiness: $minHappiness, minAffection: $minAffection, minBeauty: $minBeauty, relativePhysicalStats: $relativePhysicalStats, needsOverworldRain: $needsOverworldRain, turnUpsideDown: $turnUpsideDown)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PokemonEvolutionCopyWith<$Res>
+    implements $PokemonEvolutionCopyWith<$Res> {
+  factory _$PokemonEvolutionCopyWith(
+          _PokemonEvolution value, $Res Function(_PokemonEvolution) _then) =
+      __$PokemonEvolutionCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {PokemonBasicInfo pokemon,
+      bool isBaby,
+      int? evolvesFromSpeciesId,
+      List<String> evolutionTriggers,
+      int? minLevel,
+      String? heldItem,
+      String? evolutionItem,
+      String? timeOfDay,
+      int? minHappiness,
+      int? minAffection,
+      int? minBeauty,
+      int? relativePhysicalStats,
+      bool? needsOverworldRain,
+      bool? turnUpsideDown});
+
+  @override
+  $PokemonBasicInfoCopyWith<$Res> get pokemon;
+}
+
+/// @nodoc
+class __$PokemonEvolutionCopyWithImpl<$Res>
+    implements _$PokemonEvolutionCopyWith<$Res> {
+  __$PokemonEvolutionCopyWithImpl(this._self, this._then);
+
+  final _PokemonEvolution _self;
+  final $Res Function(_PokemonEvolution) _then;
+
   /// Create a copy of PokemonEvolution
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PokemonEvolutionImplCopyWith<_$PokemonEvolutionImpl> get copyWith =>
-      __$$PokemonEvolutionImplCopyWithImpl<_$PokemonEvolutionImpl>(
-          this, _$identity);
-}
-
-abstract class _PokemonEvolution implements PokemonEvolution {
-  factory _PokemonEvolution(
-      {required final PokemonBasicInfo pokemon,
-      required final bool isBaby,
-      required final int? evolvesFromSpeciesId,
-      required final List<String> evolutionTriggers,
-      required final int? minLevel,
-      required final String? heldItem,
-      required final String? evolutionItem,
-      required final String? timeOfDay,
-      required final int? minHappiness,
-      required final int? minAffection,
-      required final int? minBeauty,
-      required final int? relativePhysicalStats,
-      required final bool? needsOverworldRain,
-      required final bool? turnUpsideDown}) = _$PokemonEvolutionImpl;
-
-  @override
-  PokemonBasicInfo get pokemon;
-  @override
-  bool get isBaby;
-  @override
-  int? get evolvesFromSpeciesId;
-  @override
-  List<String> get evolutionTriggers;
-  @override
-  int? get minLevel;
-  @override
-  String? get heldItem;
-  @override
-  String? get evolutionItem;
-  @override
-  String? get timeOfDay;
-  @override
-  int? get minHappiness;
-  @override
-  int? get minAffection;
-  @override
-  int? get minBeauty;
-  @override
-  int? get relativePhysicalStats;
-  @override
-  bool? get needsOverworldRain;
-  @override
-  bool? get turnUpsideDown;
+  $Res call({
+    Object? pokemon = null,
+    Object? isBaby = null,
+    Object? evolvesFromSpeciesId = freezed,
+    Object? evolutionTriggers = null,
+    Object? minLevel = freezed,
+    Object? heldItem = freezed,
+    Object? evolutionItem = freezed,
+    Object? timeOfDay = freezed,
+    Object? minHappiness = freezed,
+    Object? minAffection = freezed,
+    Object? minBeauty = freezed,
+    Object? relativePhysicalStats = freezed,
+    Object? needsOverworldRain = freezed,
+    Object? turnUpsideDown = freezed,
+  }) {
+    return _then(_PokemonEvolution(
+      pokemon: null == pokemon
+          ? _self.pokemon
+          : pokemon // ignore: cast_nullable_to_non_nullable
+              as PokemonBasicInfo,
+      isBaby: null == isBaby
+          ? _self.isBaby
+          : isBaby // ignore: cast_nullable_to_non_nullable
+              as bool,
+      evolvesFromSpeciesId: freezed == evolvesFromSpeciesId
+          ? _self.evolvesFromSpeciesId
+          : evolvesFromSpeciesId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      evolutionTriggers: null == evolutionTriggers
+          ? _self._evolutionTriggers
+          : evolutionTriggers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      minLevel: freezed == minLevel
+          ? _self.minLevel
+          : minLevel // ignore: cast_nullable_to_non_nullable
+              as int?,
+      heldItem: freezed == heldItem
+          ? _self.heldItem
+          : heldItem // ignore: cast_nullable_to_non_nullable
+              as String?,
+      evolutionItem: freezed == evolutionItem
+          ? _self.evolutionItem
+          : evolutionItem // ignore: cast_nullable_to_non_nullable
+              as String?,
+      timeOfDay: freezed == timeOfDay
+          ? _self.timeOfDay
+          : timeOfDay // ignore: cast_nullable_to_non_nullable
+              as String?,
+      minHappiness: freezed == minHappiness
+          ? _self.minHappiness
+          : minHappiness // ignore: cast_nullable_to_non_nullable
+              as int?,
+      minAffection: freezed == minAffection
+          ? _self.minAffection
+          : minAffection // ignore: cast_nullable_to_non_nullable
+              as int?,
+      minBeauty: freezed == minBeauty
+          ? _self.minBeauty
+          : minBeauty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      relativePhysicalStats: freezed == relativePhysicalStats
+          ? _self.relativePhysicalStats
+          : relativePhysicalStats // ignore: cast_nullable_to_non_nullable
+              as int?,
+      needsOverworldRain: freezed == needsOverworldRain
+          ? _self.needsOverworldRain
+          : needsOverworldRain // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      turnUpsideDown: freezed == turnUpsideDown
+          ? _self.turnUpsideDown
+          : turnUpsideDown // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
 
   /// Create a copy of PokemonEvolution
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PokemonEvolutionImplCopyWith<_$PokemonEvolutionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $PokemonBasicInfoCopyWith<$Res> get pokemon {
+    return $PokemonBasicInfoCopyWith<$Res>(_self.pokemon, (value) {
+      return _then(_self.copyWith(pokemon: value));
+    });
+  }
 }
+
+// dart format on
