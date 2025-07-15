@@ -27,9 +27,6 @@ mixin _$PokemonModel {
       _$PokemonModelCopyWithImpl<PokemonModel>(
           this as PokemonModel, _$identity);
 
-  /// Serializes this PokemonModel to a JSON map.
-  Map<String, dynamic> toJson();
-
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -41,7 +38,6 @@ mixin _$PokemonModel {
             (identical(other.genus, genus) || other.genus == genus));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, types, genus);
 
@@ -258,15 +254,13 @@ extension PokemonModelPatterns on PokemonModel {
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _PokemonModel implements PokemonModel {
   _PokemonModel(
       {required this.id,
       required this.name,
       required this.types,
       required this.genus});
-  factory _PokemonModel.fromJson(Map<String, dynamic> json) =>
-      _$PokemonModelFromJson(json);
 
   @override
   final int id;
@@ -286,13 +280,6 @@ class _PokemonModel implements PokemonModel {
       __$PokemonModelCopyWithImpl<_PokemonModel>(this, _$identity);
 
   @override
-  Map<String, dynamic> toJson() {
-    return _$PokemonModelToJson(
-      this,
-    );
-  }
-
-  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -303,7 +290,6 @@ class _PokemonModel implements PokemonModel {
             (identical(other.genus, genus) || other.genus == genus));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, types, genus);
 

@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pokemon_move.freezed.dart';
 
 @freezed
-class PokemonMove with _$PokemonMove {
+abstract class PokemonMove with _$PokemonMove {
   const factory PokemonMove({
     required String name,
     required String type,
