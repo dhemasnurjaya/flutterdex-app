@@ -40,9 +40,6 @@ mixin _$PokemonEvolutionModel {
       _$PokemonEvolutionModelCopyWithImpl<PokemonEvolutionModel>(
           this as PokemonEvolutionModel, _$identity);
 
-  /// Serializes this PokemonEvolutionModel to a JSON map.
-  Map<String, dynamic> toJson();
-
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -79,7 +76,6 @@ mixin _$PokemonEvolutionModel {
                 other.turnUpsideDown == turnUpsideDown));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -500,7 +496,7 @@ extension PokemonEvolutionModelPatterns on PokemonEvolutionModel {
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _PokemonEvolutionModel implements PokemonEvolutionModel {
   const _PokemonEvolutionModel(
       {required this.id,
@@ -520,8 +516,6 @@ class _PokemonEvolutionModel implements PokemonEvolutionModel {
       required this.relativePhysicalStats,
       required this.needsOverworldRain,
       required this.turnUpsideDown});
-  factory _PokemonEvolutionModel.fromJson(Map<String, dynamic> json) =>
-      _$PokemonEvolutionModelFromJson(json);
 
   @override
   final int id;
@@ -568,13 +562,6 @@ class _PokemonEvolutionModel implements PokemonEvolutionModel {
           this, _$identity);
 
   @override
-  Map<String, dynamic> toJson() {
-    return _$PokemonEvolutionModelToJson(
-      this,
-    );
-  }
-
-  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -610,7 +597,6 @@ class _PokemonEvolutionModel implements PokemonEvolutionModel {
                 other.turnUpsideDown == turnUpsideDown));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,

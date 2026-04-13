@@ -1,12 +1,13 @@
-class PokemonAbilityModel {
-  PokemonAbilityModel({
-    required this.isHidden,
-    required this.name,
-    required this.description,
-    required this.generation,
-  });
-  final bool isHidden;
-  final String name;
-  final String description;
-  final String generation;
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'pokemon_ability_model.freezed.dart';
+
+@freezed
+abstract class PokemonAbilityModel with _$PokemonAbilityModel {
+  const factory PokemonAbilityModel({
+    required bool isHidden,
+    required String name,
+    required String description,
+    required String generation,
+  }) = _PokemonAbilityModel;
 }

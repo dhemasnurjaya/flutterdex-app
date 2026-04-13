@@ -32,7 +32,14 @@ class PokemonCard extends StatelessWidget {
     );
     final pokemonTypes = Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: pokemon.types.map<Widget>(PokemonTypeChip.new).toList(),
+      children: pokemon.types
+          .map<Widget>(
+            (e) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: PokemonTypeChip(e),
+            ),
+          )
+          .toList(),
     );
     final pokemonNumber = Text(
       pokemon.id.toString().padLeft(4, '0'),

@@ -14,7 +14,7 @@ class GetPokemonEvolutions
   Future<Either<Failure, List<PokemonEvolutions>>> call(
     GetPokemonEvolutionsParams params,
   ) {
-    return repository.getPokemonEvolutions(id: params.pokemonId);
+    return repository.getPokemonEvolutions(pokemonId: params.pokemonId);
   }
 }
 

@@ -1,27 +1,20 @@
-class PokemonSpeciesModel {
-  PokemonSpeciesModel({
-    required this.id,
-    required this.name,
-    required this.height,
-    required this.weight,
-    required this.genderRate,
-    required this.captureRate,
-    required this.baseHappiness,
-    required this.isBaby,
-    required this.hatchCounter,
-    required this.description,
-    required this.growthRate,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final int id;
-  final String name;
-  final int height;
-  final int weight;
-  final int genderRate;
-  final int captureRate;
-  final int? baseHappiness;
-  final bool isBaby;
-  final int? hatchCounter;
-  final String description;
-  final String growthRate;
+part 'pokemon_species_model.freezed.dart';
+
+@freezed
+abstract class PokemonSpeciesModel with _$PokemonSpeciesModel {
+  const factory PokemonSpeciesModel({
+    required int id,
+    required String name,
+    required int height,
+    required int weight,
+    required int genderRate,
+    required int captureRate,
+    required int? baseHappiness,
+    required bool isBaby,
+    required int? hatchCounter,
+    required String description,
+    required String growthRate,
+  }) = _PokemonSpeciesModel;
 }

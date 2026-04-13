@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
+import 'package:flutterdex/data/enums/pokemon_generation.dart';
+import 'package:flutterdex/data/enums/pokemon_move_learn_method.dart';
 import 'package:flutterdex/data/models/pokemon_ability_model.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/data/models/pokemon_model.dart';
+import 'package:flutterdex/data/models/pokemon_move_model.dart';
 import 'package:flutterdex/data/models/pokemon_species_model.dart';
 import 'package:flutterdex/data/models/pokemon_stat_model.dart';
 import 'package:path/path.dart';
@@ -165,5 +168,26 @@ void main() {
     // assert
     expect(result, isA<List<PokemonEvolutionModel>>());
     expect(result.map((e) => e.name).toSet(), tExpectedPokemonNames);
+  });
+
+  test('getPokemonMoves', () async {
+    // arrange
+    const tId = 1; // bulbasaur
+    const tGeneration = PokemonGeneration.gen1;
+    const tLearnMethod = PokemonMoveLearnMethod.levelUp;
+
+    // act
+    final result = await dataSource.getPokemonMoves(
+      pokemonId: tId,
+      generation: tGeneration,
+      learnMethod: tLearnMethod,
+    );
+
+    // assert
+    const tExpectedFirstMoveName = 'Growl';
+    const tExpectedLastMoveName = 'Solar Beam';
+    expect(result, isA<List<PokemonMoveModel>>());
+    expect(result.first.moveName, tExpectedFirstMoveName);
+    expect(result.last.moveName, tExpectedLastMoveName);
   });
 }

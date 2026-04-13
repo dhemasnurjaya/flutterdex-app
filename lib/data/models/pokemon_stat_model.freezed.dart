@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'pokemon_model.dart';
+part of 'pokemon_stat_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,89 +13,84 @@ part of 'pokemon_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$PokemonModel {
-  int get id;
+mixin _$PokemonStatModel {
   String get name;
-  String get types;
-  String get genus;
+  int get value;
+  int get effortValue;
 
-  /// Create a copy of PokemonModel
+  /// Create a copy of PokemonStatModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PokemonModelCopyWith<PokemonModel> get copyWith =>
-      _$PokemonModelCopyWithImpl<PokemonModel>(
-          this as PokemonModel, _$identity);
+  $PokemonStatModelCopyWith<PokemonStatModel> get copyWith =>
+      _$PokemonStatModelCopyWithImpl<PokemonStatModel>(
+          this as PokemonStatModel, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is PokemonModel &&
-            (identical(other.id, id) || other.id == id) &&
+            other is PokemonStatModel &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.types, types) || other.types == types) &&
-            (identical(other.genus, genus) || other.genus == genus));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.effortValue, effortValue) ||
+                other.effortValue == effortValue));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, types, genus);
+  int get hashCode => Object.hash(runtimeType, name, value, effortValue);
 
   @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, types: $types, genus: $genus)';
+    return 'PokemonStatModel(name: $name, value: $value, effortValue: $effortValue)';
   }
 }
 
 /// @nodoc
-abstract mixin class $PokemonModelCopyWith<$Res> {
-  factory $PokemonModelCopyWith(
-          PokemonModel value, $Res Function(PokemonModel) _then) =
-      _$PokemonModelCopyWithImpl;
+abstract mixin class $PokemonStatModelCopyWith<$Res> {
+  factory $PokemonStatModelCopyWith(
+          PokemonStatModel value, $Res Function(PokemonStatModel) _then) =
+      _$PokemonStatModelCopyWithImpl;
   @useResult
-  $Res call({int id, String name, String types, String genus});
+  $Res call({String name, int value, int effortValue});
 }
 
 /// @nodoc
-class _$PokemonModelCopyWithImpl<$Res> implements $PokemonModelCopyWith<$Res> {
-  _$PokemonModelCopyWithImpl(this._self, this._then);
+class _$PokemonStatModelCopyWithImpl<$Res>
+    implements $PokemonStatModelCopyWith<$Res> {
+  _$PokemonStatModelCopyWithImpl(this._self, this._then);
 
-  final PokemonModel _self;
-  final $Res Function(PokemonModel) _then;
+  final PokemonStatModel _self;
+  final $Res Function(PokemonStatModel) _then;
 
-  /// Create a copy of PokemonModel
+  /// Create a copy of PokemonStatModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
-    Object? types = null,
-    Object? genus = null,
+    Object? value = null,
+    Object? effortValue = null,
   }) {
     return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      types: null == types
-          ? _self.types
-          : types // ignore: cast_nullable_to_non_nullable
-              as String,
-      genus: null == genus
-          ? _self.genus
-          : genus // ignore: cast_nullable_to_non_nullable
-              as String,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int,
+      effortValue: null == effortValue
+          ? _self.effortValue
+          : effortValue // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [PokemonModel].
-extension PokemonModelPatterns on PokemonModel {
+/// Adds pattern-matching-related methods to [PokemonStatModel].
+extension PokemonStatModelPatterns on PokemonStatModel {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -110,12 +105,12 @@ extension PokemonModelPatterns on PokemonModel {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_PokemonModel value)? $default, {
+    TResult Function(_PokemonStatModel value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _PokemonModel() when $default != null:
+      case _PokemonStatModel() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -137,11 +132,11 @@ extension PokemonModelPatterns on PokemonModel {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_PokemonModel value) $default,
+    TResult Function(_PokemonStatModel value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _PokemonModel():
+      case _PokemonStatModel():
         return $default(_that);
       case _:
         throw StateError('Unexpected subclass');
@@ -162,11 +157,11 @@ extension PokemonModelPatterns on PokemonModel {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_PokemonModel value)? $default,
+    TResult? Function(_PokemonStatModel value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _PokemonModel() when $default != null:
+      case _PokemonStatModel() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -187,14 +182,13 @@ extension PokemonModelPatterns on PokemonModel {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(int id, String name, String types, String genus)?
-        $default, {
+    TResult Function(String name, int value, int effortValue)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _PokemonModel() when $default != null:
-        return $default(_that.id, _that.name, _that.types, _that.genus);
+      case _PokemonStatModel() when $default != null:
+        return $default(_that.name, _that.value, _that.effortValue);
       case _:
         return orElse();
     }
@@ -215,12 +209,12 @@ extension PokemonModelPatterns on PokemonModel {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(int id, String name, String types, String genus) $default,
+    TResult Function(String name, int value, int effortValue) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _PokemonModel():
-        return $default(_that.id, _that.name, _that.types, _that.genus);
+      case _PokemonStatModel():
+        return $default(_that.name, _that.value, _that.effortValue);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -240,13 +234,12 @@ extension PokemonModelPatterns on PokemonModel {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(int id, String name, String types, String genus)?
-        $default,
+    TResult? Function(String name, int value, int effortValue)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _PokemonModel() when $default != null:
-        return $default(_that.id, _that.name, _that.types, _that.genus);
+      case _PokemonStatModel() when $default != null:
+        return $default(_that.name, _that.value, _that.effortValue);
       case _:
         return null;
     }
@@ -255,96 +248,86 @@ extension PokemonModelPatterns on PokemonModel {
 
 /// @nodoc
 
-class _PokemonModel implements PokemonModel {
-  _PokemonModel(
-      {required this.id,
-      required this.name,
-      required this.types,
-      required this.genus});
+class _PokemonStatModel implements PokemonStatModel {
+  const _PokemonStatModel(
+      {required this.name, required this.value, required this.effortValue});
 
-  @override
-  final int id;
   @override
   final String name;
   @override
-  final String types;
+  final int value;
   @override
-  final String genus;
+  final int effortValue;
 
-  /// Create a copy of PokemonModel
+  /// Create a copy of PokemonStatModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PokemonModelCopyWith<_PokemonModel> get copyWith =>
-      __$PokemonModelCopyWithImpl<_PokemonModel>(this, _$identity);
+  _$PokemonStatModelCopyWith<_PokemonStatModel> get copyWith =>
+      __$PokemonStatModelCopyWithImpl<_PokemonStatModel>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PokemonModel &&
-            (identical(other.id, id) || other.id == id) &&
+            other is _PokemonStatModel &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.types, types) || other.types == types) &&
-            (identical(other.genus, genus) || other.genus == genus));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.effortValue, effortValue) ||
+                other.effortValue == effortValue));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, types, genus);
+  int get hashCode => Object.hash(runtimeType, name, value, effortValue);
 
   @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, types: $types, genus: $genus)';
+    return 'PokemonStatModel(name: $name, value: $value, effortValue: $effortValue)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$PokemonModelCopyWith<$Res>
-    implements $PokemonModelCopyWith<$Res> {
-  factory _$PokemonModelCopyWith(
-          _PokemonModel value, $Res Function(_PokemonModel) _then) =
-      __$PokemonModelCopyWithImpl;
+abstract mixin class _$PokemonStatModelCopyWith<$Res>
+    implements $PokemonStatModelCopyWith<$Res> {
+  factory _$PokemonStatModelCopyWith(
+          _PokemonStatModel value, $Res Function(_PokemonStatModel) _then) =
+      __$PokemonStatModelCopyWithImpl;
   @override
   @useResult
-  $Res call({int id, String name, String types, String genus});
+  $Res call({String name, int value, int effortValue});
 }
 
 /// @nodoc
-class __$PokemonModelCopyWithImpl<$Res>
-    implements _$PokemonModelCopyWith<$Res> {
-  __$PokemonModelCopyWithImpl(this._self, this._then);
+class __$PokemonStatModelCopyWithImpl<$Res>
+    implements _$PokemonStatModelCopyWith<$Res> {
+  __$PokemonStatModelCopyWithImpl(this._self, this._then);
 
-  final _PokemonModel _self;
-  final $Res Function(_PokemonModel) _then;
+  final _PokemonStatModel _self;
+  final $Res Function(_PokemonStatModel) _then;
 
-  /// Create a copy of PokemonModel
+  /// Create a copy of PokemonStatModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? id = null,
     Object? name = null,
-    Object? types = null,
-    Object? genus = null,
+    Object? value = null,
+    Object? effortValue = null,
   }) {
-    return _then(_PokemonModel(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+    return _then(_PokemonStatModel(
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      types: null == types
-          ? _self.types
-          : types // ignore: cast_nullable_to_non_nullable
-              as String,
-      genus: null == genus
-          ? _self.genus
-          : genus // ignore: cast_nullable_to_non_nullable
-              as String,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int,
+      effortValue: null == effortValue
+          ? _self.effortValue
+          : effortValue // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }

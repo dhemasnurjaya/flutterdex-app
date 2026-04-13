@@ -1,10 +1,13 @@
 import 'package:clean_arch_core/clean_arch_core.dart';
 import 'package:flutterdex/data/data_sources/local/pokeapi/pokeapi_local_data_source.dart';
+import 'package:flutterdex/data/enums/pokemon_generation.dart';
+import 'package:flutterdex/data/enums/pokemon_move_learn_method.dart';
 import 'package:flutterdex/data/models/pokemon_evolution_model.dart';
 import 'package:flutterdex/domain/entities/pokemon_ability.dart';
 import 'package:flutterdex/domain/entities/pokemon_basic_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_detail_info.dart';
 import 'package:flutterdex/domain/entities/pokemon_evolutions.dart';
+import 'package:flutterdex/domain/entities/pokemon_move.dart';
 import 'package:flutterdex/domain/entities/pokemon_stat.dart';
 import 'package:flutterdex/domain/repositories/pokeapi_repository.dart';
 
@@ -84,11 +87,31 @@ class PokeapiRepositoryImpl implements PokeapiRepository {
   }
 
   @override
-  Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({
-    required int id,
+  Future<Either<Failure, List<PokemonMove>>> getPokemonMoves({
+    required int pokemonId,
+    required PokemonMoveLearnMethod learnMethod,
+    required PokemonGeneration generation,
   }) async {
     try {
-      final result = (await localSource.getPokemonEvolutions(id: id)).toList();
+      final result = await localSource.getPokemonMoves(
+        pokemonId: pokemonId,
+        learnMethod: learnMethod,
+        generation: generation,
+      );
+      final pokemonMoves = result.map<PokemonMove>(PokemonMove.fromModel);
+      return right(pokemonMoves.toList());
+    } on Exception catch (e) {
+      return left(UnknownFailure(message: e.toString(), cause: e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PokemonEvolutions>>> getPokemonEvolutions({
+    required int pokemonId,
+  }) async {
+    try {
+      final result =
+          (await localSource.getPokemonEvolutions(id: pokemonId)).toList();
       final evolutionChains = <PokemonEvolutions>[];
       while (true) {
         if (result.length == 1) {

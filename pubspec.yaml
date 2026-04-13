@@ -13,6 +13,7 @@ dependencies:
     git:
       url: https://github.com/dhemasnurjaya/clean-arch-core
       ref: main
+  collection: ^1.18.0
   flutter:
     sdk: flutter
   font_awesome_flutter: ^10.7.0
